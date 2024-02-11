@@ -10,16 +10,16 @@ export const albumsRouter = Router();
 albumsRouter.post('/', imageUpload.single('image'), async (req, res, next) => {
     try {
         const albumData: AlbumData = {
-            name: req.body.name,
+            album: req.body.album,
             artist: req.body.artist,
             date: parseInt(req.body.date),
             image: req.file ? req.file.filename : null,
         }
 
-        const album = new Album(albumData);
-        await album.save();
+        const newAlbum = new Album(albumData);
+        await newAlbum.save();
 
-        return res.send(album);
+        return res.send(newAlbum);
 
     } catch (e) {
         if (e instanceof mongoose.Error.ValidationError) {
@@ -32,13 +32,13 @@ albumsRouter.post('/', imageUpload.single('image'), async (req, res, next) => {
 albumsRouter.get('/', async (req, res, next) => {
     try {
         const queryParam = await Album.findOne({artist: req.query.artist});
-        let query: { artist?: string } = {};
+        let queryAlbum: { artist?: string } = {};
 
         if (queryParam) {
-            query.artist = req.query.artist as string;
+            queryAlbum.artist = req.query.artist as string;
         }
 
-        const getAlbumData = await Album.find(query);
+        const getAlbumData = await Album.find(queryAlbum);
         return res.send(getAlbumData);
     } catch (e) {
         next(e);

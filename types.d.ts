@@ -5,12 +5,8 @@ export interface ArtistData {
 }
 
 export interface AlbumData {
-    name: string;
+    album: string;
     artist: string;
     date: number;
     image: string | null;
-}
-
-export interface ArtistQuery {
-    artist: string | null;
 }

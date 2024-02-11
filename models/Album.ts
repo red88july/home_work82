@@ -2,7 +2,7 @@ import {Schema, model, Types} from "mongoose";
 import Artist from "./Artist";
 
 const AlbumSchema = new Schema({
-    name: {
+    album: {
         type: String,
         required: true,
         unique: true,
@@ -16,7 +16,7 @@ const AlbumSchema = new Schema({
               const artist = await Artist.findById(value);
               return Boolean(artist);
           },
-          message: `Artist not specified!`
+          message: `Artist not specified!`,
         },
     },
     date: {
