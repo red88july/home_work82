@@ -1,0 +1,69 @@
+import mongoose, { Types } from "mongoose";
+import { Router } from 'express';
+
+import Album from "../models/Album";
+import { imageUpload } from "../multer";
+import { AlbumData } from "../types";
+
+export const albumsRouter = Router();
+
+albumsRouter.post('/', imageUpload.single('image'), async (req, res, next) => {
+    try {
+        const albumData: AlbumData = {
+            name: req.body.name,
+            artist: req.body.artist,
+            date: parseInt(req.body.date),
+            image: req.file ? req.file.filename : null,
+        }
+
+        const album = new Album(albumData);
+        await album.save();
+
+        return res.send(album);
+
+    } catch (e) {
+        if (e instanceof mongoose.Error.ValidationError) {
+            return res.send(422).send();
+        }
+        next(e);
+    }
+});
+
+albumsRouter.get('/', async (req, res, next) => {
+    try {
+        const queryParam = await Album.findOne({artist: req.query.artist});
+        let query: { artist?: string } = {};
+
+        if (queryParam) {
+            query.artist = req.query.artist as string;
+        }
+
+        const getAlbumData = await Album.find(query);
+        return res.send(getAlbumData);
+    } catch (e) {
+        next(e);
+    }
+});
+
+albumsRouter.get('/:id', async (req, res, next) => {
+    try {
+        let _id: Types.ObjectId;
+
+        try {
+            _id = new Types.ObjectId(req.params.id);
+        } catch (e) {
+            return res.status(404).send({error: 'Wrong ObjectId'});
+        }
+
+        const album = await Album.findById(_id).populate('artist');
+
+        if (!album) {
+            return res.status(404).send({error: 'Album not found!'});
+        }
+
+        return res.send(album);
+
+    } catch (e) {
+        next(e);
+    }
+});
