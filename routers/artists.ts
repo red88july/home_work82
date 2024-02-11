@@ -15,7 +15,7 @@ artistsRouter.post('/', imageUpload.single('photo'), async (req, res, next) => {
             info: req.body.info,
         }
 
-        const artist = new Artist(art);
+        const artist = new Artist(artistData);
         await artist.save();
 
         return res.send(artist);
