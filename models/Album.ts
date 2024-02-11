@@ -13,8 +13,8 @@ const AlbumSchema = new Schema({
         required: true,
         validate: {
           validator: async (value: Types.ObjectId)=> {
-              const artist = await Artist.findById(value);
-              return Boolean(artist);
+              const artistNew = await Artist.findById(value);
+              return Boolean(artistNew);
           },
           message: `Artist not specified!`,
         },
@@ -24,7 +24,7 @@ const AlbumSchema = new Schema({
         required: true,
     },
     image: String,
-}, {versionKey: false});
+}, { versionKey: false });
 
 const Album = model('Album', AlbumSchema);
 export default Album;

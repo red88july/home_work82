@@ -10,3 +10,9 @@ export interface AlbumData {
     date: number;
     image: string | null;
 }
+
+export interface TrackData {
+    track: string;
+    album: string;
+    duration: string;
+}

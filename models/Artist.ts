@@ -1,6 +1,7 @@
 import {Schema, model} from "mongoose";
 
 const ArtistSchema = new Schema({
+
     author: {
         type: String,
         required: true,
@@ -8,9 +9,10 @@ const ArtistSchema = new Schema({
     },
 
     photo: String,
+
     info: String,
 
-}, {versionKey: false});
+}, { versionKey: false });
 
 const Artist = model('Artist', ArtistSchema);
 
