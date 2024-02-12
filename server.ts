@@ -16,6 +16,7 @@ app.use('/albums', albumsRouter);
 app.use('/tracks', tracksRouter);
 
 const run = async () => {
+
     await mongoose.connect(connectToDB.db);
 
     app.listen(port, () => {
@@ -25,6 +26,7 @@ const run = async () => {
     process.on('exit', ()=> {
         mongoose.disconnect();
     });
+
 }
 
 void run();

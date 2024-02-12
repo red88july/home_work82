@@ -2,11 +2,13 @@ import {Schema, model, Types} from "mongoose";
 import Artist from "./Artist";
 
 const AlbumSchema = new Schema({
+
     album: {
         type: String,
         required: true,
         unique: true,
     },
+
     artist: {
         type: Schema.Types.ObjectId,
         ref: 'Artist',
@@ -19,11 +21,14 @@ const AlbumSchema = new Schema({
           message: `Artist not specified!`,
         },
     },
+
     date: {
         type: Number,
         required: true,
     },
+
     image: String,
+
 }, { versionKey: false });
 
 const Album = model('Album', AlbumSchema);

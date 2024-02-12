@@ -7,6 +7,7 @@ import { TrackData } from "../types";
 export const tracksRouter = Router();
 
 tracksRouter.post('/', async (req,res, next) => {
+
     try {
 
         const trackData: TrackData = {

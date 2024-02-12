@@ -6,7 +6,9 @@ const TrackSchema = new Schema({
     track: {
         type: String,
         required: true,
+        unique: true,
     },
+
     album: {
         type: Schema.Types.ObjectId,
         ref: 'Album',
@@ -19,9 +21,11 @@ const TrackSchema = new Schema({
             message: 'Album not specified!',
         },
     },
+
     duration: {
         type: String,
     },
+
 
 }, {versionKey: false});
 

@@ -52,6 +52,7 @@ albumsRouter.get('/', async (req, res, next) => {
 });
 
 albumsRouter.get('/:id', async (req, res, next) => {
+
     try {
 
         let _id: Types.ObjectId;
