@@ -29,6 +29,7 @@ export interface UserDataExtendsSchema extends UserData{
 }
 
 interface UserMethods {
+    checkPassword(password: string): Promise<Boolean>;
     generatedToken();
 }
 

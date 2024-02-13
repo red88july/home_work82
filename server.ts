@@ -5,7 +5,7 @@ import connectToDB from "./connectToDB";
 import { artistsRouter } from "./routers/artists"
 import { albumsRouter } from "./routers/albums";
 import { tracksRouter } from "./routers/tracks";
-import {usersRouter} from "./routers/users";
+import { usersRouter } from "./routers/users";
 
 const app = express();
 const port = 8000;

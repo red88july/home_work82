@@ -30,6 +30,10 @@ UserSchema.methods.generatedToken = function () {
     this.token = randomUUID();
 }
 
+UserSchema.methods.checkPassword = function (password: string) {
+    return bcrypt.compare(password, this.password);
+}
+
 UserSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     const salt = await bcrypt.genSalt(SALT_WORK);
@@ -40,7 +44,6 @@ UserSchema.pre('save', async function (next) {
 UserSchema.set('toJSON', {
     transform: (doc, ret, options) => {
         delete ret.password;
-        delete ret.token;
         return ret;
     }
 })
