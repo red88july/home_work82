@@ -1,3 +1,5 @@
+import {Model} from "mongoose";
+
 export interface ArtistData {
     author: string;
     photo: string | null;
@@ -16,3 +18,19 @@ export interface TrackData {
     album: string;
     duration: string;
 }
+
+export interface UserData {
+    username: string;
+    password: string;
+}
+
+export interface UserDataExtendsSchema extends UserData{
+    token: string;
+}
+
+interface UserMethods {
+    generatedToken();
+}
+
+type UserModel = Model<UserDataExtendsSchema, {}, UserMethods>
+
