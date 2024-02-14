@@ -24,7 +24,7 @@ const UserSchema = new Schema<UserDataExtendsSchema, UserMethods, UserModel>({
         required: true,
     },
 
-}, {versionKey: false});
+}, { versionKey: false });
 
 UserSchema.methods.generatedToken = function () {
     this.token = randomUUID();

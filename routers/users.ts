@@ -7,6 +7,7 @@ import { UserData } from "../types";
 export const usersRouter = Router();
 
 usersRouter.post('/', async (req, res, next) => {
+
    try {
 
        const userData: UserData = {
@@ -26,6 +27,7 @@ usersRouter.post('/', async (req, res, next) => {
        }
        next(e);
    }
+   
 });
 
 usersRouter.post('/sessions', async (req, res ,next) => {
@@ -50,6 +52,5 @@ usersRouter.post('/sessions', async (req, res ,next) => {
     } catch (e) {
         next(e);
     }
-
 
 })
