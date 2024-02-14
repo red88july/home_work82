@@ -1,4 +1,4 @@
-import {Model, Schema} from "mongoose";
+import { Model } from "mongoose";
 
 export interface ArtistData {
     author: string;
@@ -35,12 +35,7 @@ interface UserMethods {
 
 type UserModel = Model<UserDataExtendsSchema, {}, UserMethods>
 
-export interface TrackHistoryPost {
-    user: string;
-    track: string;
-}
-
 export interface TrackHistoryData {
-    user: Schema.Types.ObjectId;
+    user: {};
     track: string;
 }

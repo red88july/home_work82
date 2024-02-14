@@ -1,7 +1,7 @@
 import {Schema, Types, model, Date} from "mongoose";
+
 import User from "./User";
 import Track from "./Track";
-import {HistoryTrackMethods} from "../types";
 
 const TrackHistorySchema = new Schema({
 
@@ -34,7 +34,7 @@ const TrackHistorySchema = new Schema({
         default: () => new Date(),
     }
 
-});
+}, { versionKey: false });
 
 const TrackHistory = model('TrackHistory', TrackHistorySchema);
 

@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import {Router} from 'express';
+
 import User from "../models/User";
 import TrackHistory from "../models/TrackHistory";
-import {TrackHistoryData} from "../types";
+import { TrackHistoryData } from "../types";
 
 export const trackHistory = Router();
 
@@ -17,7 +18,7 @@ trackHistory.post('/', async (req, res, next) => {
        const user = await User.findOne({token});
 
        if (!user) {
-           return res.status(401).send({error: `Wrong token!`})
+           return res.status(401).send({error: `Wrong token!`});
        }
 
        const historyData: TrackHistoryData = {
