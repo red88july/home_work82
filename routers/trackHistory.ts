@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import {Router} from 'express';
+import { Router } from 'express';
 
 import User from "../models/User";
 import TrackHistory from "../models/TrackHistory";
@@ -8,12 +8,16 @@ import { TrackHistoryData } from "../types";
 export const trackHistory = Router();
 
 trackHistory.post('/', async (req, res, next) => {
-   try {
-       const token = req.get( 'Authorization' );
 
-       if (!token) {
-           return res.status(401).send({error: `No token present!`})
+    try {
+
+       const headerValue = req.get( 'Authorization' );
+
+       if (!headerValue) {
+           return res.status(401).send({error: `No authorization header value!`})
        }
+
+       const [_bearer, token] = headerValue.split(' ');
 
        const user = await User.findOne({token});
 
@@ -30,10 +34,12 @@ trackHistory.post('/', async (req, res, next) => {
        await trackHistory.save();
 
        res.send(trackHistory);
+
    } catch (e) {
        if (e instanceof mongoose.Error.ValidationError) {
            return res.status(422).send(e);
        }
        next(e)
    }
+
 });

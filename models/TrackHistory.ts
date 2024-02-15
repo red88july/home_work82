@@ -1,4 +1,4 @@
-import {Schema, Types, model, Date} from "mongoose";
+import { Schema, Types, model } from "mongoose";
 
 import User from "./User";
 import Track from "./Track";
@@ -31,6 +31,7 @@ const TrackHistorySchema = new Schema({
 
     datetime: {
         type: Date,
+        required: true,
         default: () => new Date(),
     }
 

@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from "mongoose";
 
 import connectToDB from "./connectToDB";
+
 import { artistsRouter } from "./routers/artists"
 import { albumsRouter } from "./routers/albums";
 import { tracksRouter } from "./routers/tracks";

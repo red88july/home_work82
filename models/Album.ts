@@ -1,4 +1,5 @@
-import {Schema, model, Types} from "mongoose";
+import { Schema, model, Types } from "mongoose";
+
 import Artist from "./Artist";
 
 const AlbumSchema = new Schema({
@@ -32,4 +33,5 @@ const AlbumSchema = new Schema({
 }, { versionKey: false });
 
 const Album = model('Album', AlbumSchema);
+
 export default Album;

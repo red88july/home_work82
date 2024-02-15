@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import {Router} from 'express';
+import { Router } from 'express';
 
 import Artist from "../models/Artist";
 import { imageUpload } from "../multer";

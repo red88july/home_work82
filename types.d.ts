@@ -24,7 +24,7 @@ export interface UserData {
     password: string;
 }
 
-export interface UserDataExtendsSchema extends UserData{
+export interface UserDataExtendsSchema extends UserData {
     token: string;
 }
 
