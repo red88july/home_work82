@@ -1,4 +1,5 @@
 import { Model } from "mongoose";
+import User from "./models/User";
 
 export interface ArtistData {
     author: string;
@@ -36,6 +37,6 @@ interface UserMethods {
 type UserModel = Model<UserDataExtendsSchema, {}, UserMethods>
 
 export interface TrackHistoryData {
-    user: {};
+    user: User;
     track: string;
 }
