@@ -7,7 +7,6 @@ const TrackSchema = new Schema({
     track: {
         type: String,
         required: true,
-        unique: true,
     },
 
     album: {
