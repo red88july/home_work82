@@ -1,7 +1,15 @@
+import AppToolbar from './components/AppToolbar/AppToolbar.tsx';
+import Artist from './components/Artist/Artist.tsx';
+
 function App() {
   return (
     <>
-      TEST
+      <header>
+        <AppToolbar/>
+      </header>
+      <main>
+        <Artist/>
+      </main>
     </>
   );
 }

@@ -11,8 +11,9 @@ import { usersRouter } from "./routers/users";
 import { trackHistory } from "./routers/trackHistory";
 
 const app = express();
-const port = 8000;
+const port = 3000;
 
+app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
 

@@ -31,7 +31,7 @@ artistsRouter.post('/', imageUpload.single('photo'), async (req, res, next) => {
 
 });
 
-artistsRouter.get('/', async (req, res, next) => {
+artistsRouter.get('/', async (_req, res, next) => {
 
     try {
 
