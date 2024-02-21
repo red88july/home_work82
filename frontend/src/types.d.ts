@@ -3,3 +3,10 @@ export interface Artists {
   author: string;
   photo: null | string;
 }
+
+export interface Albums {
+  _id: string;
+  album: string;
+  date: number;
+  image: null | string;
+}
