@@ -14,13 +14,13 @@ const Artist = () => {
   }, [dispatch]);
 
   return (
-      <Grid container direction="column" spacing={2} marginTop={10}>
+      <Grid container direction="column" spacing={2} marginTop={5}>
         <Grid item container justifyContent="space-between" alignItems="center">
           <Grid item>
             <Typography variant="h4">Artists</Typography>
           </Grid>
         </Grid>
-        <Grid item container spacing={2}>
+        <Grid item container spacing={2} display="flex" justifyContent="center" gap={1}>
           {artists.map(artist => (
             <ArtistItem
               id={artist._id}

@@ -1,6 +1,6 @@
 import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material';
 
-import imageNotAvailable from '../../assets/images/image_not_available.png';
+import imageNotAvailable from '../../assets/pic/image_not_available.png';
 import {apiURL} from '../../constants.ts';
 import React from 'react';
 
@@ -20,7 +20,7 @@ const ArtistItem: React.FC<Props> = ({id, photo, author}) => {
 
   return (
         <Box key={id} marginTop={10}>
-          <Card id={id} sx={{maxWidth: 345}}>
+          <Card id={id} sx={{height: "100%"}}>
             <CardActionArea>
               <CardMedia
                 component="img"
