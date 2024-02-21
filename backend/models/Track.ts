@@ -18,7 +18,7 @@ const TrackSchema = new Schema({
                 const albumNew = await Album.findById(value);
                 return Boolean(albumNew);
             },
-            message: 'Album not specified!',
+            message: 'AlbumsList not specified!',
         },
     },
 

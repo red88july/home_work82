@@ -17,7 +17,6 @@ const ArtistItem: React.FC<Props> = ({id, photo, author}) => {
 
   const dispatch = useAppDispatch();
 
-
   let cardImage = imageNotAvailable;
 
   if (photo) {
@@ -27,6 +26,7 @@ const ArtistItem: React.FC<Props> = ({id, photo, author}) => {
   const handleClick = () => {
     dispatch(getAlbums(id));
   };
+
 
   return (
     <Box key={id} marginTop={10}>

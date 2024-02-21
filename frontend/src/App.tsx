@@ -5,7 +5,9 @@ import Layout from './components/Layout/Layout';
 import Artist from './components/Artist/Artist';
 
 import PageNoFoundPicture from '../../frontend/src/assets/pic/404PageNotFound.jpg';
-import Albums from './components/Album/Albums';
+import Album from './components/Album/Album.tsx';
+// import AlbumsList from './components/AlbumsList/AlbumsList.tsx';
+// import Album from './components/Album/Album.tsx';
 
 function App() {
   return (
@@ -13,7 +15,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={(<Artist />)}/>
-          <Route path="/albums" element={<Albums />} />
+          <Route path="/albums" element={<Album />} />
           <Route path="*" element={(
             <Box
               sx={{display: "flex", alignItems:'center',

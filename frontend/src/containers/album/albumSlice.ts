@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import { Albums } from '../../types';
 import {getAlbums} from './albumThunk.ts';
+import {RootState} from '../../app/store.ts';
 
 interface AlbumsState {
   items: Albums[];
@@ -32,3 +33,4 @@ export const albumsSlice = createSlice({
 });
 
 export const albumReducer = albumsSlice.reducer;
+export const selectAlbum = (state:RootState) => state.albums.items;
