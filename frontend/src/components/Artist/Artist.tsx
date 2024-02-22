@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { selectArtists } from '../../containers/artists/artistsSlice.ts';
-import {getArtists} from '../../containers/artists/artistsThunk.ts';
+import { getArtists } from '../../containers/artists/artistsThunk.ts';
 import ArtistItem from '../ArtistItem/ArtistItem';
 
 const Artist = () => {

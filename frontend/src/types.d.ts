@@ -1,6 +1,7 @@
 export interface Artists {
   _id: string;
   author: string;
+  info: string;
   photo: null | string;
 }
 
@@ -10,4 +11,14 @@ export interface Albums {
   album: string;
   date: number;
   image: null | string;
+}
+
+export type AlbumsType = Omit<Albums, 'artist image'>
+
+export interface Tracks {
+  _id: string;
+  track: string;
+  album: AlbumsType;
+  duration: number;
+  number: number;
 }

@@ -3,6 +3,7 @@ import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mu
 import {apiURL} from '../../constants.ts';
 import imageNotAvailable from '../../assets/pic/image_not_available.png';
 import {Artists} from '../../types';
+import {Link} from 'react-router-dom';
 
 const cardEffect = {
   width: '50%',
@@ -35,13 +36,14 @@ const AlbumsList: React.FC<Props> = ({id, album, date, image, artist}) => {
 
   return (
     <Box key={id} sx={cardEffect} >
-      <Card id={id} sx={{padding: 0}} >
+      <Card id={id} sx={{padding: 0}}
+            component={Link} to={`/tracks?album=` + id}>
         <CardActionArea>
           <CardContent sx={positionElements}>
             <CardMedia
               component="img"
               sx={{width: 200}}
-              image={image ? apiURL + '/' + image : coverImage}
+              image={coverImage}
               alt={album}
             />
             <Box sx={{display:"flex", alignItems:"center"}}>

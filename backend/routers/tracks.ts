@@ -41,7 +41,7 @@ tracksRouter.get('/', async (req,res,next) => {
            albumQueryParam.album = req.query.album as string;
        }
 
-       const getTrackData = await Track.find(albumQueryParam);
+       const getTrackData = await Track.find(albumQueryParam).populate('album', 'album date').sort({number: 1});
 
        return res.send(getTrackData);
 

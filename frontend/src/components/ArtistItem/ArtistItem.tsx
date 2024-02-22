@@ -33,7 +33,6 @@ const ArtistItem: React.FC<Props> = ({id, photo, author}) => {
     dispatch(getAlbums(id));
   };
 
-
   return (
     <Box key={id} marginTop={10} sx={cardEffect}>
       <Card id={id} sx={{textDecoration: 'none'}}

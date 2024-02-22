@@ -1,9 +1,10 @@
-import {selectAlbum} from '../../containers/album/albumSlice.ts';
-import {getAlbums} from '../../containers/album/albumThunk.ts';
-import {useAppDispatch, useAppSelector} from '../../app/hooks.ts';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import {useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
+import { selectAlbum } from '../../containers/album/albumSlice.ts';
+import { getAlbums } from '../../containers/album/albumThunk.ts';
+import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
+
 
 import AlbumsList from '../AlbumsList/AlbumsList';
 import { Grid } from '@mui/material';
@@ -26,7 +27,7 @@ const Album = () => {
   }, [dispatch, location.search]);
 
   return (
-    <Grid item container spacing={2} marginTop={10} display="flex" justifyContent="center" gap={2}>
+    <Grid item container spacing={2} marginTop={10} display="flex" justifyContent="center" gap={1}>
       {albums.map(album => (
         <AlbumsList
           key={album._id}

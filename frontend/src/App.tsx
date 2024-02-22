@@ -6,6 +6,7 @@ import Artist from './components/Artist/Artist';
 
 import PageNoFoundPicture from '../../frontend/src/assets/pic/404PageNotFound.jpg';
 import Album from './components/Album/Album';
+import TrackList from './components/TrackList/TrackList.tsx';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={(<Artist />)}/>
           <Route path="/albums" element={<Album />} />
+          <Route path="/tracks" element={<TrackList />} />
           <Route path="*" element={(
             <Box
               sx={{display: "flex", alignItems:'center',
