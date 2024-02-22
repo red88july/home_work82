@@ -36,3 +36,4 @@ export const tracksSlice =createSlice({
 export const tracksReducer = tracksSlice.reducer;
 
 export const selectTracks = (state:RootState) => state.tracks.items;
+export const loadingTracks = (state:RootState) => state.tracks.isLoadingTracks;

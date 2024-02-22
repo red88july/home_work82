@@ -1,8 +1,8 @@
-import { Grid, Typography } from '@mui/material';
+import {Box, CircularProgress, Grid, Typography} from '@mui/material';
 import { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectArtists } from '../../containers/artists/artistsSlice.ts';
+import {loadingArtists, selectArtists} from '../../containers/artists/artistsSlice.ts';
 import { getArtists } from '../../containers/artists/artistsThunk.ts';
 import ArtistItem from '../ArtistItem/ArtistItem';
 
@@ -10,6 +10,7 @@ const Artist = () => {
 
   const dispatch = useAppDispatch();
   const artists = useAppSelector(selectArtists);
+  const loadingArtist = useAppSelector(loadingArtists);
 
   useEffect(() => {
     dispatch(getArtists());
@@ -22,6 +23,8 @@ const Artist = () => {
             <Typography variant="h4">Artists</Typography>
           </Grid>
         </Grid>
+        {loadingArtist &&<Box sx={{display:"flex", justifyContent:"center"}}>
+          <CircularProgress  size={100}/></Box>}
         <Grid item container spacing={2} display="flex" justifyContent="center" gap={1}>
           {artists.map(artist => (
             <ArtistItem

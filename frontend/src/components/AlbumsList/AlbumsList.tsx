@@ -1,13 +1,15 @@
+import { Link } from 'react-router-dom';
 import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material';
 
-import {apiURL} from '../../constants.ts';
+import { apiURL } from '../../constants.ts';
 import imageNotAvailable from '../../assets/pic/image_not_available.png';
-import {Artists} from '../../types';
-import {Link} from 'react-router-dom';
+import { Artists } from '../../types';
 
 const cardEffect = {
   width: '50%',
   "&:hover": {
+    transition: "1s",
+    transform: "scale(0.9)",
     boxShadow: "6px 7px 21px -5px rgba(0,0,0,0.27)",
   }
 };

@@ -1,18 +1,20 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { selectAlbum } from '../../containers/album/albumSlice.ts';
+import {loadingAlbum, selectAlbum} from '../../containers/album/albumSlice.ts';
 import { getAlbums } from '../../containers/album/albumThunk.ts';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 
 
 import AlbumsList from '../AlbumsList/AlbumsList';
-import { Grid } from '@mui/material';
+import {Box, CircularProgress, Grid} from '@mui/material';
+import {useSelector} from 'react-redux';
 
 const Album = () => {
 
   const dispatch = useAppDispatch();
   const albums = useAppSelector(selectAlbum);
+  const isLoadingAlbum = useSelector(loadingAlbum);
 
   const location = useLocation();
 
@@ -28,6 +30,8 @@ const Album = () => {
 
   return (
     <Grid item container spacing={2} marginTop={10} display="flex" justifyContent="center" gap={1}>
+      {isLoadingAlbum && <Box sx={{display:"flex", justifyContent:"center"}}>
+        <CircularProgress  size={100}/></Box>}
       {albums.map(album => (
         <AlbumsList
           key={album._id}

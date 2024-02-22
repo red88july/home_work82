@@ -34,3 +34,4 @@ export const albumsSlice = createSlice({
 
 export const albumReducer = albumsSlice.reducer;
 export const selectAlbum = (state:RootState) => state.albums.items;
+export const loadingAlbum = (state: RootState) => state.albums.isLoadingAlbum;

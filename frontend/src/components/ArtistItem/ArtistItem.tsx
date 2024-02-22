@@ -15,6 +15,8 @@ interface Props {
 
 const cardEffect = {
   "&:hover": {
+    transition: "1s",
+    transform: "scale(0.9)",
     boxShadow: "6px 7px 21px -5px rgba(0,0,0,0.27)",
   }
 };

@@ -35,5 +35,5 @@ export const artistsSlice =createSlice({
 });
 
 export const artistsReducer = artistsSlice.reducer;
-
 export const selectArtists = (state:RootState) => state.artists.items;
+export const loadingArtists = (state:RootState) => state.artists.isLoadingArtists;
