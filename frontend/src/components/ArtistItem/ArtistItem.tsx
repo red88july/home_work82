@@ -13,6 +13,12 @@ interface Props {
   author: string;
 }
 
+const cardEffect = {
+  "&:hover": {
+    boxShadow: "6px 7px 21px -5px rgba(0,0,0,0.27)",
+  }
+};
+
 const ArtistItem: React.FC<Props> = ({id, photo, author}) => {
 
   const dispatch = useAppDispatch();
@@ -29,8 +35,8 @@ const ArtistItem: React.FC<Props> = ({id, photo, author}) => {
 
 
   return (
-    <Box key={id} marginTop={10}>
-      <Card id={id} sx={{height: '100%'}}
+    <Box key={id} marginTop={10} sx={cardEffect}>
+      <Card id={id} sx={{textDecoration: 'none'}}
             component={Link} to={`/albums?artist=` + id}
             onClick={handleClick}>
         <CardActionArea>

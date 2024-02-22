@@ -1,17 +1,31 @@
-import { Box, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material';
 
+import {apiURL} from '../../constants.ts';
 import imageNotAvailable from '../../assets/pic/image_not_available.png';
-import { apiURL } from '../../constants.ts';
+import {Artists} from '../../types';
 
+const cardEffect = {
+  width: '50%',
+  "&:hover": {
+    boxShadow: "6px 7px 21px -5px rgba(0,0,0,0.27)",
+  }
+};
+
+const positionElements = {
+  display: 'flex',
+  justifyContent: "space-around",
+  textAlign: 'center',
+};
 
 interface Props {
   id: string;
   album: string;
   date: number;
   image: string | null;
+  artist: Artists;
 }
 
-const AlbumsList: React.FC<Props> = ({id, album ,date ,image }) => {
+const AlbumsList: React.FC<Props> = ({id, album, date, image, artist}) => {
 
   let coverImage = imageNotAvailable;
 
@@ -20,28 +34,33 @@ const AlbumsList: React.FC<Props> = ({id, album ,date ,image }) => {
   }
 
   return (
-    <>
-      <Grid item container spacing={2}  justifyContent="center" gap={1} marginTop={5}>
-          <Box key={id}>
-            <Card id={id} sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-              <CardMedia
-                component="img"
-                sx={{width: 200}}
-                image={image ? apiURL + '/' + image : coverImage}
-                alt={album}
-              />
-              <CardContent sx={{textAlign: 'center'}}>
+    <Box key={id} sx={cardEffect} >
+      <Card id={id} sx={{padding: 0}} >
+        <CardActionArea>
+          <CardContent sx={positionElements}>
+            <CardMedia
+              component="img"
+              sx={{width: 200}}
+              image={image ? apiURL + '/' + image : coverImage}
+              alt={album}
+            />
+            <Box sx={{display:"flex", alignItems:"center"}}>
+              <Box>
                 <Typography gutterBottom variant="h5" component="div">
-                  {album}
+                  Album: {album}
+                </Typography>
+                <Typography gutterBottom variant="subtitle1" component="div">
+                  Artist: {artist.author}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  Год выпуска: {date}
+                  Date path: {date}
                 </Typography>
-              </CardContent>
-            </Card>
-          </Box>
-      </Grid>
-    </>
+              </Box>
+            </Box>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Box>
   );
 };
 

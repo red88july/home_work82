@@ -43,7 +43,8 @@ albumsRouter.get('/', async (req, res, next) => {
             query.artist = req.query.artist as string;
         }
 
-        const getAlbumData = await Album.find(query);
+        const getAlbumData = await Album.find(query).populate('artist', 'author').sort({date: -1});
+
         return res.send(getAlbumData);
     } catch (e) {
         next(e);

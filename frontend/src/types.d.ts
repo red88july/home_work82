@@ -6,6 +6,7 @@ export interface Artists {
 
 export interface Albums {
   _id: string;
+  artist: Artists;
   album: string;
   date: number;
   image: null | string;

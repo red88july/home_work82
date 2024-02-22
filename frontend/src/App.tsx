@@ -5,9 +5,7 @@ import Layout from './components/Layout/Layout';
 import Artist from './components/Artist/Artist';
 
 import PageNoFoundPicture from '../../frontend/src/assets/pic/404PageNotFound.jpg';
-import Album from './components/Album/Album.tsx';
-// import AlbumsList from './components/AlbumsList/AlbumsList.tsx';
-// import Album from './components/Album/Album.tsx';
+import Album from './components/Album/Album';
 
 function App() {
   return (
