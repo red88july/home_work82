@@ -1,6 +1,6 @@
 import {useSelector} from 'react-redux';
 import {useLocation} from 'react-router-dom';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 import {useAppDispatch} from '../../app/hooks.ts';
 import {loadingTracks, selectTracks} from '../../containers/track/tracksSlice.ts';
@@ -35,6 +35,8 @@ const TrackList = () => {
   const tracks = useSelector(selectTracks);
   const isLoadingTracks = useSelector(loadingTracks);
 
+  const [albumName, setAlbumName] = useState<string>('');
+
   const location = useLocation();
 
   useEffect(() => {
@@ -48,9 +50,19 @@ const TrackList = () => {
 
   }, [dispatch, location.search]);
 
+  useEffect(() => {
+    if (tracks.length > 0) {
+      setAlbumName(tracks[0].album.album);
+    }
+  }, [tracks]);
 
   return (
     <>
+      <Box>
+        <Typography variant="h3">
+          {albumName}
+        </Typography>
+      </Box>
       {isLoadingTracks &&<Box sx={{display:"flex", justifyContent:"center"}}>
           <CircularProgress  size={100}/></Box>}
       <Box marginTop={5} sx={listOuterBoxEffect}>

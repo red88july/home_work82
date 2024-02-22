@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 
 import {loadingAlbum, selectAlbum} from '../../containers/album/albumSlice.ts';
-import { getAlbums } from '../../containers/album/albumThunk.ts';
-import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
+import {getAlbums} from '../../containers/album/albumThunk.ts';
+import {useAppDispatch, useAppSelector} from '../../app/hooks.ts';
 
 
 import AlbumsList from '../AlbumsList/AlbumsList';
-import {Box, CircularProgress, Grid} from '@mui/material';
+import {Box, CircularProgress, Grid, Typography} from '@mui/material';
 import {useSelector} from 'react-redux';
 
 const Album = () => {
@@ -15,6 +15,8 @@ const Album = () => {
   const dispatch = useAppDispatch();
   const albums = useAppSelector(selectAlbum);
   const isLoadingAlbum = useSelector(loadingAlbum);
+
+  const [artistName, setArtistName] = useState<string>('');
 
   const location = useLocation();
 
@@ -28,21 +30,34 @@ const Album = () => {
     }
   }, [dispatch, location.search]);
 
+  useEffect(() => {
+    if (albums.length > 0) {
+      setArtistName(albums[0].artist.author);
+    }
+  }, [albums]);
+
   return (
-    <Grid item container spacing={2} marginTop={10} display="flex" justifyContent="center" gap={1}>
-      {isLoadingAlbum && <Box sx={{display:"flex", justifyContent:"center"}}>
-        <CircularProgress  size={100}/></Box>}
-      {albums.map(album => (
-        <AlbumsList
-          key={album._id}
-          id={album._id}
-          album={album.album}
-          date={album.date}
-          image={album.image}
-          artist={album.artist}
-        />
-      ))}
-    </Grid>
+    <>
+      <Box>
+        <Typography variant="h3">
+          {artistName}
+        </Typography>
+      </Box>
+      <Grid item container  marginTop={7} display="flex" justifyContent="center" gap={1}>
+        {isLoadingAlbum && <Box sx={{display: 'flex', justifyContent: 'center'}}>
+          <CircularProgress size={100}/></Box>}
+        {albums.map(album => (
+          <AlbumsList
+            key={album._id}
+            id={album._id}
+            album={album.album}
+            date={album.date}
+            image={album.image}
+            artist={album.artist}
+          />
+        ))}
+      </Grid>
+    </>
   );
 };
 
