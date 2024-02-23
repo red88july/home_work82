@@ -1,18 +1,17 @@
 import mongoose from "mongoose";
 
 import Track from "../models/Track";
-import { Router } from "express";
-import { TrackData } from "../types";
+import {Router} from "express";
+import {TrackData} from "../types";
 
 export const tracksRouter = Router();
 
-tracksRouter.post('/', async (req,res, next) => {
+tracksRouter.post('/', async (req, res, next) => {
 
     try {
 
         const trackData: TrackData = {
             track: req.body.track,
-            author: req.body.author,
             album: req.body.album,
             duration: req.body.duration,
         }
@@ -31,23 +30,29 @@ tracksRouter.post('/', async (req,res, next) => {
 
 });
 
-tracksRouter.get('/', async (req,res,next) => {
+tracksRouter.get('/', async (req, res, next) => {
 
     try {
 
-       const findParam = await Track.findOne({album: req.query.album});
-       let albumQueryParam: { album? : string } = {};
+        const findParam = await Track.findOne({album: req.query.album});
+        let albumQueryParam: { album?: string } = {};
 
-       if (findParam) {
-           albumQueryParam.album = req.query.album as string;
-       }
+        if (findParam) {
+            albumQueryParam.album = req.query.album as string;
+        }
 
-       const getTrackData = await Track.find(albumQueryParam).populate('album', 'artist album').sort({number: 1});
+        const getTrackData = await Track.find(albumQueryParam).populate({
+            path: 'album',
+            select: 'album artist',
+            populate: {
+                path: 'artist', model: 'Artist', select: 'author'
+            }
+        }).sort({number: 1});
 
-       return res.send(getTrackData);
+        return res.send(getTrackData);
 
-   } catch (e) {
-       next(e);
-   }
+    } catch (e) {
+        next(e);
+    }
 
 });

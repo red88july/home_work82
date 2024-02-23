@@ -36,6 +36,8 @@ const TracksList = () => {
   const dispatch = useAppDispatch();
   const tracks = useSelector(selectTracks);
 
+  console.log('TrackList', tracks);
+
   const isLoadingTracks = useSelector(loadingTracks);
 
   const [albumsName, setAlbumsName] = useState<string>('');
@@ -57,7 +59,7 @@ const TracksList = () => {
 
   useEffect(() => {
     if (tracks.length > 0) {
-      setArtistsName(tracks[0].author);
+      setArtistsName(tracks[0].album.artist.author);
       setAlbumsName(tracks[0].album.album);
     }
   }, [tracks]);
