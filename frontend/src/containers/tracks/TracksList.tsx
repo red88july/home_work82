@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import {useLocation} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { useAppDispatch } from '../../app/hooks.ts';
