@@ -1,20 +1,22 @@
 import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router-dom';
 
-import {loadingAlbum, selectAlbum} from '../../containers/album/albumSlice.ts';
-import {getAlbums} from '../../containers/album/albumThunk.ts';
+import {loadingAlbum, selectAlbum} from './albumsSlice.ts';
+import {getAlbums} from './albumsThunk.ts';
 import {useAppDispatch, useAppSelector} from '../../app/hooks.ts';
 
 
-import AlbumsList from '../AlbumsList/AlbumsList';
+import AlbumsList from './AlbumsList.tsx';
 import {Box, CircularProgress, Grid, Typography} from '@mui/material';
 import {useSelector} from 'react-redux';
 
-const Album = () => {
+const Albums = () => {
 
   const dispatch = useAppDispatch();
   const albums = useAppSelector(selectAlbum);
   const isLoadingAlbum = useSelector(loadingAlbum);
+
+  console.log(albums);
 
   const [artistName, setArtistName] = useState<string>('');
 
@@ -61,4 +63,4 @@ const Album = () => {
   );
 };
 
-export default Album;
+export default Albums;

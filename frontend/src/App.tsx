@@ -2,20 +2,20 @@ import { Box } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
-import Artist from './components/Artist/Artist';
+import Artists from './containers/artists/Artists.tsx';
 
 import PageNoFoundPicture from '../../frontend/src/assets/pic/404PageNotFound.jpg';
-import Album from './components/Album/Album';
-import TrackList from './components/TrackList/TrackList.tsx';
+import Albums from './containers/albums/Albums.tsx';
+import TracksList from './containers/tracks/TracksList.tsx';
 
 function App() {
   return (
     <>
       <Layout>
         <Routes>
-          <Route path="/" element={(<Artist />)}/>
-          <Route path="/albums" element={<Album />} />
-          <Route path="/tracks" element={<TrackList />} />
+          <Route path="/" element={(<Artists />)}/>
+          <Route path="/albums" element={<Albums />} />
+          <Route path="/tracks" element={<TracksList />} />
           <Route path="*" element={(
             <Box
               sx={{display: "flex", alignItems:'center',

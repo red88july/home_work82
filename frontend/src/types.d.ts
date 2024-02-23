@@ -18,6 +18,7 @@ export type AlbumsType = Omit<Albums, 'artist image'>
 export interface Tracks {
   _id: string;
   track: string;
+  author: string;
   album: AlbumsType;
   duration: number;
   number: number;

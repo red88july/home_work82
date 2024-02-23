@@ -1,12 +1,14 @@
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {useLocation} from 'react-router-dom';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 
-import {useAppDispatch} from '../../app/hooks.ts';
-import {loadingTracks, selectTracks} from '../../containers/track/tracksSlice.ts';
-import {getTracks} from '../../containers/track/tracksThunk.ts';
+import { useAppDispatch } from '../../app/hooks.ts';
+import { loadingTracks, selectTracks } from './tracksSlice.ts';
+import { getTracks } from './tracksThunk.ts';
 
-import {Box, CircularProgress, Typography} from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+
 
 const listInnerBoxEffect = {
   display: 'flex',
@@ -29,13 +31,15 @@ const listOuterBoxEffect = {
   gap: '7px',
 };
 
-const TrackList = () => {
+const TracksList = () => {
 
   const dispatch = useAppDispatch();
   const tracks = useSelector(selectTracks);
+
   const isLoadingTracks = useSelector(loadingTracks);
 
-  const [albumName, setAlbumName] = useState<string>('');
+  const [albumsName, setAlbumsName] = useState<string>('');
+  const [artistsName, setArtistsName] = useState<string>('');
 
   const location = useLocation();
 
@@ -50,20 +54,30 @@ const TrackList = () => {
 
   }, [dispatch, location.search]);
 
+
   useEffect(() => {
     if (tracks.length > 0) {
-      setAlbumName(tracks[0].album.album);
+      setArtistsName(tracks[0].author);
+      setAlbumsName(tracks[0].album.album);
     }
   }, [tracks]);
 
   return (
     <>
-      <Box>
-        <Typography variant="h3">
-          {albumName}
-        </Typography>
+      <Box sx={{display:"flex", alignItems: "center"}}>
+        <Box>
+          <Typography variant="h3">
+            {artistsName}
+          </Typography>
+        </Box>
+        <KeyboardDoubleArrowRightIcon sx={{padding: "0 20px 0 20px"}}/>
+        <Box>
+          <Typography variant="h3">
+            {albumsName}
+          </Typography>
+        </Box>
       </Box>
-      {isLoadingTracks &&<Box sx={{display:"flex", justifyContent:"center"}}>
+      {isLoadingTracks && <Box sx={{display:"flex", justifyContent:"center"}}>
           <CircularProgress  size={100}/></Box>}
       <Box marginTop={5} sx={listOuterBoxEffect}>
         {tracks.map(track => (
@@ -89,4 +103,4 @@ const TrackList = () => {
   );
 };
 
-export default TrackList;
+export default TracksList;

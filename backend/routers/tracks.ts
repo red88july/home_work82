@@ -12,6 +12,7 @@ tracksRouter.post('/', async (req,res, next) => {
 
         const trackData: TrackData = {
             track: req.body.track,
+            author: req.body.author,
             album: req.body.album,
             duration: req.body.duration,
         }
@@ -41,7 +42,7 @@ tracksRouter.get('/', async (req,res,next) => {
            albumQueryParam.album = req.query.album as string;
        }
 
-       const getTrackData = await Track.find(albumQueryParam).populate('album', 'album date').sort({number: 1});
+       const getTrackData = await Track.find(albumQueryParam).populate('album', 'artist album').sort({number: 1});
 
        return res.send(getTrackData);
 

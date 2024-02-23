@@ -22,6 +22,11 @@ const TrackSchema = new Schema({
         },
     },
 
+    author: {
+        type: String,
+        required:true,
+    },
+
     duration: {
         type: String,
     },

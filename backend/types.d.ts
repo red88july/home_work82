@@ -16,6 +16,7 @@ export interface AlbumData {
 
 export interface TrackData {
     track: string;
+    author: string;
     album: string;
     duration: string;
 }

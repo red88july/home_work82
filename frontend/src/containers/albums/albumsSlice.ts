@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import { Albums } from '../../types';
-import {getAlbums} from './albumThunk.ts';
+import {getAlbums} from './albumsThunk.ts';
 import {RootState} from '../../app/store.ts';
 
 interface AlbumsState {

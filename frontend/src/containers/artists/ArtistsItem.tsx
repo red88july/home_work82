@@ -5,7 +5,7 @@ import {apiURL} from '../../constants.ts';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {useAppDispatch} from '../../app/hooks.ts';
-import {getAlbums} from '../../containers/album/albumThunk.ts';
+import {getAlbums} from '../albums/albumsThunk.ts';
 
 interface Props {
   id: string;
@@ -21,7 +21,7 @@ const cardEffect = {
   }
 };
 
-const ArtistItem: React.FC<Props> = ({id, photo, author}) => {
+const ArtistsItem: React.FC<Props> = ({id, photo, author}) => {
 
   const dispatch = useAppDispatch();
 
@@ -58,4 +58,4 @@ const ArtistItem: React.FC<Props> = ({id, photo, author}) => {
   );
 };
 
-export default ArtistItem;
+export default ArtistsItem;
