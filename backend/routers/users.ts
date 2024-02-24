@@ -19,7 +19,7 @@ usersRouter.post('/', async (req, res, next) => {
        newUser.generatedToken();
        await newUser.save();
 
-       return res.send(newUser);
+       return res.send({message: 'Ok!', newUser});
 
    } catch (e) {
        if (e instanceof mongoose.Error.ValidationError) {

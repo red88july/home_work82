@@ -22,3 +22,31 @@ export interface Tracks {
   duration: number;
   number: number;
 }
+
+export interface User {
+  _id: string;
+  username: string;
+  token: string;
+}
+
+export interface RegistrationMutation {
+  username: string;
+  password: string;
+}
+
+export interface ValidationError {
+  errors: {
+    [key: string]: {
+      name: string;
+      message: string;
+    }
+  },
+  message: string;
+  name: string;
+  _message: string;
+}
+
+export interface RegistrationResponse {
+  message: string;
+  user: User;
+}

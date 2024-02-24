@@ -6,12 +6,12 @@ import {RootState} from '../../app/store.ts';
 import { Artists } from '../../types';
 
 interface ArtistsState {
-  items: Artists[];
+  artists: Artists[];
   isLoadingArtists: boolean;
 }
 
 const initialState: ArtistsState ={
-  items: [],
+  artists: [],
   isLoadingArtists: false,
 };
 
@@ -26,7 +26,7 @@ export const artistsSlice =createSlice({
     });
     builder.addCase(getArtists.fulfilled, (state, {payload: artists}) => {
       state.isLoadingArtists = false;
-      state.items = artists;
+      state.artists = artists;
     });
     builder.addCase(getArtists.rejected, (state) => {
       state.isLoadingArtists = false;
@@ -35,5 +35,5 @@ export const artistsSlice =createSlice({
 });
 
 export const artistsReducer = artistsSlice.reducer;
-export const selectArtists = (state:RootState) => state.artists.items;
+export const selectArtists = (state:RootState) => state.artists.artists;
 export const loadingArtists = (state:RootState) => state.artists.isLoadingArtists;

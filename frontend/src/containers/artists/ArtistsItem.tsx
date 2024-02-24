@@ -1,11 +1,12 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material';
 
+import { apiURL } from '../../constants.ts';
+import { useAppDispatch } from '../../app/hooks.ts';
+import { getAlbums } from '../albums/albumsThunk.ts';
+
 import imageNotAvailable from '../../assets/pic/image_not_available.png';
-import {apiURL} from '../../constants.ts';
-import React from 'react';
-import {Link} from 'react-router-dom';
-import {useAppDispatch} from '../../app/hooks.ts';
-import {getAlbums} from '../albums/albumsThunk.ts';
 
 interface Props {
   id: string;

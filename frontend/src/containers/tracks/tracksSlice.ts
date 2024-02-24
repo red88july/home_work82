@@ -5,12 +5,12 @@ import { RootState } from '../../app/store.ts';
 import { Tracks } from '../../types';
 
 interface TracksState {
-  items: Tracks[];
+  tracks: Tracks[];
   isLoadingTracks: boolean;
 }
 
 const initialState: TracksState ={
-  items: [],
+  tracks: [],
   isLoadingTracks: false,
 };
 
@@ -25,7 +25,7 @@ export const tracksSlice =createSlice({
     });
     builder.addCase(getTracks.fulfilled, (state, {payload: tracks}) => {
       state.isLoadingTracks = false;
-      state.items = tracks;
+      state.tracks = tracks;
     });
     builder.addCase(getTracks.rejected, (state) => {
       state.isLoadingTracks = false;
@@ -35,5 +35,5 @@ export const tracksSlice =createSlice({
 
 export const tracksReducer = tracksSlice.reducer;
 
-export const selectTracks = (state:RootState) => state.tracks.items;
+export const selectTracks = (state:RootState) => state.tracks.tracks;
 export const loadingTracks = (state:RootState) => state.tracks.isLoadingTracks;
