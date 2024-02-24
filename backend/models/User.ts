@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { Schema, model } from "mongoose";
+import {Schema, model, HydratedDocument} from "mongoose";
 import { randomUUID } from "crypto";
 
 import { UserDataExtendsSchema, UserMethods, UserModel } from "../types";
@@ -13,10 +13,16 @@ const UserSchema = new Schema<UserDataExtendsSchema, UserMethods, UserModel>({
         required: true,
         unique: true,
         validate: {
-            validator: async (username: string) => {
-                const user = await User.findOne({username: username});
-                if(user) return false;
-                return true;
+            validator: async function (
+                this: HydratedDocument<UserDataExtendsSchema>,
+                username: string):Promise<boolean> {
+                if(!this.isModified('username')) return true;
+
+                const user: HydratedDocument<UserDataExtendsSchema> | null = await User.findOne({
+                    username: username,
+                });
+
+                return !user;
             },
             message: 'This user is already registered!'
         }

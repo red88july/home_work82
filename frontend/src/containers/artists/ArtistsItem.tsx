@@ -15,6 +15,7 @@ interface Props {
 }
 
 const cardEffect = {
+  borderRadius: "10px",
   "&:hover": {
     transition: "1s",
     transform: "scale(0.9)",
@@ -43,6 +44,7 @@ const ArtistsItem: React.FC<Props> = ({id, photo, author}) => {
             onClick={handleClick}>
         <CardActionArea>
           <CardMedia
+            sx={{borderRadius: "10px"}}
             component="img"
             height="250"
             image={cardImage}

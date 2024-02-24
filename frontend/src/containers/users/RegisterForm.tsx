@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Avatar, Box, Button, Container, CssBaseline, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typography, Link } from '@mui/material';
 
 import { useSelector } from 'react-redux';
 import { registration } from './usersThunk.ts';
 import { errorRegistration } from './usersSlice.ts';
 import { useAppDispatch } from '../../app/hooks.ts';
 
-import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate} from 'react-router-dom';
 import { RegistrationMutation } from '../../types';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -49,7 +49,6 @@ const RegisterForm = () => {
       //error
     }
   };
-  console.log(error);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -106,6 +105,13 @@ const RegisterForm = () => {
           >
             Sign In
           </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link component={RouterLink} to="/login" variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Container>

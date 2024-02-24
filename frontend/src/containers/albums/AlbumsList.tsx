@@ -44,7 +44,7 @@ const AlbumsList: React.FC<Props> = ({id, album, date, image, artist}) => {
           <CardContent sx={positionElements}>
             <CardMedia
               component="img"
-              sx={{width: 200}}
+              sx={{width: 200, borderRadius:"10px"}}
               image={coverImage}
               alt={album}
             />
