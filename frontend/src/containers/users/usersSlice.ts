@@ -1,7 +1,8 @@
-import { User, ValidationError} from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
+
 import { registration } from './usersThunk.ts';
 import { RootState } from '../../app/store.ts';
+import { User, ValidationError} from '../../types';
 
 interface UsersState {
   users: User | null;
