@@ -6,8 +6,9 @@ import { useAppDispatch } from '../../app/hooks.ts';
 import { loadingTracks, selectTracks } from './tracksSlice.ts';
 import { getTracks } from './tracksThunk.ts';
 
-import { Box, CircularProgress, Typography } from '@mui/material';
+import {Box, Button, CircularProgress, Typography} from '@mui/material';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 
 
 const listInnerBoxEffect = {
@@ -18,9 +19,15 @@ const listInnerBoxEffect = {
   borderRadius: '8px',
   width: '550px',
   '&:hover': {
+    boxShadow: '6px 7px 21px -5px rgba(0,0,0,0.27)',
+  }
+};
+
+const buttonEffect = {
+  borderRadius: "50%",
+  '&:hover': {
     transition: '1s',
     transform: 'scale(0.9)',
-    boxShadow: '6px 7px 21px -5px rgba(0,0,0,0.27)',
   }
 };
 
@@ -86,6 +93,11 @@ const TracksList = () => {
               <Typography gutterBottom variant="subtitle2" component="div">
                 {track.number}
               </Typography>
+
+              <Button sx={buttonEffect}>
+                <PlayCircleIcon />Play
+              </Button>
+
               <Typography gutterBottom variant="subtitle2" component="div">
                 {track.track}
               </Typography>

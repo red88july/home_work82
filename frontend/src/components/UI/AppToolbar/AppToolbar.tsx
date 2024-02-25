@@ -14,9 +14,7 @@ const Link = styled(NavLink)({
 });
 
 const AppToolbar = () => {
-
   const user = useAppSelector(selectUser);
-  console.log(user);
 
   return (
     <AppBar position="sticky" sx={{mb: 2}}>
