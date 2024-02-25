@@ -51,6 +51,11 @@ export interface RegistrationResponse {
   user: User;
 }
 
+export interface LoginResponse {
+  message: string;
+  user: User;
+}
+
 export interface LoginMutation {
   username: string;
   password: string;

@@ -422,22 +422,6 @@ const run = async () => {
         },
     ]);
 
-    await User.create([
-        {
-            username: "Ivanov",
-            password: "Ivanov_123#",
-            token: crypto.randomUUID(),
-        }, {
-            username: "Petrov",
-            password: "Petrov_123#",
-            token: crypto.randomUUID(),
-        }, {
-            username: "Sidorov",
-            password: "Sidorov_123#",
-            token: crypto.randomUUID(),
-        },
-   ]);
-
     await db.close();
 };
 

@@ -3,7 +3,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAxiosError } from 'axios';
 import axiosApi from '../../axiosApi.ts';
 
-import {GlobalError, LoginMutation, RegistrationMutation, RegistrationResponse, ValidationError} from '../../types';
+import {
+  GlobalError,
+  LoginMutation,
+  LoginResponse,
+  RegistrationMutation,
+  RegistrationResponse,
+  ValidationError
+} from '../../types';
 
 export const registration = createAsyncThunk<RegistrationResponse, RegistrationMutation, {  rejectValue: ValidationError}>(
   'users/registered',
@@ -20,7 +27,7 @@ export const registration = createAsyncThunk<RegistrationResponse, RegistrationM
   }
 );
 
-export const login = createAsyncThunk<RegistrationResponse, LoginMutation, { rejectValue: GlobalError }>(
+export const login = createAsyncThunk<LoginResponse, LoginMutation, { rejectValue: GlobalError }>(
   'users/login',
   async (loginMutation, {rejectWithValue}) => {
     try {

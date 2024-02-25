@@ -33,22 +33,22 @@ usersRouter.post('/', async (req, res, next) => {
 usersRouter.post('/sessions', async (req, res ,next) => {
 
     try {
-        const username = await User.findOne({username: req.body.username});
+        const user = await User.findOne({username: req.body.username});
 
-        if (!username) {
+        if (!user) {
             return res.status(422).send({message: `Username not found`});
         }
 
-        const checkPass = await username.checkPassword(req.body.password);
+        const checkPass = await user.checkPassword(req.body.password);
 
         if (!checkPass) {
             return res.status(422).send({message: `Password is wrong!`});
         }
 
-        username.generatedToken();
-        await username.save();
+        user.generatedToken();
+        await user.save();
 
-        return res.send({ message: 'Username and password are correct!', username });
+        return res.send({ message: 'Username and password are correct!', user });
 
 
     } catch (e) {
