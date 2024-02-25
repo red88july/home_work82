@@ -65,7 +65,7 @@ const RegisterForm = () => {
           <LockOutlinedIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign Up
         </Typography>
         <Box component="form" onSubmit={submitForm} sx={{mt: 1}}>
           <TextField
@@ -103,7 +103,7 @@ const RegisterForm = () => {
             variant="contained"
             sx={{mt: 3, mb: 2}}
           >
-            Sign In
+            Sign Up
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>

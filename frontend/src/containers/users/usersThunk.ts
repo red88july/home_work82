@@ -20,16 +20,17 @@ export const registration = createAsyncThunk<RegistrationResponse, RegistrationM
   }
 );
 
-export const login = createAsyncThunk<RegistrationResponse, LoginMutation, {  rejectValue: GlobalError}>(
+export const login = createAsyncThunk<RegistrationResponse, LoginMutation, { rejectValue: GlobalError }>(
   'users/login',
   async (loginMutation, {rejectWithValue}) => {
     try {
-      const response = await axiosApi.post('/users', loginMutation);
+      const response = await axiosApi.post('/users/sessions', loginMutation);
       return response.data;
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 422) {
         return rejectWithValue(e.response.data);
       }
+
       throw e;
     }
   }

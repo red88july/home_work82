@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { LoginMutation } from '../../types';
-import { Alert, Avatar, Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Alert, Avatar, Box, Button, Container, CssBaseline, Grid, Link, TextField, Typography } from '@mui/material';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectLoginError } from './usersSlice';
 import { login } from './usersThunk';
+import { selectLoginError } from './usersSlice';
+import { LoginMutation } from '../../types';
 
 const LoginForm = () => {
 
@@ -18,7 +19,7 @@ const LoginForm = () => {
     password: ''
   });
 
-  const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const inputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target;
     setState(prevState => {
       return {...prevState, [name]: value};
@@ -33,6 +34,7 @@ const LoginForm = () => {
 
   return (
     <Container component="main" maxWidth="xs">
+      <CssBaseline/>
       <Box
         sx={{
           marginTop: 8,
@@ -45,49 +47,48 @@ const LoginForm = () => {
           <LockOpenIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign In
         </Typography>
         {error && (
           <Alert severity="error" sx={{mt: 3, width: "100%"}}>
-            {error.error}
+            {error.error || "Username or password isn't correct!"}
           </Alert>
         )}
-        <Box component="form" onSubmit={submitFormHandler} sx={{mt: 3}}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                label="Username"
-                name="username"
-                value={state.username}
-                onChange={inputChangeHandler}
-                autoComplete="current-username"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                name="password"
-                label="Password"
-                type="password"
-                value={state.password}
-                onChange={inputChangeHandler}
-                autoComplete="current-password"
-              />
-            </Grid>
-          </Grid>
+        <Box component="form" onSubmit={submitFormHandler} sx={{mt: 1}}>
+          <TextField
+            required
+            fullWidth
+            type="username"
+            name="username"
+            value={state.username}
+            label="Username"
+            onChange={inputChange}
+            margin="normal"
+            autoComplete="current-username"
+          />
+          <TextField
+            required
+            fullWidth
+            type="password"
+            name="password"
+            value={state.password}
+            label="Password"
+            onChange={inputChange}
+            margin="normal"
+            autoComplete="current-password"
+          />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{mt: 3, mb: 2}}
           >
-            Sign In
+            Sign Up
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link component={RouterLink} to="/login" variant="body2">
-                Or sign in
+              <Link component={RouterLink} to="/register" variant="body2">
+                Or Sign Up
               </Link>
             </Grid>
           </Grid>

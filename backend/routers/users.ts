@@ -42,13 +42,15 @@ usersRouter.post('/sessions', async (req, res ,next) => {
         const checkPass = await username.checkPassword(req.body.password);
 
         if (!checkPass) {
-            return res.status(422).send({message: `Password not found`});
+            return res.status(422).send({message: `Password is wrong!`});
         }
 
         username.generatedToken();
         await username.save();
 
-        res.send(username);
+        return res.send({ message: 'Username and password are correct!', username });
+
+
     } catch (e) {
         next(e);
     }

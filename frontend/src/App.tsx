@@ -8,6 +8,7 @@ import PageNoFoundPicture from '../../frontend/src/assets/pic/404PageNotFound.jp
 import Albums from './containers/albums/Albums';
 import TracksList from './containers/tracks/TracksList';
 import RegisterForm from './containers/users/RegisterForm.tsx';
+import LoginForm from './containers/users/LoginForm.tsx';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/albums" element={<Albums />} />
           <Route path="/tracks" element={<TracksList />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/login" element={<LoginForm />} />
           <Route path="*" element={(
             <Box
               sx={{display: "flex", alignItems:'center',
