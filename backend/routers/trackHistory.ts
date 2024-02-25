@@ -31,13 +31,13 @@ trackHistory.post('/', auth, async (req: RequestUser, res, next) => {
 
 });
 
-// trackHistory.get('/', async (req, res, next) => {
-//     try {
-//
-//         const trackHistory = await TrackHistory.find().populate({path: 'user', select:'username token'});
-//         return res.send(trackHistory);
-//
-//     } catch (e) {
-//         next(e);
-//     }
-// });
+trackHistory.get('/', async (req, res, next) => {
+    try {
+
+        const trackHistory = await TrackHistory.find().populate({path: 'user', select:'username token'});
+        return res.send(trackHistory);
+
+    } catch (e) {
+        next(e);
+    }
+});
