@@ -31,10 +31,24 @@ trackHistory.post('/', auth, async (req: RequestUser, res, next) => {
 
 });
 
-trackHistory.get('/', async (req, res, next) => {
+trackHistory.get('/', auth, async (req: RequestUser, res, next) => {
     try {
 
-        const trackHistory = await TrackHistory.find().populate({path: 'user', select:'username token'});
+        if (!req.user) {
+            return res.status(422).send({error: "History tracks by user listening not found!"});
+        }
+
+        const trackHistory = await TrackHistory.find({user: req.user})
+            .populate(
+                {
+                    path: 'track',
+                    select: 'track duration album',
+                    populate: {
+                        path: "album",
+                        model: "Album",
+                        select: "album",
+                    }
+            }).sort({datetime: -1});
         return res.send(trackHistory);
 
     } catch (e) {
