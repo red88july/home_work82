@@ -9,6 +9,7 @@ import Albums from './containers/albums/Albums';
 import TracksList from './containers/tracks/TracksList';
 import RegisterForm from './containers/users/RegisterForm.tsx';
 import LoginForm from './containers/users/LoginForm.tsx';
+import TrackStoryUser from './features/tracksHistory/TrackStory/TrackStoryUser.tsx';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/tracks" element={<TracksList />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/login" element={<LoginForm />} />
+            <Route path="/track_story" element={<TrackStoryUser />} />
             <Route path="*" element={(
               <Box
                 sx={{display: "flex", alignItems:'center',

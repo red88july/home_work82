@@ -74,3 +74,18 @@ export interface TrackHistory {
   user: User;
   track: string;
 }
+
+export interface TracksTypes {
+  album: {
+    album: string
+  };
+  duration: string;
+  track: string;
+}
+
+export interface TrackDataHistory {
+  _id: string;
+  user: User;
+  track: TracksTypes;
+  datetime: string;
+}

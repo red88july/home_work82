@@ -46,8 +46,7 @@ trackHistory.get('/', auth, async (req: RequestUser, res, next) => {
                     populate: {
                         path: "album",
                         model: "Album",
-                        select: "album",
-                    }
+                        select: "album",}
             }).sort({datetime: -1});
         return res.send(trackHistory);
 

@@ -35,7 +35,7 @@ const TrackHistorySchema = new Schema({
         default: () => new Date(),
     }
 
-}, { versionKey: false });
+}, { versionKey: false } );
 
 const TrackHistory = model('TrackHistory', TrackHistorySchema);
 
