@@ -164,12 +164,12 @@ const listOuterBoxEffect = {
 };
 
 const TracksList = () => {
+
   const dispatch = useAppDispatch();
+
   const tracks = useSelector(selectTracks);
   const user = useSelector(selectUser);
   const isLoadingTracks = useSelector(loadingTracks);
-
-  console.log("User", user);
 
   const [albumsName, setAlbumsName] = useState<string>('');
   const [artistsName, setArtistsName] = useState<string>('');
@@ -198,7 +198,6 @@ const TracksList = () => {
       return {error: 'Token is not found!'};
     }
 
-    console.log(token);
     dispatch(historyTrack({ track: id, token: token }));
   };
 
