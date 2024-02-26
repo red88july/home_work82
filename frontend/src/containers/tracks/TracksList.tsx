@@ -110,11 +110,9 @@ const TracksList = () => {
               <Typography gutterBottom variant="subtitle2" component="div">
                 {track.number}
               </Typography>
-
               <Button onClick={() => playButtonClick(track._id)} sx={buttonEffect}>
                 <PlayCircleIcon /> Play
               </Button>
-
               <Typography gutterBottom variant="subtitle2" component="div">
                 {track.track}
               </Typography>

@@ -46,10 +46,15 @@ trackHistory.get('/', auth, async (req: RequestUser, res, next) => {
                     populate: {
                         path: "album",
                         model: "Album",
-                        select: "album",}
+                        select: "album artist",
+                        populate: {
+                            path: "artist",
+                            model: "Artist",
+                            select: "author",
+                        }
+                    }
             }).sort({datetime: -1});
         return res.send(trackHistory);
-
     } catch (e) {
         next(e);
     }

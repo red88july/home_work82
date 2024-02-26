@@ -77,7 +77,10 @@ export interface TrackHistory {
 
 export interface TracksTypes {
   album: {
-    album: string
+    album: string;
+    artist: {
+      author: string;
+    };
   };
   duration: string;
   track: string;

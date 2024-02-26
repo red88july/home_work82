@@ -57,6 +57,14 @@ const TrackStoryUser: React.FC = () => {
             <Box id={track._id}>
               <Box sx={{display: 'flex', alignItems: 'center'}}>
                 <Typography variant="subtitle2">
+                  <p style={{margin: "0 10px 3px 0" }}><b>Author name:</b></p>
+                </Typography>
+                <Typography variant="subtitle2">
+                  <em>{track.track.album.artist.author}</em>
+                </Typography>
+              </Box>
+              <Box sx={{display: 'flex', alignItems: 'center'}}>
+                <Typography variant="subtitle2">
                   <p style={{margin: "0 10px 3px 0" }}><b>Albums name:</b></p>
                 </Typography>
                 <Typography variant="subtitle2">

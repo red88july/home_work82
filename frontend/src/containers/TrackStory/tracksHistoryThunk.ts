@@ -5,7 +5,7 @@ import axiosApi from '../../axiosApi.ts';
 import { isAxiosError } from 'axios';
 
 export const historyPostTrack = createAsyncThunk<TrackHistory, { track: string, token: string },
-  { rejectValue: GlobalError}>(
+  { rejectValue: GlobalError }>(
   'tracksHistory/historyTrack',
   async ({track, token}, {rejectWithValue}) => {
 
