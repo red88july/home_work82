@@ -4,7 +4,7 @@ import {useAppSelector} from '../../../app/hooks.ts';
 import {selectUser} from '../../../containers/users/usersSlice.ts';
 import UserMenu from './UserMenu';
 import GuestMenu from './GuestMenu.tsx';
-import TrackStory from './TrackStory.tsx';
+import TracKStoryButton from './TracKStoryButton.tsx';
 
 const Link = styled(NavLink)({
   color: 'inherit',
@@ -24,7 +24,7 @@ const AppToolbar = () => {
           <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
             <Link to="/">Spot</Link>
           </Typography>
-          {user && (<TrackStory/>)}
+          {user && (<TracKStoryButton/>)}
           {user ? (
             <UserMenu user={user}/>
           ) : (

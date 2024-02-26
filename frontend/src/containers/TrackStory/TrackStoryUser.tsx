@@ -1,12 +1,14 @@
-import React, {useEffect} from 'react';
 import dayjs from 'dayjs';
-import {useSelector} from 'react-redux';
-import {selectHistoryTracks} from './tracksHistorySlice.ts';
+import React, {useEffect} from 'react';
 
-import {Box, Typography} from '@mui/material';
-import {historyGetTrack} from './tracksHistoryThunk.ts';
-import {useAppDispatch} from '../../app/hooks.ts';
-import {selectUser} from '../users/usersSlice.ts';
+import { useSelector } from 'react-redux';
+
+import { useAppDispatch } from '../../app/hooks.ts';
+import { selectUser } from '../users/usersSlice.ts';
+import { loadingTrackHistory, selectHistoryTracks} from './tracksHistorySlice.ts';
+import { historyGetTrack } from './tracksHistoryThunk.ts';
+
+import { Box, CircularProgress, Typography} from '@mui/material';
 
 const listInnerBoxEffect = {
   display: 'flex',
@@ -22,9 +24,13 @@ const listInnerBoxEffect = {
 
 
 const TrackStoryUser: React.FC = () => {
+
   const dispatch = useAppDispatch();
-  const historyTracks = useSelector(selectHistoryTracks);
+
   const user = useSelector(selectUser);
+  const historyTracks = useSelector(selectHistoryTracks);
+
+  const loadingHistory = useSelector(loadingTrackHistory);
 
   useEffect(() => {
     const token = user?.token;
@@ -41,6 +47,11 @@ const TrackStoryUser: React.FC = () => {
         Track History
       </Typography>
       <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        {loadingHistory && (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <CircularProgress size={100} />
+          </Box>
+        )}
         {historyTracks.map((track) => (
           <Box key={track._id} sx={listInnerBoxEffect}>
             <Box id={track._id}>

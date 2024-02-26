@@ -1,6 +1,5 @@
-import React from 'react';
-import {Button} from '@mui/material';
-import {NavLink as HistoryLink} from 'react-router-dom';
+import { Button } from '@mui/material';
+import { NavLink as HistoryLink } from 'react-router-dom';
 
 const historyButtonEffect = {
   marginRight: "30px",
@@ -8,8 +7,7 @@ const historyButtonEffect = {
   borderRadius: "10px",
 };
 
-const TrackStory:React.FC = () => {
-
+const TracKStoryButton = () => {
   return (
     <>
       <Button component={HistoryLink}
@@ -22,4 +20,4 @@ const TrackStory:React.FC = () => {
   );
 };
 
-export default TrackStory;
+export default TracKStoryButton;

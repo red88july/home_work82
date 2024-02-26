@@ -4,13 +4,16 @@ import { useEffect, useState } from 'react';
 
 import { useAppDispatch } from '../../app/hooks.ts';
 import { loadingTracks, selectTracks } from './tracksSlice.ts';
+
+import { Alert, Box, Button, CircularProgress, Typography } from '@mui/material';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+
+import { selectUser } from '../users/usersSlice.ts';
+import { errorPostTrack } from '../TrackStory/tracksHistorySlice.ts';
+import { historyPostTrack } from '../TrackStory/tracksHistoryThunk.ts';
 import { getTracks } from './tracksThunk.ts';
 
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
-import { historyPostTrack } from '../TrackStory/tracksHistoryThunk.ts';
-import { selectUser } from '../users/usersSlice.ts';
 
 const listInnerBoxEffect = {
   display: 'flex',
@@ -45,10 +48,12 @@ const TracksList = () => {
 
   const tracks = useSelector(selectTracks);
   const user = useSelector(selectUser);
-  const isLoadingTracks = useSelector(loadingTracks);
 
   const [albumsName, setAlbumsName] = useState<string>('');
   const [artistsName, setArtistsName] = useState<string>('');
+
+  const isLoadingTracks = useSelector(loadingTracks);
+  const errorLoadTrack = useSelector(errorPostTrack);
 
   const location = useLocation();
 
@@ -93,6 +98,11 @@ const TracksList = () => {
           <CircularProgress size={100} />
         </Box>
       )}
+      {errorLoadTrack && (
+        <Alert severity="error" sx={{mt: 3, width: "100%"}}>
+          {"False to load track!"}
+        </Alert>
+      )}
       <Box marginTop={5} sx={listOuterBoxEffect}>
         {tracks.map((track) => (
           <Box key={track._id}>
@@ -100,9 +110,11 @@ const TracksList = () => {
               <Typography gutterBottom variant="subtitle2" component="div">
                 {track.number}
               </Typography>
+
               <Button onClick={() => playButtonClick(track._id)} sx={buttonEffect}>
                 <PlayCircleIcon /> Play
               </Button>
+
               <Typography gutterBottom variant="subtitle2" component="div">
                 {track.track}
               </Typography>

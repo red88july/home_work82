@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
-import { Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typography, Link } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Grid,
+  TextField,
+  Typography,
+  Link,
+  CircularProgress
+} from '@mui/material';
 
 import { useSelector } from 'react-redux';
 import { registration } from './usersThunk.ts';
-import { errorRegistration } from './usersSlice.ts';
+import {errorRegistration, loadingRegistration} from './usersSlice.ts';
 import { useAppDispatch } from '../../app/hooks.ts';
 
 import { Link as RouterLink, useNavigate} from 'react-router-dom';
@@ -17,7 +28,9 @@ const RegisterForm = () => {
   const navigate = useNavigate();
   const error = useSelector(errorRegistration);
 
-  const [register, setRegister] = useState<RegistrationMutation>({
+  const isRegistration = useSelector(loadingRegistration);
+
+   const [register, setRegister] = useState<RegistrationMutation>({
     username: '',
     password: '',
   });
@@ -97,13 +110,15 @@ const RegisterForm = () => {
             margin="normal"
             autoComplete="new-password"
           />
+
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{mt: 3, mb: 2}}
+            disabled={isRegistration}
           >
-            Sign Up
+            {isRegistration ? <CircularProgress /> : 'Sign Up'}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
