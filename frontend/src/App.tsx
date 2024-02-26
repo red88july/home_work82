@@ -9,7 +9,7 @@ import Albums from './containers/albums/Albums';
 import TracksList from './containers/tracks/TracksList';
 import RegisterForm from './containers/users/RegisterForm.tsx';
 import LoginForm from './containers/users/LoginForm.tsx';
-import TrackStoryUser from './features/tracksHistory/TrackStory/TrackStoryUser.tsx';
+import TrackStoryUser from './containers/TrackStory/TrackStoryUser.tsx';
 
 function App() {
   return (

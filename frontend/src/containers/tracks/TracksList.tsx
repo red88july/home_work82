@@ -9,7 +9,7 @@ import { getTracks } from './tracksThunk.ts';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
-import { historyPostTrack } from '../../features/tracksHistory/tracksHistoryThunk.ts';
+import { historyPostTrack } from '../TrackStory/tracksHistoryThunk.ts';
 import { selectUser } from '../users/usersSlice.ts';
 
 const listInnerBoxEffect = {
