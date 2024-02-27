@@ -9,7 +9,8 @@ import { Alert, Box, Button, CircularProgress, Typography } from '@mui/material'
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 
-import { selectUser } from '../users/usersSlice.ts';
+
+import {selectUser} from '../users/usersSlice.ts';
 import { errorPostTrack } from '../TrackStory/tracksHistorySlice.ts';
 import { historyPostTrack } from '../TrackStory/tracksHistoryThunk.ts';
 import { getTracks } from './tracksThunk.ts';
@@ -40,6 +41,11 @@ const listOuterBoxEffect = {
   alignItems: 'center',
   flexDirection: 'column',
   gap: '7px',
+};
+
+const regButton = {
+background: 'white',
+  backgroundImage: 'url(../../assets/pic/reg-user.png)'
 };
 
 const TracksList = () => {
@@ -73,6 +79,8 @@ const TracksList = () => {
   }, [tracks]);
 
   const playButtonClick = (id: string) => {
+
+
     const token = user?.token;
 
     if (!token) {
@@ -80,6 +88,7 @@ const TracksList = () => {
     }
 
     dispatch(historyPostTrack({ track: id, token: token }));
+
   };
 
   return (
@@ -110,9 +119,12 @@ const TracksList = () => {
               <Typography gutterBottom variant="subtitle2" component="div">
                 {track.number}
               </Typography>
-              <Button onClick={() => playButtonClick(track._id)} sx={buttonEffect}>
-                <PlayCircleIcon /> Play
-              </Button>
+              {user ? (
+                <Button onClick={() => playButtonClick(track._id)} sx={buttonEffect}>
+                  <PlayCircleIcon /> Play
+                </Button>
+              ) : <Button sx={regButton}>   Block   </Button>}
+
               <Typography gutterBottom variant="subtitle2" component="div">
                 {track.track}
               </Typography>
