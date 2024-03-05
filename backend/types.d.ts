@@ -27,6 +27,7 @@ export interface UserData {
 
 export interface UserDataExtendsSchema extends UserData {
     token: string;
+    role: string;
 }
 
 interface UserMethods {

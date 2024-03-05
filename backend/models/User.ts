@@ -38,6 +38,13 @@ const UserSchema = new Schema<UserDataExtendsSchema, UserMethods, UserModel>({
         required: true,
     },
 
+    role: {
+        type: String,
+        required: true,
+        enum: ['admin', 'user'],
+        default: 'user',
+    },
+
 }, { versionKey: false });
 
 UserSchema.methods.generatedToken = function () {

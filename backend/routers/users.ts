@@ -3,10 +3,11 @@ import { Router } from 'express';
 
 import User from "../models/User";
 import { UserData } from "../types";
+import permit from "../middleware/permit";
 
 export const usersRouter = Router();
 
-usersRouter.post('/', async (req, res, next) => {
+usersRouter.post('/',  async (req, res, next) => {
 
    try {
 
