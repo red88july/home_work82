@@ -82,6 +82,8 @@ albumsRouter.get('/:id', async (req, res, next) => {
 
 });
 
+
+
 albumsRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res, next) => {
 
     try {
@@ -99,6 +101,36 @@ albumsRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res,
         }
 
         return res.send({message: 'Album successfully deleted', album});
+
+    } catch (e) {
+        next(e);
+    }
+
+})
+
+albumsRouter.patch(`/:id/togglePublished`, auth, permit('admin'), async (req: RequestUser, res, next) => {
+
+
+    try {
+        let _id: Types.ObjectId;
+
+        try {
+            _id = new Types.ObjectId(req.params.id)
+        } catch {
+            return res.status(404).send({error: 'Wrong ObjectId!'});
+        }
+
+        const album = await Album.findById(_id);
+
+        if (!album) {
+            return res.status(404).send({error: 'Album not found!'});
+        }
+
+        album.isPublished = !album.isPublished
+
+        await album.save();
+
+        return res.send({message: 'Album successfully patched', album});
 
     } catch (e) {
         next(e);

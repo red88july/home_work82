@@ -7,6 +7,7 @@ import auth, {RequestUser} from "../middleware/auth";
 import permit from "../middleware/permit";
 import Album from "../models/Album";
 import {albumsRouter} from "./albums";
+import Artist from "../models/Artist";
 
 export const tracksRouter = Router();
 
@@ -78,6 +79,36 @@ tracksRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res,
         }
 
         return res.send({message: 'Track successfully deleted', track});
+
+    } catch (e) {
+        next(e);
+    }
+
+})
+
+tracksRouter.patch(`/:id/togglePublished`, auth, permit('admin'), async (req: RequestUser, res, next) => {
+
+
+    try {
+        let _id: Types.ObjectId;
+
+        try {
+            _id = new Types.ObjectId(req.params.id)
+        } catch {
+            return res.status(404).send({error: 'Wrong ObjectId!'});
+        }
+
+        const track = await Track.findById(_id);
+
+        if (!track) {
+            return res.status(404).send({error: 'Track not found!'});
+        }
+
+        track.isPublished = !track.isPublished
+
+        await track.save();
+
+        return res.send({message: 'Track successfully patched', track});
 
     } catch (e) {
         next(e);
