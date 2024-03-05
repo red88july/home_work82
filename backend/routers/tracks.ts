@@ -1,9 +1,12 @@
-import mongoose from "mongoose";
+import mongoose, {Types} from "mongoose";
 
 import Track from "../models/Track";
 import {Router} from "express";
 import {TrackData} from "../types";
-import auth from "../middleware/auth";
+import auth, {RequestUser} from "../middleware/auth";
+import permit from "../middleware/permit";
+import Album from "../models/Album";
+import {albumsRouter} from "./albums";
 
 export const tracksRouter = Router();
 
@@ -57,3 +60,27 @@ tracksRouter.get('/', async (req, res, next) => {
     }
 
 });
+
+tracksRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res, next) => {
+
+    try {
+        let _id: Types.ObjectId;
+        try {
+            _id = new Types.ObjectId(req.params.id)
+        } catch {
+            return res.status(404).send({ error: 'Wrong ObjectId!' });
+        }
+
+        const track = await Track.findByIdAndDelete(_id);
+
+        if(!track) {
+            return res.status(404).send({error: 'Not Found!'});
+        }
+
+        return res.send({message: 'Track successfully deleted', track});
+
+    } catch (e) {
+        next(e);
+    }
+
+})

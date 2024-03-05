@@ -4,7 +4,10 @@ import { Router } from 'express';
 import Album from "../models/Album";
 import { imageUpload } from "../multer";
 import { AlbumData } from "../types";
-import auth from "../middleware/auth";
+import auth, {RequestUser} from "../middleware/auth";
+import permit from "../middleware/permit";
+import Artist from "../models/Artist";
+import {artistsRouter} from "./artists";
 
 export const albumsRouter = Router();
 
@@ -78,3 +81,27 @@ albumsRouter.get('/:id', async (req, res, next) => {
     }
 
 });
+
+albumsRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res, next) => {
+
+    try {
+        let _id: Types.ObjectId;
+        try {
+            _id = new Types.ObjectId(req.params.id)
+        } catch {
+            return res.status(404).send({ error: 'Wrong ObjectId!' });
+        }
+
+        const album = await Album.findByIdAndDelete(_id);
+
+        if(!album) {
+            return res.status(404).send({error: 'Not Found!'});
+        }
+
+        return res.send({message: 'Album successfully deleted', album});
+
+    } catch (e) {
+        next(e);
+    }
+
+})

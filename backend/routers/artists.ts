@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, {Types} from "mongoose";
 import { Router } from 'express';
 
 import Artist from "../models/Artist";
 import { imageUpload } from "../multer";
 import { ArtistData } from "../types";
-import auth from "../middleware/auth";
+import auth, {RequestUser} from "../middleware/auth";
+import permit from "../middleware/permit";
 
 export const artistsRouter = Router();
 
@@ -38,6 +39,30 @@ artistsRouter.get('/', async (_req, res, next) => {
 
         const getArtistData = await Artist.find();
         return res.send(getArtistData);
+
+    } catch (e) {
+        next(e);
+    }
+
+})
+
+artistsRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res, next) => {
+
+    try {
+        let _id: Types.ObjectId;
+        try {
+            _id = new Types.ObjectId(req.params.id)
+        } catch {
+            return res.status(404).send({ error: 'Wrong ObjectId!' });
+        }
+
+        const artist = await Artist.findByIdAndDelete(_id);
+
+        if(!artist) {
+            return res.status(404).send({error: 'Not Found!'});
+        }
+
+        return res.send({message: 'Artist successfully deleted', artist});
 
     } catch (e) {
         next(e);
