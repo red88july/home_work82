@@ -3,10 +3,11 @@ import mongoose from "mongoose";
 import Track from "../models/Track";
 import {Router} from "express";
 import {TrackData} from "../types";
+import auth from "../middleware/auth";
 
 export const tracksRouter = Router();
 
-tracksRouter.post('/', async (req, res, next) => {
+tracksRouter.post('/', auth, async (req, res, next) => {
 
     try {
 

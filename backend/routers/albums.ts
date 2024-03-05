@@ -4,10 +4,11 @@ import { Router } from 'express';
 import Album from "../models/Album";
 import { imageUpload } from "../multer";
 import { AlbumData } from "../types";
+import auth from "../middleware/auth";
 
 export const albumsRouter = Router();
 
-albumsRouter.post('/', imageUpload.single('image'), async (req, res, next) => {
+albumsRouter.post('/', auth, imageUpload.single('image'), async (req, res, next) => {
 
     try {
 
