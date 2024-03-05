@@ -2,10 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { login, registration } from './usersThunk.ts';
 import { RootState } from '../../app/store.ts';
-import { GlobalError, User, ValidationError } from '../../types';
+import {GlobalError, LoginResponse, RegistrationResponse, ValidationError} from '../../types';
 
 interface UsersState {
-  users: User | null;
+  users: RegistrationResponse | null;
+  usersLog: LoginResponse | null;
   registrationLoading: boolean;
   registrationError: ValidationError | null;
   loginLoading: boolean;
@@ -14,6 +15,7 @@ interface UsersState {
 
 const initialState: UsersState = {
   users: null,
+  usersLog: null,
   registrationLoading: false,
   registrationError: null,
   loginLoading: false,
@@ -23,7 +25,11 @@ const initialState: UsersState = {
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    unsetUser: (state) => {
+      state.usersLog = null;
+    }
+  },
 
   extraReducers: (builder) => {
     builder.addCase(registration.pending, (state) => {
@@ -32,7 +38,7 @@ export const usersSlice = createSlice({
     });
     builder.addCase(registration.fulfilled, (state, {payload: data}) => {
       state.registrationLoading = false;
-      state.users = data.user;
+      state.users = data;
     });
     builder.addCase(registration.rejected, (state, {payload: error}) => {
       state.registrationLoading = false;
@@ -45,7 +51,7 @@ export const usersSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, {payload: data}) => {
       state.loginLoading = false;
-      state.users = data.user;
+      state.usersLog = data;
     });
     builder.addCase(login.rejected, (state, {payload: error}) => {
       state.loginLoading = true;
@@ -55,8 +61,10 @@ export const usersSlice = createSlice({
 });
 
 export const usersReducer = usersSlice.reducer;
+export const {unsetUser} = usersSlice.actions;
 
 export const selectUser = (state: RootState) => state.users.users;
+export const selectUserLog = (state: RootState) => state.users.usersLog;
 
 export const loadingRegistration = (state: RootState) => state.users.registrationLoading;
 export const errorRegistration = (state: RootState) => state.users.registrationError;

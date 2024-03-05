@@ -12,7 +12,7 @@ import {tracksHistoryReducer} from '../containers/TrackStory/tracksHistorySlice.
 const usersPersistConfig = {
   key: 'music:users',
   storage: storage,
-  whitelist: ['users'],
+  whitelist: ['usersLog'],
 };
 
 const rootReducer = combineReducers({

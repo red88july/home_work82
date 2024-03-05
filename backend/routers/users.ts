@@ -56,3 +56,33 @@ usersRouter.post('/sessions', async (req, res ,next) => {
     }
 
 })
+
+usersRouter.delete('/sessions', async (req, res ,next) => {
+
+    try {
+        const message = {message: 'Success!'};
+
+        const headerValue = req.get('Authorization');
+
+        if(!headerValue) {
+            return res.send(message);
+        }
+
+        const [_bearer, token] = headerValue.split(' ');
+
+        const user = await User.findOne({token});
+
+        if(!user) {
+            return res.send(message);
+        }
+
+        user.generatedToken();
+        await user.save();
+
+        return res.send(message);
+
+    } catch (e) {
+        next(e);
+    }
+
+})

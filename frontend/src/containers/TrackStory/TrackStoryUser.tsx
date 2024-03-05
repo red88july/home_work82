@@ -33,7 +33,7 @@ const TrackStoryUser: React.FC = () => {
   const loadingHistory = useSelector(loadingTrackHistory);
 
   useEffect(() => {
-    const token = user?.token;
+    const token = user?.user.token;
     if (!token) {
       console.error('Token is not found!');
       return;

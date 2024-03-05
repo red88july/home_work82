@@ -11,6 +11,8 @@ import {
   RegistrationResponse,
   ValidationError
 } from '../../types';
+import {RootState} from '../../app/store.ts';
+import {unsetUser} from './usersSlice.ts';
 
 export const registration = createAsyncThunk<RegistrationResponse, RegistrationMutation, {  rejectValue: ValidationError}>(
   'users/registered',
@@ -40,5 +42,14 @@ export const login = createAsyncThunk<LoginResponse, LoginMutation, { rejectValu
 
       throw e;
     }
+  }
+);
+
+export const logout = createAsyncThunk<void, undefined, { state: RootState }>(
+  'users/logout',
+  async (_,{getState, dispatch}) => {
+      const token = getState().users.usersLog?.user.token;
+      await axiosApi.delete('/users/sessions', {headers: {'Authorization' : `Bearer:${token}`}});
+      dispatch(unsetUser());
   }
 );

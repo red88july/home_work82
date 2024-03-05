@@ -28,6 +28,7 @@ interface Props {
   artist: Artists;
 }
 
+
 const AlbumsList: React.FC<Props> = ({id, album, date, image, artist}) => {
 
   let coverImage = imageNotAvailable;
