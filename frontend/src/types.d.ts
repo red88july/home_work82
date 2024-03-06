@@ -3,6 +3,7 @@ export interface Artists {
   author: string;
   info: string;
   photo: null | string;
+  isPublished: boolean;
 }
 
 export interface Albums {
@@ -11,6 +12,7 @@ export interface Albums {
   album: string;
   date: number;
   image: null | string;
+  isPublished: boolean;
 }
 
 export type AlbumsType = Omit<Albums, 'artist image'>
@@ -21,12 +23,14 @@ export interface Tracks {
   album: AlbumsType;
   duration: number;
   number: number;
+  isPublished: boolean;
 }
 
 export interface User {
   _id: string;
   username: string;
   token: string;
+  role: string;
 }
 
 export interface RegistrationMutation {

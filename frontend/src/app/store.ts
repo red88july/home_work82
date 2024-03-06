@@ -1,13 +1,13 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 
-import { artistsReducer } from '../containers/artists/artistsSlice.ts';
-import { albumReducer } from '../containers/albums/albumsSlice.ts';
-import {tracksReducer} from '../containers/tracks/tracksSlice.ts';
-import {usersReducer} from '../containers/users/usersSlice.ts';
+import { artistsReducer } from '../features/artists/artistsSlice.ts';
+import { albumReducer } from '../features/albums/albumsSlice.ts';
+import {tracksReducer} from '../features/tracks/tracksSlice.ts';
+import {usersReducer} from '../features/users/usersSlice.ts';
 import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
 
 import storage from 'redux-persist/lib/storage';
-import {tracksHistoryReducer} from '../containers/TrackStory/tracksHistorySlice.ts';
+import {tracksHistoryReducer} from '../features/TrackStory/tracksHistorySlice.ts';
 
 const usersPersistConfig = {
   key: 'music:users',

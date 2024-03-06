@@ -6,7 +6,7 @@ import { getAlbums } from './albumsThunk.ts';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 
 
-import AlbumsList from './AlbumsList.tsx';
+import AlbumsList from './components/AlbumsList.tsx';
 import { Box, CircularProgress, Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 

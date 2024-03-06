@@ -35,7 +35,7 @@ trackHistory.get('/', auth, async (req: RequestUser, res, next) => {
     try {
 
         if (!req.user) {
-            return res.status(422).send({error: "History tracks by user listening not found!"});
+            return res.status(422).send({error: "History tracks by findUser listening not found!"});
         }
 
         const trackHistory = await TrackHistory.find({user: req.user})

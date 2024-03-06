@@ -2,19 +2,19 @@ import {useSelector} from 'react-redux';
 import {useLocation, Link as RegToForm} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 
-import {useAppDispatch} from '../../app/hooks.ts';
-import {loadingTracks, selectTracks} from './tracksSlice.ts';
+import {useAppDispatch} from '../../../app/hooks.ts';
+import {loadingTracks, selectTracks} from '../tracksSlice.ts';
 
 import {Alert, Box, Button, CircularProgress, Typography} from '@mui/material';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import onlyRegistered from '../../assets/pic/reg-user.png';
+import onlyRegistered from '../../../assets/pic/reg-user.png';
 
 
-import {selectUser} from '../users/usersSlice.ts';
-import {errorPostTrack} from '../TrackStory/tracksHistorySlice.ts';
-import {historyPostTrack} from '../TrackStory/tracksHistoryThunk.ts';
-import {getTracks} from './tracksThunk.ts';
+import {selectUserLog} from '../../users/usersSlice.ts';
+import {errorPostTrack} from '../../TrackStory/tracksHistorySlice.ts';
+import {historyPostTrack} from '../../TrackStory/tracksHistoryThunk.ts';
+import {getTracks} from '../tracksThunk.ts';
 
 
 const listInnerBoxEffect = {
@@ -61,7 +61,7 @@ const TracksList = () => {
   const dispatch = useAppDispatch();
 
   const tracks = useSelector(selectTracks);
-  const user = useSelector(selectUser);
+  const user = useSelector(selectUserLog);
 
   const [albumsName, setAlbumsName] = useState<string>('');
   const [artistsName, setArtistsName] = useState<string>('');

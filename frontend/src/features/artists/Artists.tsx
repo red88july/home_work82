@@ -1,10 +1,10 @@
-import { Box,  CircularProgress, Grid, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import {Box, CircularProgress, Grid, Typography} from '@mui/material';
+import {useEffect} from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { loadingArtists, selectArtists } from './artistsSlice.ts';
-import { getArtists } from './artistsThunk.ts';
-import ArtistsItem from './ArtistsItem';
+import {useAppDispatch, useAppSelector} from '../../app/hooks.ts';
+import {loadingArtists, selectArtists} from './artistsSlice.ts';
+import {getArtists} from './artistsThunk.ts';
+import ArtistsItem from './components/ArtistsItem';
 
 const Artists = () => {
 
@@ -15,7 +15,6 @@ const Artists = () => {
   useEffect(() => {
     dispatch(getArtists());
   }, [dispatch]);
-
 
   return (
     <Grid container direction="column" spacing={2} marginTop={5}>

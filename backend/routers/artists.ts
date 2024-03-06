@@ -7,6 +7,9 @@ import {ArtistData} from "../types";
 import auth, {RequestUser} from "../middleware/auth";
 import permit from "../middleware/permit";
 import {isBooleanObject} from "node:util/types";
+import User from "../models/User";
+import user from "../models/User";
+import findUser from "../middleware/findUser";
 
 export const artistsRouter = Router();
 
@@ -34,18 +37,21 @@ artistsRouter.post('/', auth, imageUpload.single('photo'), async (req, res, next
 
 });
 
-artistsRouter.get('/', async (_req, res, next) => {
 
+artistsRouter.get('/', findUser, async (req:RequestUser, res, next) => {
     try {
+        console.log(req.user)
 
-        const getArtistData = await Artist.find();
-        return res.send(getArtistData);
+
+        const user = await Artist.find();
+        return res.send(user);
 
     } catch (e) {
         next(e);
     }
+});
 
-})
+
 
 artistsRouter.patch(`/:id/togglePublished`, auth, permit('admin'), async (req: RequestUser, res, next) => {
 

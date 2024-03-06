@@ -4,7 +4,7 @@ import React, {useEffect} from 'react';
 import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from '../../app/hooks.ts';
-import { selectUser } from '../users/usersSlice.ts';
+import { selectUserLog } from '../users/usersSlice.ts';
 import { loadingTrackHistory, selectHistoryTracks} from './tracksHistorySlice.ts';
 import { historyGetTrack } from './tracksHistoryThunk.ts';
 
@@ -27,7 +27,7 @@ const TrackStoryUser: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const user = useSelector(selectUser);
+  const user = useSelector(selectUserLog);
   const historyTracks = useSelector(selectHistoryTracks);
 
   const loadingHistory = useSelector(loadingTrackHistory);

@@ -5,7 +5,7 @@ import { Artists } from '../../types';
 export const getArtists = createAsyncThunk<Artists []>(
   'artists/fetch',
   async () => {
-    const response = await axiosApi.get<Artists []>('/artists');
-    return response.data;
+      const response = await axiosApi.get<Artists []>('/artists');
+      return response.data;
   }
 );

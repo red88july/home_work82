@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material';
 
-import { apiURL } from '../../constants.ts';
-import imageNotAvailable from '../../assets/pic/image_not_available.png';
-import { Artists } from '../../types';
+import { apiURL } from '../../../constants.ts';
+import imageNotAvailable from '../../../assets/pic/image_not_available.png';
+import { Artists } from '../../../types';
 
 const cardEffect = {
   width: '50%',

@@ -24,7 +24,7 @@ const UserSchema = new Schema<UserDataExtendsSchema, UserMethods, UserModel>({
 
                 return !user;
             },
-            message: 'This user is already registered!'
+            message: 'This findUser is already registered!'
         }
     },
 

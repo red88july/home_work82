@@ -7,6 +7,9 @@ import { persistor, store } from './app/store.ts';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 
+
+// addInterceptors(store);
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>

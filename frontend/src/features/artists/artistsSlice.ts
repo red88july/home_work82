@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getArtists } from './artistsThunk.ts';
+import {getArtists} from './artistsThunk.ts';
 import {RootState} from '../../app/store.ts';
 
 import { Artists } from '../../types';

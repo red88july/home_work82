@@ -1,10 +1,10 @@
 import {NavLink} from 'react-router-dom';
 import {AppBar, Grid, styled, Toolbar, Typography} from '@mui/material';
 import {useAppSelector} from '../../../app/hooks.ts';
-import {selectUserLog} from '../../../containers/users/usersSlice.ts';
+import {selectUserLog} from '../../../features/users/usersSlice.ts';
 import UserMenu from './UserMenu';
-import GuestMenu from './GuestMenu.tsx';
-import TracKStoryButton from './TracKStoryButton.tsx';
+import GuestMenu from './GuestMenu';
+
 
 const Link = styled(NavLink)({
   color: 'inherit',
@@ -24,7 +24,6 @@ const AppToolbar = () => {
           <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
             <Link to="/">Spot</Link>
           </Typography>
-          {user && (<TracKStoryButton/>)}
           {user ? (
             <UserMenu user={user.user}/>
           ) : (
