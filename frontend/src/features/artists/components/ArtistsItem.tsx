@@ -12,6 +12,7 @@ interface Props {
   id: string;
   photo: string | null;
   author: string;
+  isPublished: boolean;
 }
 
 const cardEffect = {
@@ -23,10 +24,9 @@ const cardEffect = {
   }
 };
 
-const ArtistsItem: React.FC<Props> = ({id, photo, author}) => {
+const ArtistsItem: React.FC<Props> = ({id, photo, author, isPublished}) => {
 
   const dispatch = useAppDispatch();
-
 
   let cardImage = imageNotAvailable;
 
@@ -40,26 +40,31 @@ const ArtistsItem: React.FC<Props> = ({id, photo, author}) => {
 
   return (
     <>
-      <Box key={id} marginTop={10} sx={cardEffect}>
-        <Card id={id} sx={{textDecoration: 'none'}}
-              component={Link} to={`/albums?artist=` + id}
-              onClick={handleClick}>
-          <CardActionArea>
-            <CardMedia
-              sx={{borderRadius: "10px"}}
-              component="img"
-              height="250"
-              image={cardImage}
-              alt={author}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {author}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      </Box>
+      {isPublished  ? (
+        <Box key={id} marginTop={10} sx={cardEffect}>
+          <Card
+            id={id}
+            sx={{ textDecoration: 'none' }}
+            component={Link}
+            to={`/albums?artist=${id}`}
+            onClick={handleClick}
+          >
+            <CardActionArea>
+              <CardMedia sx={{ borderRadius: '10px' }} component="img" height="250" image={cardImage} alt={author} />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {author}
+                </Typography>
+              </CardContent>
+              {isPublished ? (
+                <Typography variant="body2" color="textSecondary">Published</Typography>
+              ) : (
+                <Typography variant="body2" color="textSecondary">Not Published</Typography>
+              )}
+            </CardActionArea>
+          </Card>
+        </Box>
+      ) : null}
     </>
   );
 };

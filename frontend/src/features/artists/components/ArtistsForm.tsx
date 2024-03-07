@@ -1,21 +1,31 @@
 import React, {useState} from 'react';
-import {Box, Button, Container, Grid, TextField} from '@mui/material';
+import {Box, Button, CircularProgress, Container, Grid, TextField} from '@mui/material';
 import FileInput from '../../../components/FileInput/FileInput.tsx';
+import {ArtistsData} from '../../../types';
+import {useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
+import {isErrorLoadArtists, isLoadingArtists} from '../artistsSlice.ts';
+import {artistCreate} from '../artistsThunk.ts';
 
 const ArtistsForm = () => {
-  const [artist, setArtist] = useState({
+
+  const dispatch = useAppDispatch();
+
+  const isLoadingCreateArtist = useAppSelector(isLoadingArtists);
+  const isErrorCreateArtist = useAppSelector(isErrorLoadArtists);
+
+  const [artist, setArtist] = useState<ArtistsData>({
     author: '',
-    info: '',
     photo: null,
+    info: '',
   });
 
-  // const getfieldError = (fieldError: string) => {
-  //   try {
-  //     return isErrorLoadProduct?.errors[fieldError].message;
-  //   } catch {
-  //     return undefined;
-  //   }
-  // };
+  const getfieldError = (fieldError: string) => {
+    try {
+      return isErrorCreateArtist?.errors[fieldError].message;
+    } catch {
+      return undefined;
+    }
+  };
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
@@ -28,7 +38,7 @@ const ArtistsForm = () => {
   const onFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      // await dispatch(productCreate(state)).unwrap();
+      await dispatch(artistCreate(artist)).unwrap();
 
       setArtist((prevState) => {
         return {
@@ -65,10 +75,11 @@ const ArtistsForm = () => {
                 id="author"
                 label="Enter name of artist/band"
                 name="author"
+                autoComplete="new-author"
                 value={artist.author}
                 onChange={inputChangeHandler}
-                // error={Boolean(getfieldError('title'))}
-                // helperText={getfieldError('title')}
+                error={Boolean(getfieldError('author'))}
+                helperText={getfieldError('author')}
               />
             </Grid>
             <Grid item xs>
@@ -78,8 +89,11 @@ const ArtistsForm = () => {
                 id="info"
                 label="Enter info about artist"
                 name="info"
+                autoComplete="new-info"
                 value={artist.info}
                 onChange={inputChangeHandler}
+                error={Boolean(getfieldError('info'))}
+                helperText={getfieldError('info')}
               />
             </Grid>
             <Grid item xs>
@@ -95,8 +109,9 @@ const ArtistsForm = () => {
                 type="submit"
                 color="primary"
                 variant="contained"
+                disabled={isLoadingCreateArtist}
               >
-                Add new artist
+                {isLoadingCreateArtist ? (<CircularProgress />) : 'Add new artist'}
               </Button>
             </Grid>
           </Grid>

@@ -5,12 +5,15 @@ import {useAppDispatch, useAppSelector} from '../../app/hooks.ts';
 import {loadingArtists, selectArtists} from './artistsSlice.ts';
 import {getArtists} from './artistsThunk.ts';
 import ArtistsItem from './components/ArtistsItem';
+import {selectUserLog} from '../users/usersSlice.ts';
 
 const Artists = () => {
 
   const dispatch = useAppDispatch();
   const artists = useAppSelector(selectArtists);
   const loadingArtist = useAppSelector(loadingArtists);
+  const user = useAppSelector(selectUserLog);
+  console.log(user);
 
   useEffect(() => {
     dispatch(getArtists());
@@ -32,6 +35,7 @@ const Artists = () => {
             key={artist._id}
             photo={artist.photo}
             author={artist.author}
+            isPublished={artist.isPublished}
           />
         ))}
       </Grid>

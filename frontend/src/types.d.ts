@@ -6,6 +6,20 @@ export interface Artists {
   isPublished: boolean;
 }
 
+export interface ArtistsMutation {
+  _id: string;
+  author: string;
+  info: string;
+  photo: string | null;
+  isPublished: boolean;
+}
+
+export interface ArtistsData {
+  author: string;
+  info: string;
+  photo: File | null;
+}
+
 export interface Albums {
   _id: string;
   artist: Artists;

@@ -40,11 +40,16 @@ artistsRouter.post('/', auth, imageUpload.single('photo'), async (req, res, next
 
 artistsRouter.get('/', findUser, async (req:RequestUser, res, next) => {
     try {
-        console.log(req.user)
 
+        let publications;
 
-        const user = await Artist.find();
-        return res.send(user);
+        if(req.user?.role === 'admin') {
+            publications = await Artist.find();
+        } else {
+            publications = await Artist.find({isPublished: true});
+        }
+
+        return res.send(publications);
 
     } catch (e) {
         next(e);
