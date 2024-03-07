@@ -77,11 +77,11 @@ const ArtistsItem: React.FC<Props> = ({id, photo, author, isPublished}) => {
                         color="success">Published</Button>
                   </Box>
                 )}
-                <Box>
+                {(user && user.user.role === 'admin') && <Box>
                   <Button
                     variant="contained"
                     color="warning">Delete</Button>
-                </Box>
+                </Box>}
               </Box>
             </CardActionArea>
           </Card>
