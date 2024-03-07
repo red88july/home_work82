@@ -44,9 +44,9 @@ artistsRouter.get('/', findUser, async (req:RequestUser, res, next) => {
         let publications;
 
         if(req.user?.role === 'user') {
-            publications = await Artist.find();
-        } else {
             publications = await Artist.find({isPublished: true});
+        } else {
+            publications = await Artist.find();
         }
 
         return res.send(publications);

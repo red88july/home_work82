@@ -46,8 +46,6 @@ export interface AlbumsData {
   image: File | null;
 }
 
-
-
 export type AlbumsType = Omit<Albums, 'artist image'>
 
 export interface Tracks {

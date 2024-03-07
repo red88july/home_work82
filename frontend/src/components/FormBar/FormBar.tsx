@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Box, Button} from '@mui/material';
 import {NavLink} from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
-import {useAppSelector} from '../../../app/hooks.ts';
-import {selectUserLog} from '../../../features/users/usersSlice.ts';
+import {useAppSelector} from '../../app/hooks.ts';
+import {selectUserLog} from '../../features/users/usersSlice.ts';
 
 const FormBar:React.FC = () => {
 

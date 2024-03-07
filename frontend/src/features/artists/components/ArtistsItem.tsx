@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material';
 
 import { apiURL } from '../../../constants.ts';
-import {useAppDispatch} from '../../../app/hooks.ts';
+import {useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
 import { getAlbums } from '../../albums/albumsThunk.ts';
 
 import imageNotAvailable from '../../../assets/pic/image_not_available.png';
+import {selectUserLog} from '../../users/usersSlice.ts';
 
 interface Props {
   id: string;
@@ -28,6 +29,8 @@ const ArtistsItem: React.FC<Props> = ({id, photo, author, isPublished}) => {
 
   const dispatch = useAppDispatch();
 
+  const user = useAppSelector(selectUserLog);
+
   let cardImage = imageNotAvailable;
 
   if (photo) {
@@ -40,7 +43,7 @@ const ArtistsItem: React.FC<Props> = ({id, photo, author, isPublished}) => {
 
   return (
     <>
-      {isPublished  ? (
+      {(user && user.user.role === 'admin') || isPublished ? (
         <Box key={id} marginTop={10} sx={cardEffect}>
           <Card
             id={id}

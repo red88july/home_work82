@@ -2,7 +2,7 @@ import {PropsWithChildren} from 'react';
 import AppToolbar from '../UI/AppToolbar/AppToolbar';
 import {useAppSelector} from '../../app/hooks.ts';
 import {selectUserLog} from '../../features/users/usersSlice.ts';
-import FormBar from '../UI/FormBar/FormBar.tsx';
+import FormBar from '../FormBar/FormBar.tsx';
 import {Alert} from '@mui/material';
 
 const Layout:React.FC<PropsWithChildren> = ({children}) => {
