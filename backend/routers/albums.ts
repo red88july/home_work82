@@ -1,13 +1,14 @@
-import mongoose, { Types } from "mongoose";
-import { Router } from 'express';
+import mongoose, {Types} from "mongoose";
+import {Router} from 'express';
 
 import Album from "../models/Album";
-import { imageUpload } from "../multer";
-import { AlbumData } from "../types";
+import {imageUpload} from "../multer";
+import {AlbumData} from "../types";
 import auth, {RequestUser} from "../middleware/auth";
 import permit from "../middleware/permit";
 import Artist from "../models/Artist";
 import {artistsRouter} from "./artists";
+import findUser from "../middleware/findUser";
 
 export const albumsRouter = Router();
 
@@ -36,25 +37,27 @@ albumsRouter.post('/', auth, imageUpload.single('image'), async (req, res, next)
 
 });
 
-albumsRouter.get('/', async (req, res, next) => {
-
+albumsRouter.get('/', findUser, async (req: RequestUser, res, next) => {
     try {
+        let publications;
 
-        const queryParam = await Album.findOne({artist: req.query.artist});
-        let query: { artist? : string } = {};
-
-        if (queryParam) {
-            query.artist = req.query.artist as string;
+        if (req.user?.role === 'user') {
+            publications = await Album.find({ isPublished: true }).sort({ date: -1 });
+            
+        } else {
+            let query: { artist?: string } = {};
+            if (req.query.artist) {
+                query.artist = req.query.artist as string;
+            }
+            publications = await Album.find(query).populate('artist', 'album author').sort({ date: -1 });
         }
 
-        const getAlbumData = await Album.find(query).populate('artist', 'album author').sort({date: -1});
-
-        return res.send(getAlbumData);
+        return res.send(publications);
     } catch (e) {
         next(e);
     }
-
 });
+
 
 albumsRouter.get('/:id', async (req, res, next) => {
 
@@ -83,7 +86,6 @@ albumsRouter.get('/:id', async (req, res, next) => {
 });
 
 
-
 albumsRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res, next) => {
 
     try {
@@ -91,12 +93,12 @@ albumsRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res,
         try {
             _id = new Types.ObjectId(req.params.id)
         } catch {
-            return res.status(404).send({ error: 'Wrong ObjectId!' });
+            return res.status(404).send({error: 'Wrong ObjectId!'});
         }
 
         const album = await Album.findByIdAndDelete(_id);
 
-        if(!album) {
+        if (!album) {
             return res.status(404).send({error: 'Not Found!'});
         }
 

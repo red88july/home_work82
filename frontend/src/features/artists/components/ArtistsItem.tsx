@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material';
 
 import { apiURL } from '../../../constants.ts';
-import {useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
 import { getAlbums } from '../../albums/albumsThunk.ts';
 
 import imageNotAvailable from '../../../assets/pic/image_not_available.png';
-import {selectUserLog} from '../../users/usersSlice.ts';
+import { selectUserLog } from '../../users/usersSlice.ts';
 
 interface Props {
   id: string;
@@ -28,7 +28,6 @@ const cardEffect = {
 const ArtistsItem: React.FC<Props> = ({id, photo, author, isPublished}) => {
 
   const dispatch = useAppDispatch();
-
   const user = useAppSelector(selectUserLog);
 
   let cardImage = imageNotAvailable;

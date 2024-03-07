@@ -54,6 +54,7 @@ const Albums = () => {
             date={album.date}
             image={album.image}
             artist={album.artist}
+            isPublished={album.isPublished}
           />
         ))}
       </Grid>

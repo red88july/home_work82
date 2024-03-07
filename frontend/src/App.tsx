@@ -30,7 +30,7 @@ function App() {
             <Route path="/register" element={<RegisterForm/>}/>
             <Route path="/login" element={<LoginForm/>}/>
             <Route path="/track_story" element={
-              <ProtectedRoute isAllowed={user && (user.user?.role === 'admin')}>
+              <ProtectedRoute isAllowed={user && (user.user?.role === 'admin' || user.user?.role === 'user')}>
                 <TrackStoryUser/>
               </ProtectedRoute>
             }/>
