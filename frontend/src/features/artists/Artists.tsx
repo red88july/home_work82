@@ -16,8 +16,11 @@ const Artists = () => {
   console.log(user);
 
   useEffect(() => {
-    dispatch(getArtists());
-  }, [dispatch]);
+    console.log('You here', user);
+    if (user?.user.role === 'admin') {
+      dispatch(getArtists());
+    }
+  }, [dispatch, user]);
 
   return (
     <Grid container direction="column" spacing={2} marginTop={5}>

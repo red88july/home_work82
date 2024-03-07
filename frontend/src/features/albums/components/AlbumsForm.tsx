@@ -1,23 +1,35 @@
-import {Box, Button, Container, Grid, MenuItem, TextField} from '@mui/material';
+import {Box, Button, CircularProgress, Container, Grid, MenuItem, TextField} from '@mui/material';
 import React, {useState} from 'react';
 import FileInput from '../../../components/FileInput/FileInput.tsx';
+import {useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
+import {AlbumsData} from '../../../types';
+import {selectArtists} from '../../artists/artistsSlice.ts';
+
+import {isErrorLoadAlbums, isLoadingAlbums} from '../albumsSlice.ts';
+import {albumCreate} from '../albumsThunk.ts';
 
 const AlbumsForm = () => {
+  const dispatch = useAppDispatch();
 
-  const [album, setAlbum] = useState({
+  const isLoadingCreateAlbum = useAppSelector(isLoadingAlbums);
+  const isErrorCreateAlbum = useAppSelector(isErrorLoadAlbums);
+
+  const artists = useAppSelector(selectArtists);
+
+  const [album, setAlbum] = useState<AlbumsData>({
     album: '',
     artist: '',
-    date: '',
+    date: 0,
     image: null,
   });
 
-  // const getfieldError = (fieldError: string) => {
-  //   try {
-  //     return isErrorLoadProduct?.errors[fieldError].message;
-  //   } catch {
-  //     return undefined;
-  //   }
-  // };
+  const getfieldError = (fieldError: string) => {
+    try {
+      return isErrorCreateAlbum?.errors[fieldError].message;
+    } catch {
+      return undefined;
+    }
+  };
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
@@ -30,14 +42,13 @@ const AlbumsForm = () => {
   const onFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      // await dispatch(productCreate(state)).unwrap();
+      await dispatch(albumCreate(album)).unwrap();
 
       setAlbum((prevState) => {
         return {
           ...prevState,
           album: '',
-          artist: '',
-          date: '',
+          date: 0,
         };
       });
 
@@ -68,10 +79,11 @@ const AlbumsForm = () => {
                 id="album"
                 label="Enter album name"
                 name="album"
+                autoComplete="new-album"
                 value={album.album}
                 onChange={inputChangeHandler}
-                // error={Boolean(getfieldError('title'))}
-                // helperText={getfieldError('title')}
+                error={Boolean(getfieldError('album'))}
+                helperText={getfieldError('album')}
               />
             </Grid>
             <Grid item xs>
@@ -81,6 +93,7 @@ const AlbumsForm = () => {
                 id="date"
                 label="Enter album creation date"
                 name="date"
+                autoComplete="new-date"
                 value={album.date}
                 onChange={inputChangeHandler}
               />
@@ -91,16 +104,17 @@ const AlbumsForm = () => {
                 required
                 select
                 id="artist" label="Artist name"
+                autoComplete="new-name"
                 value={album.artist}
                 onChange={inputChangeHandler}
                 name="artist"
               >
                 <MenuItem value="" disabled>Please select artist...</MenuItem>
-                <MenuItem value="Nightwish">Nightwish</MenuItem>
-                <MenuItem value="Metallica">Metallica</MenuItem>
-                <MenuItem value="Кипелов">Кипелов</MenuItem>
-                <MenuItem value="HYDE">HYDE</MenuItem>
-                <MenuItem value="Crazy Lixx">Crazy Lixx</MenuItem>
+                {artists.map((artist) => (
+                  <MenuItem key={artist._id} value={artist._id}>
+                    {artist.author}
+                  </MenuItem>
+                ))}
               </TextField>
             </Grid>
             <Grid item xs>
@@ -116,8 +130,9 @@ const AlbumsForm = () => {
                 type="submit"
                 color="primary"
                 variant="contained"
+                disabled={isLoadingCreateAlbum}
                >
-                Add new album
+                {isLoadingCreateAlbum ? (<CircularProgress/>) : 'Add new album'}
               </Button>
             </Grid>
           </Grid>
