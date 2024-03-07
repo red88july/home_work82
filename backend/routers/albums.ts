@@ -43,7 +43,6 @@ albumsRouter.get('/', findUser, async (req: RequestUser, res, next) => {
 
         if (req.user?.role === 'user') {
             publications = await Album.find({ isPublished: true }).sort({ date: -1 });
-            
         } else {
             let query: { artist?: string } = {};
             if (req.query.artist) {
