@@ -1,16 +1,18 @@
-import {Box, Button, CircularProgress, Container, Grid, MenuItem, TextField} from '@mui/material';
 import React, {useEffect, useState} from 'react';
-import FileInput from '../../../components/FileInput/FileInput.tsx';
-import {useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
+import { Box, Button, CircularProgress, Container, Grid, MenuItem, TextField } from '@mui/material';
+
+
+import { albumCreate } from '../albumsThunk.ts';
+import { getAllArtists } from '../../artists/artistsThunk.ts';
+import { isErrorLoadAlbums, isLoadingAlbums } from '../albumsSlice.ts';
+import { selectAllArtists } from '../../artists/artistsSlice.ts';
+import { selectUserLog } from '../../users/usersSlice.ts';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
+
+import FileInput from '../../../components/FileInput/FileInput';
 import {AlbumsData} from '../../../types';
-import {selectAllArtists} from '../../artists/artistsSlice.ts';
 
-import {isErrorLoadAlbums, isLoadingAlbums} from '../albumsSlice.ts';
-import {albumCreate} from '../albumsThunk.ts';
-import {selectUserLog} from '../../users/usersSlice.ts';
-import {getAllArtists} from '../../artists/artistsThunk.ts';
-
-const AlbumsForm = () => {
+const AlbumsForm:React.FC = () => {
 
   const dispatch = useAppDispatch();
   const isLoadingCreateAlbum = useAppSelector(isLoadingAlbums);

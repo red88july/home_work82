@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { Box, Button, CircularProgress, Container, Grid, MenuItem, TextField } from '@mui/material';
 
-
 import { trackCreate } from '../tracksThunk.ts';
 import { isErrorLoadTracks, isLoadingTracks } from '../tracksSlice.ts';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
 
 import { TracksData } from '../../../types';
-import {getAllAlbums} from '../../albums/albumsThunk.ts';
-import {selectAllAlbum} from '../../albums/albumsSlice.ts';
-import {selectUserLog} from '../../users/usersSlice.ts';
+import { getAllAlbums } from '../../albums/albumsThunk.ts';
+import { selectAllAlbum } from '../../albums/albumsSlice.ts';
+import { selectUserLog } from '../../users/usersSlice.ts';
 
 const TracksForm: React.FC = () => {
 
@@ -62,8 +61,6 @@ const TracksForm: React.FC = () => {
       //
     }
   };
-
-
 
   return (
     <Container maxWidth="sm">

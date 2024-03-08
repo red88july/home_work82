@@ -50,3 +50,14 @@ export const getAllArtists = createAsyncThunk<Artists []>(
     return response.data;
   }
 );
+
+
+export const deleteArtist = createAsyncThunk<Artists, string, { state: RootState }>(
+  'artists/deleteArtist',
+  async (id, {getState}) => {
+    const token = getState().users.usersLog?.user.token;
+    const response = await axiosApi.delete('/artists/' + id, {headers: {'Authorization': 'Bearer ' + token}});
+    return response.data;
+  }
+);
+

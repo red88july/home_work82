@@ -1,15 +1,16 @@
-import React, {useState} from 'react';
-import {Box, Button, CircularProgress, Container, Grid, TextField} from '@mui/material';
-import FileInput from '../../../components/FileInput/FileInput.tsx';
-import {ArtistsData} from '../../../types';
-import {useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
-import {isErrorLoadArtists, isLoadingArtists} from '../artistsSlice.ts';
-import {artistCreate} from '../artistsThunk.ts';
+import React, { useState } from 'react';
+import { Box, Button, CircularProgress, Container, Grid, TextField } from '@mui/material';
 
-const ArtistsForm = () => {
+import { artistCreate } from '../artistsThunk.ts';
+import { isErrorLoadArtists, isLoadingArtists } from '../artistsSlice.ts';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
+
+import FileInput from '../../../components/FileInput/FileInput';
+import { ArtistsData } from '../../../types';
+
+const ArtistsForm:React.FC = () => {
 
   const dispatch = useAppDispatch();
-
   const isLoadingCreateArtist = useAppSelector(isLoadingArtists);
   const isErrorCreateArtist = useAppSelector(isErrorLoadArtists);
 

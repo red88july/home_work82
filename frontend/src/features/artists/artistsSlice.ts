@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { artistCreate, getAllArtists, getArtists } from './artistsThunk.ts';
+import {artistCreate, getAllArtists, getArtists} from './artistsThunk.ts';
 import { RootState } from '../../app/store.ts';
 
 import { Artists, ArtistsMutation, ValidationError } from '../../types';
-
 
 interface ArtistsState {
   artist: ArtistsMutation | null;
@@ -71,9 +70,7 @@ export const artistsSlice = createSlice({
 
 export const artistsReducer = artistsSlice.reducer;
 export const selectArtists = (state: RootState) => state.artists.artists;
-
 export const selectAllArtists = (state: RootState) => state.artists.artistsAll;
-
 export const loadingArtists = (state: RootState) => state.artists.isLoadingArtists;
 export const isLoadingArtists = (state: RootState) => state.artists.isLoadingArtist;
 export const isErrorLoadArtists = (state: RootState) => state.artists.isErrorArtist;

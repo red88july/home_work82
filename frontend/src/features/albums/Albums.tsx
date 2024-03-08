@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router-dom';
 
 import {loadingAlbum, selectAlbum} from './albumsSlice.ts';
-import {getAlbums} from './albumsThunk.ts';
+import {deleteAlbum, getAlbums} from './albumsThunk.ts';
 import {useAppDispatch, useAppSelector} from '../../app/hooks.ts';
 
 
@@ -21,7 +21,6 @@ const Albums = () => {
   const location = useLocation();
 
   useEffect(() => {
-
     const search = new URLSearchParams(location.search);
     const id = search.get('artist');
 
@@ -35,6 +34,17 @@ const Albums = () => {
       setArtistName(albums[0].artist.author);
     }
   }, [albums]);
+
+  const handleDeleteAlbum = async (id: string) => {
+    await dispatch(deleteAlbum(id));
+
+    const search = new URLSearchParams(location.search);
+    const getArtistId = search.get('artist');
+
+    if (getArtistId) {
+      await dispatch(getAlbums(getArtistId));
+    }
+  };
 
   return (
     <>
@@ -54,6 +64,7 @@ const Albums = () => {
               image={album.image}
               artist={album.artist}
               isPublished={album.isPublished}
+              onDelete={() => handleDeleteAlbum(album._id)}
             />
           ))}
         </Grid>

@@ -53,9 +53,7 @@ export const tracksSlice =createSlice({
 });
 
 export const tracksReducer = tracksSlice.reducer;
-
 export const selectTracks = (state:RootState) => state.tracks.tracks;
 export const loadingTracks = (state:RootState) => state.tracks.isLoadingTracks;
-
 export const isLoadingTracks = (state:RootState) => state.tracks.isLoadingTrack;
 export const isErrorLoadTracks = (state:RootState) => state.tracks.isErrorTrack;

@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import {Box, Button, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material';
+import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
 
 import { apiURL } from '../../../constants.ts';
 import imageNotAvailable from '../../../assets/pic/image_not_available.png';
 import { Artists } from '../../../types';
 import {useAppSelector} from '../../../app/hooks.ts';
-import {selectUserLog} from '../../users/usersSlice.ts';
+import { selectUserLog } from '../../users/usersSlice.ts';
 import React from 'react';
 
 const cardEffect = {
@@ -30,11 +30,11 @@ interface Props {
   date: number;
   image: string | null;
   artist: Artists;
+  onDelete: () => void;
   isPublished: boolean;
 }
 
-
-const AlbumsList: React.FC<Props> = ({id, album, date, image, artist, isPublished}) => {
+const AlbumsList: React.FC<Props> = ({ id, album, date, image, artist, isPublished,onDelete }) => {
 
   const user = useAppSelector(selectUserLog);
 
@@ -44,21 +44,25 @@ const AlbumsList: React.FC<Props> = ({id, album, date, image, artist, isPublishe
     coverImage = apiURL + '/' + image;
   }
 
+  const handleClickDelete = () => {
+     onDelete();
+  };
+
   return (
     <>
       {(user && user.user?.role === 'admin') || isPublished ? (
         <Box key={id} sx={cardEffect}>
-          <Card id={id} sx={{padding: 0}}
+          <Card id={id} sx={{ padding: 0 }}
                 component={Link} to={`/tracks?album=` + id}>
             <CardActionArea>
               <CardContent sx={positionElements}>
                 <CardMedia
                   component="img"
-                  sx={{width: 200, borderRadius:"10px"}}
+                  sx={{ width: 200, borderRadius: "10px" }}
                   image={coverImage}
                   alt={album}
                 />
-                <Box sx={{display:"flex", alignItems:"center"}}>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
                   <Box>
                     <Typography gutterBottom variant="h5" component="div">
                       Album: {album}
@@ -95,12 +99,13 @@ const AlbumsList: React.FC<Props> = ({id, album, date, image, artist, isPublishe
             )}
             {(user && user.user.role === 'admin') && <Box>
               <Button
+                onClick={handleClickDelete}
                 variant="contained"
                 color="warning">Delete</Button>
             </Box>}
           </Box>
         </Box>
-      ): null}
+      ) : null}
     </>
   );
 };

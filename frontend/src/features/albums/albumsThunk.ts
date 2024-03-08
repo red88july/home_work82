@@ -57,3 +57,12 @@ export const getAllAlbums = createAsyncThunk<Albums []>(
     return response.data;
   }
 );
+
+export const deleteAlbum = createAsyncThunk<void, string, { state: RootState }>(
+  'albums/deleteAlbum',
+  async (id, {getState}) => {
+    const token = getState().users.usersLog?.user.token;
+    const response = await axiosApi.delete('/albums/' + id, {headers: {'Authorization': 'Bearer ' + token}});
+    return response.data;
+  }
+);

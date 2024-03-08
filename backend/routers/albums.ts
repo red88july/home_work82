@@ -101,7 +101,6 @@ albumsRouter.get('/:id', async (req, res, next) => {
 
 });
 
-
 albumsRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res, next) => {
 
     try {
