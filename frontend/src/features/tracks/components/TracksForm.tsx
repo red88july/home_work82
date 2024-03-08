@@ -1,64 +1,87 @@
-import React, {useState} from 'react';
-import {Box, Button, Container, Grid, MenuItem, TextField} from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import { Box, Button, CircularProgress, Container, Grid, MenuItem, TextField } from '@mui/material';
 
-const TracksForm: React.FC= () => {
 
-  const [track, setTrack] = useState({
+import { trackCreate } from '../tracksThunk.ts';
+import { isErrorLoadTracks, isLoadingTracks } from '../tracksSlice.ts';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
+
+import { TracksData } from '../../../types';
+import {getAllAlbums} from '../../albums/albumsThunk.ts';
+import {selectAllAlbum} from '../../albums/albumsSlice.ts';
+import {selectUserLog} from '../../users/usersSlice.ts';
+
+const TracksForm: React.FC = () => {
+
+  const dispatch = useAppDispatch();
+  const isLoadDataTrack = useAppSelector(isLoadingTracks);
+  const isErrorLoadDataTrack = useAppSelector(isErrorLoadTracks);
+
+  const albums = useAppSelector(selectAllAlbum);
+  const user = useAppSelector(selectUserLog);
+  const filterAlbums = user?.user.role === 'admin' ? albums : albums.filter(album => album.isPublished);
+
+  const [track, setTrack] = useState<TracksData>({
+    number: 0,
     track: '',
     album: '',
     duration: '',
   });
 
-  // const getfieldError = (fieldError: string) => {
-  //   try {
-  //     return isErrorLoadProduct?.errors[fieldError].message;
-  //   } catch {
-  //     return undefined;
-  //   }
-  // };
+  useEffect(() => {
+      dispatch(getAllAlbums());
+  }, [dispatch]);
+
+  const getfieldError = (fieldError: string) => {
+    try {
+      return isErrorLoadDataTrack?.errors[fieldError].message;
+    } catch {
+      return undefined;
+    }
+  };
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-
-    setTrack(prevState => {
-      return {...prevState, [name]: value};
-    });
+    const { name, value } = e.target;
+    setTrack((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const onFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      // await dispatch(productCreate(state)).unwrap();
-
-      setTrack((prevState) => {
-        return {
-          ...prevState,
-          track: '',
-          album: '',
-          duration: '',
-        };
+      await dispatch(trackCreate(track)).unwrap();
+      setTrack({
+        number: 0,
+        track: '',
+        album: '',
+        duration: '',
       });
-
     } catch (e) {
       //
     }
   };
 
-  const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, files} = e.target;
-    if (files) {
-      setTrack(prevState => ({
-        ...prevState, [name]: files[0]
-      }));
-    }
-  };
+
 
   return (
     <Container maxWidth="sm">
       <Box>
-        <form
-          autoComplete="off"
-          onSubmit={onFormSubmit}>
+        <form autoComplete="off" onSubmit={onFormSubmit}>
+          <Grid item md marginBottom={2}>
+            <TextField
+              fullWidth
+              required
+              id="number"
+              label="Enter number of track"
+              name="number"
+              value={track.number}
+              onChange={inputChangeHandler}
+              error={Boolean(getfieldError('number'))}
+              helperText={getfieldError('number')}
+            />
+          </Grid>
           <Grid container direction="column" spacing={2}>
             <Grid item xs>
               <TextField
@@ -67,8 +90,11 @@ const TracksForm: React.FC= () => {
                 id="track"
                 label="Enter track name"
                 name="track"
+                autoComplete="new-track"
                 value={track.track}
                 onChange={inputChangeHandler}
+                error={Boolean(getfieldError('track'))}
+                helperText={getfieldError('track')}
               />
             </Grid>
             <Grid item md>
@@ -76,25 +102,20 @@ const TracksForm: React.FC= () => {
                 fullWidth
                 required
                 select
-                id="album" label="Album name"
+                id="album"
+                label="Album name"
                 value={track.album}
                 onChange={inputChangeHandler}
-                name="track"
+                name="album"
               >
-                <MenuItem value="" disabled>Please select album name...</MenuItem>
-                <MenuItem value="Death Magnetic">Death Magnetic</MenuItem>
-                <MenuItem value="Dark Passion Play">Dark Passion Play</MenuItem>
-                <MenuItem value="Звезды и Кресты">Звезды и Кресты</MenuItem>
-                <MenuItem value="ANTI">ANTI</MenuItem>
-                <MenuItem value="Forever Wild">Forever Wild</MenuItem>
-                <MenuItem value="Load">Load</MenuItem>
-                <MenuItem value="Master of Puppets">Master of Puppets</MenuItem>
-                <MenuItem value="Oceanborn">Oceanborn</MenuItem>
-                <MenuItem value="Angels Fall First">Angels Fall First</MenuItem>
-                <MenuItem value="Жить вопреки">Жить вопреки</MenuItem>
-                <MenuItem value="Реки времен">Реки времен</MenuItem>
-                <MenuItem value="FAITH">FAITH</MenuItem>
-                <MenuItem value="ROENTGEN">ROENTGEN</MenuItem>
+                <MenuItem value="" disabled>
+                  Please select album name...
+                </MenuItem>
+                {filterAlbums.map((album) => (
+                  <MenuItem key={album._id} value={album._id}>
+                    {album.album}
+                  </MenuItem>
+                ))}
               </TextField>
             </Grid>
             <Grid item xs>
@@ -106,16 +127,13 @@ const TracksForm: React.FC= () => {
                 name="duration"
                 value={track.duration}
                 onChange={inputChangeHandler}
+                error={Boolean(getfieldError('duration'))}
+                helperText={getfieldError('duration')}
               />
             </Grid>
             <Grid item xs>
-              <Button
-                fullWidth
-                type="submit"
-                color="primary"
-                variant="contained"
-              >
-                Add new artist
+              <Button fullWidth type="submit" color="primary" variant="contained" disabled={isLoadDataTrack}>
+                {isLoadDataTrack ? <CircularProgress /> : 'Add new track'}
               </Button>
             </Grid>
           </Grid>

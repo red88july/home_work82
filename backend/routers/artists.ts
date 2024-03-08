@@ -13,7 +13,7 @@ import findUser from "../middleware/findUser";
 
 export const artistsRouter = Router();
 
-artistsRouter.post('/', auth, imageUpload.single('photo'), async (req, res, next) => {
+artistsRouter.post('/', imageUpload.single('photo'), async (req, res, next) => {
 
     try {
 
@@ -38,12 +38,12 @@ artistsRouter.post('/', auth, imageUpload.single('photo'), async (req, res, next
 });
 
 
-artistsRouter.get('/', findUser, async (req:RequestUser, res, next) => {
+artistsRouter.get('/', findUser, async (req: RequestUser, res, next) => {
     try {
 
         let publications;
 
-        if(req.user?.role === 'user') {
+        if (req.user?.role === 'user') {
             publications = await Artist.find({isPublished: true});
         } else {
             publications = await Artist.find();
@@ -56,6 +56,23 @@ artistsRouter.get('/', findUser, async (req:RequestUser, res, next) => {
     }
 });
 
+artistsRouter.get('/get-artist', findUser, async (req: RequestUser, res, next) => {
+    try {
+
+        let publications;
+
+        if (req.user?.role === 'user') {
+            publications = await Artist.find({isPublished: true});
+        } else {
+            publications = await Artist.find();
+        }
+
+        return res.send(publications);
+
+    } catch (e) {
+        next(e);
+    }
+});
 
 
 artistsRouter.patch(`/:id/togglePublished`, auth, permit('admin'), async (req: RequestUser, res, next) => {

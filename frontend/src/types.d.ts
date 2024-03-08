@@ -29,7 +29,6 @@ export interface Albums {
   isPublished: boolean;
 }
 
-
 export interface AlbumsMutation {
   _id: string;
   album: string;
@@ -44,6 +43,22 @@ export interface AlbumsData {
   artist: string;
   date: number;
   image: File | null;
+}
+
+export interface TracksMutation {
+  _id: string;
+  track: string;
+  album: string;
+  duration: string;
+  number: number;
+  isPublished: boolean;
+}
+
+export interface TracksData {
+  number: number;
+  track: string;
+  album: string;
+  duration: string;
 }
 
 export type AlbumsType = Omit<Albums, 'artist image'>

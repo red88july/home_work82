@@ -12,7 +12,7 @@ import findUser from "../middleware/findUser";
 
 export const tracksRouter = Router();
 
-tracksRouter.post('/', auth, async (req, res, next) => {
+tracksRouter.post('/', async (req, res, next) => {
 
     try {
 

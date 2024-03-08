@@ -1,20 +1,24 @@
 import {Box, Button, CircularProgress, Container, Grid, MenuItem, TextField} from '@mui/material';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FileInput from '../../../components/FileInput/FileInput.tsx';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
 import {AlbumsData} from '../../../types';
-import {selectArtists} from '../../artists/artistsSlice.ts';
+import {selectAllArtists} from '../../artists/artistsSlice.ts';
 
 import {isErrorLoadAlbums, isLoadingAlbums} from '../albumsSlice.ts';
 import {albumCreate} from '../albumsThunk.ts';
+import {selectUserLog} from '../../users/usersSlice.ts';
+import {getAllArtists} from '../../artists/artistsThunk.ts';
 
 const AlbumsForm = () => {
-  const dispatch = useAppDispatch();
 
+  const dispatch = useAppDispatch();
   const isLoadingCreateAlbum = useAppSelector(isLoadingAlbums);
   const isErrorCreateAlbum = useAppSelector(isErrorLoadAlbums);
 
-  const artists = useAppSelector(selectArtists);
+  const artist = useAppSelector(selectAllArtists);
+  const user = useAppSelector(selectUserLog);
+  const filterArtist = user?.user.role === 'admin' ? artist : artist.filter(artist => artist.isPublished);
 
   const [album, setAlbum] = useState<AlbumsData>({
     album: '',
@@ -22,6 +26,10 @@ const AlbumsForm = () => {
     date: 0,
     image: null,
   });
+
+  useEffect(() => {
+    dispatch(getAllArtists());
+  }, [dispatch]);
 
   const getfieldError = (fieldError: string) => {
     try {
@@ -110,7 +118,7 @@ const AlbumsForm = () => {
                 name="artist"
               >
                 <MenuItem value="" disabled>Please select artist...</MenuItem>
-                {artists.map((artist) => (
+                {filterArtist.map((artist) => (
                   <MenuItem key={artist._id} value={artist._id}>
                     {artist.author}
                   </MenuItem>

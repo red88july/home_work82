@@ -10,7 +10,6 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import onlyRegistered from '../../../assets/pic/reg-user.png';
 
-
 import {selectUserLog} from '../../users/usersSlice.ts';
 import {errorPostTrack} from '../../TrackStory/tracksHistorySlice.ts';
 import {historyPostTrack} from '../../TrackStory/tracksHistoryThunk.ts';
@@ -101,7 +100,7 @@ const TracksList = () => {
 
   return (
     <>
-      <Box sx={{display: 'flex', alignItems: 'center'}}>
+      <Box sx={{display: 'flex', alignItems: 'center', marginTop: '50px'}}>
         <Box>
           <Typography variant="h3">{artistsName}</Typography>
         </Box>
@@ -120,7 +119,6 @@ const TracksList = () => {
           {'False to load track!'}
         </Alert>
       )}
-      {(user && user.user.role === 'admin') ? (
         <Box marginTop={5} sx={listOuterBoxEffect}>
           {tracks.map((track) => (
             <Box key={track._id}>
@@ -171,9 +169,6 @@ const TracksList = () => {
             </Box>
           ))}
         </Box>
-
-      ) : null}
-
     </>
   );
 };

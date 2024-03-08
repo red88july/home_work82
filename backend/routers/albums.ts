@@ -12,7 +12,7 @@ import findUser from "../middleware/findUser";
 
 export const albumsRouter = Router();
 
-albumsRouter.post('/', auth, imageUpload.single('image'), async (req, res, next) => {
+albumsRouter.post('/', imageUpload.single('image'), async (req, res, next) => {
 
     try {
 
@@ -42,13 +42,30 @@ albumsRouter.get('/', findUser, async (req: RequestUser, res, next) => {
         let publications;
 
         if (req.user?.role === 'user') {
-            publications = await Album.find({ isPublished: true }).sort({ date: -1 });
+            publications = await Album.find({isPublished: true}).sort({date: -1});
         } else {
             let query: { artist?: string } = {};
             if (req.query.artist) {
                 query.artist = req.query.artist as string;
             }
-            publications = await Album.find(query).populate('artist', 'album author').sort({ date: -1 });
+            publications = await Album.find(query).populate('artist', 'album author').sort({date: -1});
+        }
+
+        return res.send(publications);
+    } catch (e) {
+        next(e);
+    }
+});
+
+albumsRouter.get('/get-albums', findUser,async (req:RequestUser, res, next) => {
+    try {
+
+        let publications;
+
+        if (req.user?.role === 'user') {
+            publications = await Album.find({isPublished: true}).sort({date: -1});
+        } else {
+            publications = await Album.find().populate('artist', 'album author');
         }
 
         return res.send(publications);
