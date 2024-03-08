@@ -8,6 +8,7 @@ import permit from "../middleware/permit";
 import Album from "../models/Album";
 import {albumsRouter} from "./albums";
 import Artist from "../models/Artist";
+import findUser from "../middleware/findUser";
 
 export const tracksRouter = Router();
 
@@ -35,26 +36,34 @@ tracksRouter.post('/', auth, async (req, res, next) => {
 
 });
 
-tracksRouter.get('/', async (req, res, next) => {
+tracksRouter.get('/', findUser, async (req:RequestUser, res, next) => {
 
     try {
 
-        const findParam = await Track.findOne({album: req.query.album});
-        let albumQueryParam: { album?: string } = {};
+        try {
+            let publications;
 
-        if (findParam) {
-            albumQueryParam.album = req.query.album as string;
-        }
+            if (req.user?.role === 'user') {
+                publications = await Track.find({ isPublished: true }).sort({number: 1});
+            } else {
+                let albumQueryParam: { album?: string } = {};
 
-        const getTrackData = await Track.find(albumQueryParam).populate({
-            path: 'album',
-            select: 'album artist',
-            populate: {
-                path: 'artist', model: 'Artist', select: 'author'
+                if (req.query.album) {
+                    albumQueryParam.album = req.query.album as string;
+                }
+                publications = await Track.find(albumQueryParam).populate({
+                    path: 'album',
+                    select: 'album artist',
+                    populate: {
+                        path: 'artist', model: 'Artist', select: 'author'
+                    }
+                }).sort({number: 1});
             }
-        }).sort({number: 1});
 
-        return res.send(getTrackData);
+            return res.send(publications);
+        } catch (e) {
+            next(e);
+        }
 
     } catch (e) {
         next(e);

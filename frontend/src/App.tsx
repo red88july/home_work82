@@ -35,17 +35,17 @@ function App() {
               </ProtectedRoute>
             }/>
             <Route path="/artist-form" element={
-              <ProtectedRoute isAllowed={user && (user.user?.role === 'admin')}>
+              <ProtectedRoute isAllowed={user && (user.user?.role === 'admin' || user.user?.role === 'user')}>
                 <ArtistsForm/>
               </ProtectedRoute>
             }/>
             <Route path="/album-form" element={
-              <ProtectedRoute isAllowed={user && (user.user?.role === 'admin')}>
+              <ProtectedRoute isAllowed={user && (user.user?.role === 'admin' || user.user?.role === 'user')}>
                 <AlbumsForm/>
               </ProtectedRoute>
             }/>
             <Route path="/track-form" element={
-              <ProtectedRoute isAllowed={user && (user.user?.role === 'admin')}>
+              <ProtectedRoute isAllowed={user && (user.user?.role === 'admin' || user.user?.role === 'user')}>
                 <TracksForm/>
               </ProtectedRoute>
             }/>
