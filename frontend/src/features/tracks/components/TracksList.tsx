@@ -13,7 +13,8 @@ import onlyRegistered from '../../../assets/pic/reg-user.png';
 import {selectUserLog} from '../../users/usersSlice.ts';
 import {errorPostTrack} from '../../TrackStory/tracksHistorySlice.ts';
 import {historyPostTrack} from '../../TrackStory/tracksHistoryThunk.ts';
-import {getTracks} from '../tracksThunk.ts';
+import {deleteTrack, getTracks} from '../tracksThunk.ts';
+import {deleteAlbum, getAlbums} from '../../albums/albumsThunk.ts';
 
 
 const listInnerBoxEffect = {
@@ -98,6 +99,17 @@ const TracksList = () => {
 
   };
 
+  const handleDeleteTrack = async (id: string) => {
+    await dispatch(deleteTrack(id));
+
+    const search = new URLSearchParams(location.search);
+    const getALbumsId = search.get('album');
+
+    if (getALbumsId) {
+      await dispatch(getTracks(getALbumsId));
+    }
+  };
+
   return (
     <>
       <Box sx={{display: 'flex', alignItems: 'center', marginTop: '50px'}}>
@@ -161,6 +173,7 @@ const TracksList = () => {
                   )}
                   {(user && user.user.role === 'admin') && <Box>
                     <Button
+                      onClick={() => handleDeleteTrack(track._id)}
                       variant="contained"
                       color="warning">Delete</Button>
                   </Box>}

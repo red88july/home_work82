@@ -31,3 +31,12 @@ export const getTracks = createAsyncThunk<Tracks [], string>(
     return response.data;
   }
 );
+
+export const deleteTrack = createAsyncThunk<void, string, { state: RootState }>(
+  'track/deleteTrack',
+  async (id, {getState}) => {
+    const token = getState().users.usersLog?.user.token;
+    const response = await axiosApi.delete('/tracks/' + id, {headers: {'Authorization': 'Bearer ' + token}});
+    return response.data;
+  }
+);
