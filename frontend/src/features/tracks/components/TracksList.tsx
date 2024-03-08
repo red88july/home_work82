@@ -20,10 +20,11 @@ import {getTracks} from '../tracksThunk.ts';
 const listInnerBoxEffect = {
   display: 'flex',
   padding: '5px 15px 5px 15px',
+  alignItems: 'center',
   justifyContent: 'space-between',
   border: '1px solid grey',
   borderRadius: '8px',
-  width: '550px',
+  width: '700px',
   '&:hover': {
     boxShadow: '6px 7px 21px -5px rgba(0,0,0,0.27)',
   }
@@ -88,7 +89,6 @@ const TracksList = () => {
 
   const playButtonClick = (id: string) => {
 
-
     const token = user?.user.token;
 
     if (!token) {
@@ -120,35 +120,60 @@ const TracksList = () => {
           {'False to load track!'}
         </Alert>
       )}
-      <Box marginTop={5} sx={listOuterBoxEffect}>
-        {tracks.map((track) => (
-          <Box key={track._id}>
-            <Box id={track._id} sx={listInnerBoxEffect}>
-              <Typography gutterBottom variant="subtitle2" component="div">
-                {track.number}
-              </Typography>
-              {user ? (
-                <Button onClick={() => playButtonClick(track._id)} sx={buttonEffect}>
-                  <PlayCircleIcon/> Play
-                </Button>
-              ) : <Button
-                sx={regButton}
-                component={RegToForm}
-                to="/register"/>}
-
-              <Typography gutterBottom variant="subtitle2" component="div">
-                {track.track}
-              </Typography>
-              <Typography gutterBottom variant="subtitle2" component="div">
-                {track.album.album}
-              </Typography>
-              <Typography gutterBottom variant="subtitle2" component="div">
-                {track.duration}
-              </Typography>
+      {(user && user.user.role === 'admin') ? (
+        <Box marginTop={5} sx={listOuterBoxEffect}>
+          {tracks.map((track) => (
+            <Box key={track._id}>
+              <Box id={track._id} sx={listInnerBoxEffect}>
+                <Typography gutterBottom variant="subtitle2" component="div">
+                  {track.number}
+                </Typography>
+                {user ? (
+                  <Button onClick={() => playButtonClick(track._id)} sx={buttonEffect}>
+                    <PlayCircleIcon/> Play
+                  </Button>
+                ) : <Button sx={regButton} component={RegToForm} to="/register"/>}
+                <Typography gutterBottom variant="subtitle2" component="div">
+                  {track.track}
+                </Typography>
+                <Typography gutterBottom variant="subtitle2" component="div">
+                  {track.album.album}
+                </Typography>
+                <Typography gutterBottom variant="subtitle2" component="div">
+                  {track.duration}
+                </Typography>
+                <Box display="flex"  alignItems="center" justifyContent="center" gap={2} padding={2}>
+                  {track.isPublished ? (
+                    <Typography
+                      variant="body2"
+                      color="#4caf50">
+                      <b>Published</b>
+                    </Typography>
+                  ) : (
+                    <Box display="flex" alignItems="center" justifyContent="center" gap={2}>
+                      <Typography
+                        variant="body2"
+                        color="#ef5350">
+                        <b>Not Published</b>
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        color="success">Published</Button>
+                    </Box>
+                  )}
+                  {(user && user.user.role === 'admin') && <Box>
+                    <Button
+                      variant="contained"
+                      color="warning">Delete</Button>
+                  </Box>}
+                </Box>
+              </Box>
             </Box>
-          </Box>
-        ))}
-      </Box>
+          ))}
+        </Box>
+
+      ) : null}
+
     </>
   );
 };

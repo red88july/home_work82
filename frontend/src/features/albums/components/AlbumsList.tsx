@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material';
+import {Box, Button, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material';
 
 import { apiURL } from '../../../constants.ts';
 import imageNotAvailable from '../../../assets/pic/image_not_available.png';
@@ -9,7 +9,8 @@ import {selectUserLog} from '../../users/usersSlice.ts';
 import React from 'react';
 
 const cardEffect = {
-  width: '50%',
+  width: '450px',
+  flexWrap: "wrap",
   "&:hover": {
     transition: "1s",
     transform: "scale(0.9)",
@@ -46,7 +47,7 @@ const AlbumsList: React.FC<Props> = ({id, album, date, image, artist, isPublishe
   return (
     <>
       {(user && user.user?.role === 'admin') || isPublished ? (
-        <Box key={id} sx={cardEffect} >
+        <Box key={id} sx={cardEffect}>
           <Card id={id} sx={{padding: 0}}
                 component={Link} to={`/tracks?album=` + id}>
             <CardActionArea>
@@ -71,13 +72,33 @@ const AlbumsList: React.FC<Props> = ({id, album, date, image, artist, isPublishe
                   </Box>
                 </Box>
               </CardContent>
-              {isPublished ? (
-                <Typography variant="body2" color="textSecondary">Published</Typography>
-              ) : (
-                <Typography variant="body2" color="textSecondary">Not Published</Typography>
-              )}
             </CardActionArea>
           </Card>
+          <Box display="flex"  alignItems="center" justifyContent="center" gap={2} padding={2}>
+            {isPublished ? (
+              <Typography
+                variant="body2"
+                color="#4caf50">
+                <b>Published</b>
+              </Typography>
+            ) : (
+              <Box display="flex" alignItems="center" justifyContent="center" gap={2}>
+                <Typography
+                  variant="body2"
+                  color="#ef5350">
+                  <b>Not Published</b>
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="success">Published</Button>
+              </Box>
+            )}
+            {(user && user.user.role === 'admin') && <Box>
+              <Button
+                variant="contained"
+                color="warning">Delete</Button>
+            </Box>}
+          </Box>
         </Box>
       ): null}
     </>

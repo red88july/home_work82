@@ -17,15 +17,13 @@ const Artists = () => {
   }, [dispatch]);
 
   return (
-    <Grid container direction="column" spacing={2} marginTop={5}>
-      <Grid item container justifyContent="space-between" alignItems="center">
-        <Grid item>
+    <Grid container maxWidth='xl' flexDirection='column' marginTop={5}>
+        <Grid item justifyContent="left" alignItems="left">
           <Typography variant="h4">Artists</Typography>
         </Grid>
-      </Grid>
       {loadingArtist && <Box sx={{display: 'flex', justifyContent: 'center'}}>
         <CircularProgress size={100}/></Box>}
-      <Grid item container spacing={2} display="flex" justifyContent="center" gap={1}>
+      <Grid item spacing={2} display="flex" justifyContent="center" gap={1}>
         {artists.map(artist => (
           <ArtistsItem
             id={artist._id}

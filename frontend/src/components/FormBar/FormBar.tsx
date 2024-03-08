@@ -19,11 +19,11 @@ const FormBar:React.FC = () => {
     }, []);
 
   return (
-    <Box>
-      <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={3}>
+    <Box marginTop={10}>
+      <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={1}>
         <Box>
           {timer && user && (
-            <Box maxWidth="600px">
+            <Box maxWidth="700px">
               <Alert severity='success'>
                 <p> <strong><em>{user?.user.username}</em> you are in a menu where you can add new artists, as well as add
                   their albums and tracks to albums</strong></p>
@@ -59,7 +59,6 @@ const FormBar:React.FC = () => {
         </Box>
       </Box>
     </Box>
-
   );
 };
 

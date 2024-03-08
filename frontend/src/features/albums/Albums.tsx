@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 
-import { loadingAlbum, selectAlbum } from './albumsSlice.ts';
-import { getAlbums } from './albumsThunk.ts';
-import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
+import {loadingAlbum, selectAlbum} from './albumsSlice.ts';
+import {getAlbums} from './albumsThunk.ts';
+import {useAppDispatch, useAppSelector} from '../../app/hooks.ts';
 
 
 import AlbumsList from './components/AlbumsList.tsx';
-import { Box, CircularProgress, Grid, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import {Box, CircularProgress, Grid, Typography} from '@mui/material';
+import {useSelector} from 'react-redux';
 
 const Albums = () => {
 
@@ -38,25 +38,25 @@ const Albums = () => {
 
   return (
     <>
-      <Box>
-        <Typography variant="h3">
-          {artistName}
-        </Typography>
-      </Box>
-      <Grid item container  marginTop={7} display="flex" justifyContent="center" gap={1}>
-        {isLoadingAlbum && <Box sx={{display: 'flex', justifyContent: 'center'}}>
-          <CircularProgress size={100}/></Box>}
-        {albums.map(album => (
-          <AlbumsList
-            key={album._id}
-            id={album._id}
-            album={album.album}
-            date={album.date}
-            image={album.image}
-            artist={album.artist}
-            isPublished={album.isPublished}
-          />
-        ))}
+      <Grid container marginTop={5}>
+          <Typography variant="h3">
+            {artistName}
+          </Typography>
+        <Grid item container marginTop={7} gap={1}>
+          {isLoadingAlbum && <Box sx={{display: 'flex', justifyContent: 'center'}}>
+            <CircularProgress size={100}/></Box>}
+          {albums.map(album => (
+            <AlbumsList
+              key={album._id}
+              id={album._id}
+              album={album.album}
+              date={album.date}
+              image={album.image}
+              artist={album.artist}
+              isPublished={album.isPublished}
+            />
+          ))}
+        </Grid>
       </Grid>
     </>
   );

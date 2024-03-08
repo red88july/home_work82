@@ -49,8 +49,7 @@ const ArtistsItem: React.FC<Props> = ({id, photo, author, isPublished}) => {
             sx={{ textDecoration: 'none' }}
             component={Link}
             to={`/albums?artist=${id}`}
-            onClick={handleClick}
-          >
+            onClick={handleClick}>
             <CardActionArea>
               <CardMedia sx={{ borderRadius: '10px' }} component="img" height="250" image={cardImage} alt={author} />
               <CardContent>
@@ -58,33 +57,33 @@ const ArtistsItem: React.FC<Props> = ({id, photo, author, isPublished}) => {
                   {author}
                 </Typography>
               </CardContent>
-              <Box display="flex"  alignItems="center" justifyContent="center" gap={2} padding={2}>
-                {isPublished ? (
-                      <Typography
-                        variant="body2"
-                        color="#4caf50">
-                        <b>Published</b>
-                        </Typography>
-                ) : (
-                  <Box display="flex" alignItems="center" justifyContent="center" gap={2}>
-                      <Typography
-                        variant="body2"
-                        color="#ef5350">
-                        <b>Not Published</b>
-                      </Typography>
-                      <Button
-                        variant="contained"
-                        color="success">Published</Button>
-                  </Box>
-                )}
-                {(user && user.user.role === 'admin') && <Box>
-                  <Button
-                    variant="contained"
-                    color="warning">Delete</Button>
-                </Box>}
-              </Box>
             </CardActionArea>
           </Card>
+          <Box display="flex"  alignItems="center" justifyContent="center" gap={2} padding={2}>
+            {isPublished ? (
+              <Typography
+                variant="body2"
+                color="#4caf50">
+                <b>Published</b>
+              </Typography>
+            ) : (
+              <Box display="flex" alignItems="center" justifyContent="center" gap={2}>
+                <Typography
+                  variant="body2"
+                  color="#ef5350">
+                  <b>Not Published</b>
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="success">Published</Button>
+              </Box>
+            )}
+            {(user && user.user.role === 'admin') && <Box>
+              <Button
+                variant="contained"
+                color="warning">Delete</Button>
+            </Box>}
+          </Box>
         </Box>
       ) : null}
     </>
