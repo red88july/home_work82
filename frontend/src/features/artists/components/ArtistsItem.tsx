@@ -1,14 +1,14 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {Box, Button, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material';
+import { Link} from 'react-router-dom';
+import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Typography} from '@mui/material';
 
-import {apiURL} from '../../../constants.ts';
-import {useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
-import {getAlbums} from '../../albums/albumsThunk.ts';
+import { apiURL} from '../../../constants.ts';
+import { useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
+import { getAlbums} from '../../albums/albumsThunk.ts';
 
+import { selectUserLog} from '../../users/usersSlice.ts';
+import { deleteArtist, getArtists, updateArtist} from '../artistsThunk.ts';
 import imageNotAvailable from '../../../assets/pic/image_not_available.png';
-import {selectUserLog} from '../../users/usersSlice.ts';
-import {deleteArtist, getArtists} from '../artistsThunk.ts';
 
 interface Props {
   id: string;
@@ -46,6 +46,11 @@ const ArtistsItem: React.FC<Props> = ({id, photo, author, isPublished}) => {
     await dispatch(getArtists());
   };
 
+  const handlePublishClick = async () => {
+    await dispatch(updateArtist(id));
+    await dispatch(getArtists());
+  };
+
   return (
     <>
       {(user && user.user.role === 'admin') || isPublished ? (
@@ -79,17 +84,28 @@ const ArtistsItem: React.FC<Props> = ({id, photo, author, isPublished}) => {
                   color="#ef5350">
                   <b>Not Published</b>
                 </Typography>
-                <Button
-                  variant="contained"
-                  color="success">Published</Button>
+                {(user && user.user.role === 'admin') &&
+                  (<Box>
+                    <Button
+                      onClick={handlePublishClick}
+                      variant="contained"
+                      color="success">
+                      Published
+                    </Button>
+                  </Box>)
+                }
               </Box>
             )}
-            {(user && user.user.role === 'admin') && <Box>
-              <Button
-                onClick={handleClickDelete}
-                variant="contained"
-                color="warning">Delete</Button>
-            </Box>}
+            {(user && user.user.role === 'admin') &&
+              (<Box>
+                <Button
+                  onClick={handleClickDelete}
+                  variant="contained"
+                  color="warning">
+                  Delete
+                </Button>
+              </Box>)
+            }
           </Box>
         </Box>
       ) : null}

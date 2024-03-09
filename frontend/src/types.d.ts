@@ -38,11 +38,21 @@ export interface AlbumsMutation {
   isPublished: boolean;
 }
 
+export interface UpdateArtist {
+  message: string;
+  artist: Artists;
+}
+
 export interface AlbumsData {
   album: string;
   artist: string;
   date: number;
   image: File | null;
+}
+
+export interface UpdateAlbum {
+  message: string;
+  album: Albums;
 }
 
 export interface TracksMutation {

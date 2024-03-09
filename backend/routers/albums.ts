@@ -1,21 +1,18 @@
 import mongoose, {Types} from "mongoose";
 import {Router} from 'express';
 
-import Album from "../models/Album";
-import {imageUpload} from "../multer";
-import {AlbumData} from "../types";
-import auth, {RequestUser} from "../middleware/auth";
+import auth, { RequestUser } from "../middleware/auth";
 import permit from "../middleware/permit";
-import Artist from "../models/Artist";
-import {artistsRouter} from "./artists";
 import findUser from "../middleware/findUser";
+
+import Album from "../models/Album";
+import { imageUpload } from "../multer";
+import { AlbumData } from "../types";
 
 export const albumsRouter = Router();
 
 albumsRouter.post('/', imageUpload.single('image'), async (req, res, next) => {
-
-    try {
-
+     try {
         const albumData: AlbumData = {
             album: req.body.album,
             artist: req.body.artist,
@@ -34,7 +31,6 @@ albumsRouter.post('/', imageUpload.single('image'), async (req, res, next) => {
         }
         next(e);
     }
-
 });
 
 albumsRouter.get('/', findUser, async (req: RequestUser, res, next) => {
@@ -59,7 +55,6 @@ albumsRouter.get('/', findUser, async (req: RequestUser, res, next) => {
 
 albumsRouter.get('/get-albums', findUser,async (req:RequestUser, res, next) => {
     try {
-
         let publications;
 
         if (req.user?.role === 'user') {
@@ -76,9 +71,7 @@ albumsRouter.get('/get-albums', findUser,async (req:RequestUser, res, next) => {
 
 
 albumsRouter.get('/:id', async (req, res, next) => {
-
     try {
-
         let _id: Types.ObjectId;
 
         try {
@@ -94,15 +87,12 @@ albumsRouter.get('/:id', async (req, res, next) => {
         }
 
         return res.send(album);
-
     } catch (e) {
         next(e);
     }
-
 });
 
 albumsRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res, next) => {
-
     try {
         let _id: Types.ObjectId;
         try {
@@ -122,12 +112,9 @@ albumsRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res,
     } catch (e) {
         next(e);
     }
-
 })
 
 albumsRouter.patch(`/:id/togglePublished`, auth, permit('admin'), async (req: RequestUser, res, next) => {
-
-
     try {
         let _id: Types.ObjectId;
 
@@ -152,5 +139,4 @@ albumsRouter.patch(`/:id/togglePublished`, auth, permit('admin'), async (req: Re
     } catch (e) {
         next(e);
     }
-
 })

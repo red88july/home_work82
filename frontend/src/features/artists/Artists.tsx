@@ -1,8 +1,8 @@
-import { Box, CircularProgress, Grid, Typography } from '@mui/material';
+import {Alert, Box, CircularProgress, Grid, Typography} from '@mui/material';
 import { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { loadingArtists, selectArtists } from './artistsSlice.ts';
+import {isErrorGetLoadingArtists, loadingArtists, selectArtists} from './artistsSlice.ts';
 import { getArtists } from './artistsThunk.ts';
 import ArtistsItem from './components/ArtistsItem';
 
@@ -11,6 +11,7 @@ const Artists = () => {
   const dispatch = useAppDispatch();
   const artists = useAppSelector(selectArtists);
   const loadingArtist = useAppSelector(loadingArtists);
+  const errorLoadingArtist = useAppSelector(isErrorGetLoadingArtists);
 
   useEffect(() => {
     dispatch(getArtists());
@@ -23,7 +24,8 @@ const Artists = () => {
         </Grid>
       {loadingArtist && <Box sx={{display: 'flex', justifyContent: 'center'}}>
         <CircularProgress size={100}/></Box>}
-      <Grid item  display="flex" justifyContent="center" gap={1}>
+      {errorLoadingArtist && (<Alert severity="warning">False to load Artists!</Alert>)}
+      <Grid item display="flex" justifyContent="center" flexWrap="wrap" gap={1}>
         {artists.map(artist => (
           <ArtistsItem
             id={artist._id}

@@ -13,8 +13,7 @@ import onlyRegistered from '../../../assets/pic/reg-user.png';
 import {selectUserLog} from '../../users/usersSlice.ts';
 import {errorPostTrack} from '../../TrackStory/tracksHistorySlice.ts';
 import {historyPostTrack} from '../../TrackStory/tracksHistoryThunk.ts';
-import {deleteTrack, getTracks} from '../tracksThunk.ts';
-import {deleteAlbum, getAlbums} from '../../albums/albumsThunk.ts';
+import {deleteTrack, getTracks, updateTrack} from '../tracksThunk.ts';
 
 
 const listInnerBoxEffect = {
@@ -110,6 +109,17 @@ const TracksList = () => {
     }
   };
 
+  const handleUpdateTrack = async (id: string) => {
+    await dispatch(updateTrack(id));
+
+    const search = new URLSearchParams(location.search);
+    const getALbumsId = search.get('album');
+
+    if (getALbumsId) {
+      await dispatch(getTracks(getALbumsId));
+    }
+  };
+
   return (
     <>
       <Box sx={{display: 'flex', alignItems: 'center', marginTop: '50px'}}>
@@ -167,6 +177,7 @@ const TracksList = () => {
                         <b>Not Published</b>
                       </Typography>
                       <Button
+                        onClick={() => handleUpdateTrack(track._id)}
                         variant="contained"
                         color="success">Published</Button>
                     </Box>

@@ -1,10 +1,13 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi.ts';
-import {Artists, ArtistsData, ArtistsMutation, ValidationError} from '../../types';
+import {Artists, ArtistsData, ArtistsMutation, UpdateArtist, ValidationError} from '../../types';
 import {RootState} from '../../app/store.ts';
 import {isAxiosError} from 'axios';
 
-export const artistCreate = createAsyncThunk<ArtistsMutation, ArtistsData, { rejectValue: ValidationError, state: RootState }>(
+export const artistCreate = createAsyncThunk<ArtistsMutation, ArtistsData, {
+  rejectValue: ValidationError,
+  state: RootState
+}>(
   'artists/artistCreate',
   async (artist, {rejectWithValue, getState}) => {
 
@@ -18,7 +21,7 @@ export const artistCreate = createAsyncThunk<ArtistsMutation, ArtistsData, { rej
         const value = artist[key];
 
         if (value !== null) {
-            formData.append(key, value);
+          formData.append(key, value);
         }
       });
 
@@ -51,7 +54,6 @@ export const getAllArtists = createAsyncThunk<Artists []>(
   }
 );
 
-
 export const deleteArtist = createAsyncThunk<Artists, string, { state: RootState }>(
   'artists/deleteArtist',
   async (id, {getState}) => {
@@ -61,3 +63,11 @@ export const deleteArtist = createAsyncThunk<Artists, string, { state: RootState
   }
 );
 
+export const updateArtist = createAsyncThunk<UpdateArtist, string, { state: RootState }>(
+  'artists/updateArtist',
+  async (id, {getState}) => {
+     const token = getState().users.usersLog?.user.token;
+      const response = await axiosApi.patch(`/artists/` + id + '/togglePublished', null, {headers: {'Authorization': 'Bearer ' + token}});
+      return response.data;
+  }
+);

@@ -13,10 +13,9 @@ import findUser from "../middleware/findUser";
 export const tracksRouter = Router();
 
 tracksRouter.post('/', async (req, res, next) => {
-
     try {
-
         const trackData: TrackData = {
+            number: req.body.number,
             track: req.body.track,
             album: req.body.album,
             duration: req.body.duration,
@@ -26,78 +25,63 @@ tracksRouter.post('/', async (req, res, next) => {
         await newTrack.save();
 
         return res.send(newTrack);
-
     } catch (e) {
         if (e instanceof mongoose.Error.ValidationError) {
             return res.status(422).send(e);
         }
         next(e);
     }
-
 });
 
-tracksRouter.get('/', findUser, async (req:RequestUser, res, next) => {
-
+tracksRouter.get('/', findUser, async (req: RequestUser, res, next) => {
     try {
+        let publications;
 
-        try {
-            let publications;
+        if (req.user?.role === 'user') {
+            publications = await Track.find({isPublished: true}).sort({number: 1});
+        } else {
+            let albumQueryParam: { album?: string } = {};
 
-            if (req.user?.role === 'user') {
-                publications = await Track.find({ isPublished: true }).sort({number: 1});
-            } else {
-                let albumQueryParam: { album?: string } = {};
-
-                if (req.query.album) {
-                    albumQueryParam.album = req.query.album as string;
-                }
-                publications = await Track.find(albumQueryParam).populate({
-                    path: 'album',
-                    select: 'album artist',
-                    populate: {
-                        path: 'artist', model: 'Artist', select: 'author'
-                    }
-                }).sort({number: 1});
+            if (req.query.album) {
+                albumQueryParam.album = req.query.album as string;
             }
-
-            return res.send(publications);
-        } catch (e) {
-            next(e);
+            publications = await Track.find(albumQueryParam).populate({
+                path: 'album',
+                select: 'album artist',
+                populate: {
+                    path: 'artist', model: 'Artist', select: 'author'
+                }
+            }).sort({number: 1});
         }
 
+        return res.send(publications);
     } catch (e) {
         next(e);
     }
-
 });
 
 tracksRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res, next) => {
-
     try {
         let _id: Types.ObjectId;
         try {
             _id = new Types.ObjectId(req.params.id)
         } catch {
-            return res.status(404).send({ error: 'Wrong ObjectId!' });
+            return res.status(404).send({error: 'Wrong ObjectId!'});
         }
 
         const track = await Track.findByIdAndDelete(_id);
 
-        if(!track) {
+        if (!track) {
             return res.status(404).send({error: 'Not Found!'});
         }
 
         return res.send({message: 'Track successfully deleted', track});
-
     } catch (e) {
         next(e);
     }
-
 })
 
 tracksRouter.patch(`/:id/togglePublished`, auth, permit('admin'), async (req: RequestUser, res, next) => {
-
-
     try {
         let _id: Types.ObjectId;
 
@@ -114,13 +98,10 @@ tracksRouter.patch(`/:id/togglePublished`, auth, permit('admin'), async (req: Re
         }
 
         track.isPublished = !track.isPublished
-
         await track.save();
 
         return res.send({message: 'Track successfully patched', track});
-
     } catch (e) {
         next(e);
     }
-
 })

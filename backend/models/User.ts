@@ -7,7 +7,6 @@ import { UserDataExtendsSchema, UserMethods, UserModel } from "../types";
 const SALT_WORK = 10;
 
 const UserSchema = new Schema<UserDataExtendsSchema, UserMethods, UserModel>({
-
     username: {
         type: String,
         required: true,
@@ -44,7 +43,6 @@ const UserSchema = new Schema<UserDataExtendsSchema, UserMethods, UserModel>({
         enum: ['admin', 'user'],
         default: 'user',
     },
-
 }, { versionKey: false });
 
 UserSchema.methods.generatedToken = function () {

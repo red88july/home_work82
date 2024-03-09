@@ -1,22 +1,18 @@
 import mongoose, {Types} from "mongoose";
-import {Router} from 'express';
+import { Router } from 'express';
+
+import permit from "../middleware/permit";
+import findUser from "../middleware/findUser";
+import auth, {RequestUser} from "../middleware/auth";
 
 import Artist from "../models/Artist";
-import {imageUpload} from "../multer";
-import {ArtistData} from "../types";
-import auth, {RequestUser} from "../middleware/auth";
-import permit from "../middleware/permit";
-import {isBooleanObject} from "node:util/types";
-import User from "../models/User";
-import user from "../models/User";
-import findUser from "../middleware/findUser";
+import { imageUpload } from "../multer";
+import { ArtistData } from "../types";
 
 export const artistsRouter = Router();
 
 artistsRouter.post('/', imageUpload.single('photo'), async (req, res, next) => {
-
     try {
-
         const artistData: ArtistData = {
             author: req.body.author,
             photo: req.file ? req.file.filename : null,
@@ -34,13 +30,11 @@ artistsRouter.post('/', imageUpload.single('photo'), async (req, res, next) => {
         }
         next(e);
     }
-
 });
 
 
 artistsRouter.get('/', findUser, async (req: RequestUser, res, next) => {
     try {
-
         let publications;
 
         if (req.user?.role === 'user') {
@@ -58,7 +52,6 @@ artistsRouter.get('/', findUser, async (req: RequestUser, res, next) => {
 
 artistsRouter.get('/get-artist', findUser, async (req: RequestUser, res, next) => {
     try {
-
         let publications;
 
         if (req.user?.role === 'user') {
@@ -76,8 +69,6 @@ artistsRouter.get('/get-artist', findUser, async (req: RequestUser, res, next) =
 
 
 artistsRouter.patch(`/:id/togglePublished`, auth, permit('admin'), async (req: RequestUser, res, next) => {
-
-
     try {
         let _id: Types.ObjectId;
 
@@ -94,19 +85,15 @@ artistsRouter.patch(`/:id/togglePublished`, auth, permit('admin'), async (req: R
         }
 
         artist.isPublished = !artist.isPublished
-
         await artist.save();
 
         return res.send({message: 'Artist successfully patched', artist});
-
     } catch (e) {
         next(e);
     }
-
 })
 
 artistsRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res, next) => {
-
     try {
         let _id: Types.ObjectId;
         try {
@@ -126,5 +113,4 @@ artistsRouter.delete('/:id', auth, permit('admin'), async (req: RequestUser, res
     } catch (e) {
         next(e);
     }
-
 })

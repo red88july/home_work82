@@ -31,7 +31,7 @@ const TracksForm: React.FC = () => {
       dispatch(getAllAlbums());
   }, [dispatch]);
 
-  const getfieldError = (fieldError: string) => {
+  const getFieldError = (fieldError: string) => {
     try {
       return isErrorLoadDataTrack?.errors[fieldError].message;
     } catch {
@@ -73,10 +73,11 @@ const TracksForm: React.FC = () => {
               id="number"
               label="Enter number of track"
               name="number"
+              autoComplete="new-number"
               value={track.number}
               onChange={inputChangeHandler}
-              error={Boolean(getfieldError('number'))}
-              helperText={getfieldError('number')}
+              error={Boolean(getFieldError('number'))}
+              helperText={getFieldError('number')}
             />
           </Grid>
           <Grid container direction="column" spacing={2}>
@@ -90,8 +91,8 @@ const TracksForm: React.FC = () => {
                 autoComplete="new-track"
                 value={track.track}
                 onChange={inputChangeHandler}
-                error={Boolean(getfieldError('track'))}
-                helperText={getfieldError('track')}
+                error={Boolean(getFieldError('track'))}
+                helperText={getFieldError('track')}
               />
             </Grid>
             <Grid item md>
@@ -103,8 +104,7 @@ const TracksForm: React.FC = () => {
                 label="Album name"
                 value={track.album}
                 onChange={inputChangeHandler}
-                name="album"
-              >
+                name="album">
                 <MenuItem value="" disabled>
                   Please select album name...
                 </MenuItem>
@@ -124,8 +124,8 @@ const TracksForm: React.FC = () => {
                 name="duration"
                 value={track.duration}
                 onChange={inputChangeHandler}
-                error={Boolean(getfieldError('duration'))}
-                helperText={getfieldError('duration')}
+                error={Boolean(getFieldError('duration'))}
+                helperText={getFieldError('duration')}
               />
             </Grid>
             <Grid item xs>

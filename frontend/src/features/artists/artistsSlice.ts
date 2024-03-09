@@ -3,12 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import {artistCreate, getAllArtists, getArtists} from './artistsThunk.ts';
 import { RootState } from '../../app/store.ts';
 
-import { Artists, ArtistsMutation, ValidationError } from '../../types';
+import {Artists, ArtistsMutation, ValidationError} from '../../types';
 
 interface ArtistsState {
   artist: ArtistsMutation | null;
   isLoadingArtist: boolean;
   isErrorArtist: ValidationError | null;
+  isErrorLoadingArtists: boolean;
   artists: Artists[];
   isLoadingArtists: boolean;
   artistsAll: Artists[];
@@ -19,6 +20,7 @@ const initialState: ArtistsState ={
   artist: null,
   isLoadingArtist: false,
   isErrorArtist: null,
+  isErrorLoadingArtists: false,
   artists: [],
   isLoadingArtists: false,
   artistsAll: [],
@@ -33,6 +35,7 @@ export const artistsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getArtists.pending, (state) => {
       state.isLoadingArtists = true;
+      state.isErrorLoadingArtists = false;
     });
     builder.addCase(getArtists.fulfilled, (state, {payload: artists}) => {
       state.isLoadingArtists = false;
@@ -40,6 +43,7 @@ export const artistsSlice = createSlice({
     });
     builder.addCase(getArtists.rejected, (state) => {
       state.isLoadingArtists = false;
+      state.isErrorLoadingArtists = true;
     });
 
     builder.addCase(getAllArtists.pending, (state) => {
@@ -74,3 +78,4 @@ export const selectAllArtists = (state: RootState) => state.artists.artistsAll;
 export const loadingArtists = (state: RootState) => state.artists.isLoadingArtists;
 export const isLoadingArtists = (state: RootState) => state.artists.isLoadingArtist;
 export const isErrorLoadArtists = (state: RootState) => state.artists.isErrorArtist;
+export const isErrorGetLoadingArtists = (state: RootState) => state.artists.isErrorLoadingArtists;

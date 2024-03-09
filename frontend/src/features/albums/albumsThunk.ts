@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi.ts';
-import {Albums, AlbumsData, AlbumsMutation, ValidationError} from '../../types';
+import {Albums, AlbumsData, AlbumsMutation, UpdateAlbum, ValidationError} from '../../types';
 import {RootState} from '../../app/store.ts';
 import {isAxiosError} from 'axios';
 
@@ -63,6 +63,15 @@ export const deleteAlbum = createAsyncThunk<void, string, { state: RootState }>(
   async (id, {getState}) => {
     const token = getState().users.usersLog?.user.token;
     const response = await axiosApi.delete('/albums/' + id, {headers: {'Authorization': 'Bearer ' + token}});
+    return response.data;
+  }
+);
+
+export const updateAlbum = createAsyncThunk<UpdateAlbum, string, { state: RootState }>(
+  'albums/updateAlbum',
+  async (id, {getState}) => {
+    const token = getState().users.usersLog?.user.token;
+    const response = await axiosApi.patch(`/albums/` + id + '/togglePublished', null, {headers: {'Authorization': 'Bearer ' + token}});
     return response.data;
   }
 );

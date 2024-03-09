@@ -3,7 +3,6 @@ import { Schema, model, Types } from "mongoose";
 import Artist from "./Artist";
 
 const AlbumSchema = new Schema({
-
     album: {
         type: String,
         required: true,
@@ -34,7 +33,6 @@ const AlbumSchema = new Schema({
         type: Boolean,
         default: false,
     },
-
 }, { versionKey: false });
 
 const Album = model('Album', AlbumSchema);

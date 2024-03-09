@@ -31,10 +31,11 @@ interface Props {
   image: string | null;
   artist: Artists;
   onDelete: () => void;
+  onUpdate: () => void;
   isPublished: boolean;
 }
 
-const AlbumsList: React.FC<Props> = ({ id, album, date, image, artist, isPublished,onDelete }) => {
+const AlbumsList: React.FC<Props> = ({ id, album, date, image, artist, isPublished,onDelete, onUpdate }) => {
 
   const user = useAppSelector(selectUserLog);
 
@@ -46,6 +47,10 @@ const AlbumsList: React.FC<Props> = ({ id, album, date, image, artist, isPublish
 
   const handleClickDelete = () => {
      onDelete();
+  };
+
+  const handleClickUpdate = () => {
+    onUpdate();
   };
 
   return (
@@ -93,6 +98,7 @@ const AlbumsList: React.FC<Props> = ({ id, album, date, image, artist, isPublish
                   <b>Not Published</b>
                 </Typography>
                 <Button
+                  onClick={handleClickUpdate}
                   variant="contained"
                   color="success">Published</Button>
               </Box>

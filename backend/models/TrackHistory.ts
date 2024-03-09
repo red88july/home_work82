@@ -4,7 +4,6 @@ import User from "./User";
 import Track from "./Track";
 
 const TrackHistorySchema = new Schema({
-
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
@@ -34,7 +33,6 @@ const TrackHistorySchema = new Schema({
         required: true,
         default: () => new Date(),
     }
-
 }, { versionKey: false } );
 
 const TrackHistory = model('TrackHistory', TrackHistorySchema);

@@ -8,9 +8,7 @@ import permit from "../middleware/permit";
 export const usersRouter = Router();
 
 usersRouter.post('/',  async (req, res, next) => {
-
    try {
-
        const userData: UserData = {
            username: req.body.username,
            password: req.body.password,
@@ -21,18 +19,15 @@ usersRouter.post('/',  async (req, res, next) => {
        await newUser.save();
 
        return res.send({message: 'User is correctly registered!', newUser});
-
    } catch (e) {
        if (e instanceof mongoose.Error.ValidationError) {
            return res.status(422).send(e);
        }
        next(e);
    }
-   
 });
 
 usersRouter.post('/sessions', async (req, res ,next) => {
-
     try {
         const user = await User.findOne({username: req.body.username});
 
@@ -50,16 +45,12 @@ usersRouter.post('/sessions', async (req, res ,next) => {
         await user.save();
 
         return res.send({ message: 'Username and password are correct!', user });
-
-
     } catch (e) {
         next(e);
     }
-
 })
 
 usersRouter.delete('/sessions', async (req, res ,next) => {
-
     try {
         const message = {message: 'Success!'};
 
@@ -81,9 +72,7 @@ usersRouter.delete('/sessions', async (req, res ,next) => {
         await user.save();
 
         return res.send(message);
-
     } catch (e) {
         next(e);
     }
-
 })

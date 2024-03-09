@@ -7,12 +7,15 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
 
 import FileInput from '../../../components/FileInput/FileInput';
 import { ArtistsData } from '../../../types';
+import {useNavigate} from 'react-router-dom';
 
 const ArtistsForm:React.FC = () => {
 
   const dispatch = useAppDispatch();
   const isLoadingCreateArtist = useAppSelector(isLoadingArtists);
   const isErrorCreateArtist = useAppSelector(isErrorLoadArtists);
+
+  const navigate = useNavigate();
 
   const [artist, setArtist] = useState<ArtistsData>({
     author: '',
@@ -48,7 +51,7 @@ const ArtistsForm:React.FC = () => {
           info: '',
         };
       });
-
+      navigate('/');
     } catch (e) {
       //
     }

@@ -4,11 +4,10 @@ import {albumCreate, getAlbums, getAllAlbums} from './albumsThunk.ts';
 import {RootState} from '../../app/store.ts';
 
 interface AlbumsState {
-
   album: AlbumsMutation | null;
   isLoadingDataAlbum: boolean;
   isErrorLoadDataAlbum: ValidationError | null;
-
+  isErrorLoadingAlbums: boolean;
   albums: Albums[];
   albumsAll: Albums[];
   isLoadingAlbum: boolean;
@@ -19,7 +18,7 @@ const initialState: AlbumsState = {
   album: null,
   isLoadingDataAlbum: false,
   isErrorLoadDataAlbum: null,
-
+  isErrorLoadingAlbums: false,
   albums: [],
   albumsAll: [],
   isLoadingAlbum: false,
@@ -34,6 +33,7 @@ export const albumsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getAlbums.pending, (state) => {
       state.isLoadingAlbum = true;
+      state.isErrorLoadingAlbums = false;
     });
     builder.addCase(getAlbums.fulfilled, (state, {payload: albums}) => {
       state.isLoadingAlbum = false;
@@ -41,6 +41,7 @@ export const albumsSlice = createSlice({
     });
     builder.addCase(getAlbums.rejected, (state) => {
       state.isLoadingAlbum = false;
+      state.isErrorLoadingAlbums = true;
     });
 
     builder.addCase(getAllAlbums.pending, (state) => {
@@ -71,9 +72,8 @@ export const albumsSlice = createSlice({
 
 export const albumReducer = albumsSlice.reducer;
 export const selectAlbum = (state:RootState) => state.albums.albums;
-
 export const selectAllAlbum = (state:RootState) => state.albums.albumsAll;
-
 export const loadingAlbum = (state: RootState) => state.albums.isLoadingAlbum;
 export const isLoadingAlbums = (state:RootState) => state.albums.isLoadingDataAlbum;
 export const isErrorLoadAlbums = (state:RootState) => state.albums.isErrorLoadDataAlbum;
+export const isErrorGetLoadingAlbums = (state: RootState) => state.albums.isErrorLoadingAlbums;
