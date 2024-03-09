@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi.ts';
-import {Tracks, TracksData, TracksMutation, UpdateAlbum, ValidationError} from '../../types';
-import {RootState} from '../../app/store.ts';
-import {isAxiosError} from 'axios';
+import { Tracks, TracksData, TracksMutation, UpdateAlbum, ValidationError } from '../../types';
+import { RootState } from '../../app/store.ts';
+import { isAxiosError } from 'axios';
 
 export const trackCreate = createAsyncThunk<TracksMutation, TracksData, { rejectValue: ValidationError, state: RootState }>(
   'tracks/trackCreate',

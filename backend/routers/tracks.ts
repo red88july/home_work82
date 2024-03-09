@@ -1,14 +1,12 @@
-import mongoose, {Types} from "mongoose";
+import mongoose, { Types } from "mongoose";
+import { Router } from "express";
+
+import auth, { RequestUser } from "../middleware/auth";
+import permit from "../middleware/permit";
+import findUser from "../middleware/findUser";
 
 import Track from "../models/Track";
-import {Router} from "express";
-import {TrackData} from "../types";
-import auth, {RequestUser} from "../middleware/auth";
-import permit from "../middleware/permit";
-import Album from "../models/Album";
-import {albumsRouter} from "./albums";
-import Artist from "../models/Artist";
-import findUser from "../middleware/findUser";
+import { TrackData } from "../types";
 
 export const tracksRouter = Router();
 

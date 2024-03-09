@@ -1,10 +1,12 @@
-import {Box, Container} from '@mui/material';
-import {Route, Routes} from 'react-router-dom';
+import { Box, Container } from '@mui/material';
+import {Route, Routes } from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
 import Artists from './features/artists/Artists';
 
-import PageNoFoundPicture from '../../frontend/src/assets/pic/404PageNotFound.jpg';
+import { useAppSelector } from './app/hooks.ts';
+import { selectUserLog } from './features/users/usersSlice.ts';
+
 import Albums from './features/albums/Albums';
 import TracksList from './features/tracks/components/TracksList';
 import RegisterForm from './features/users/RegisterForm';
@@ -14,8 +16,8 @@ import ArtistsForm from './features/artists/components/ArtistsForm';
 import AlbumsForm from './features/albums/components/AlbumsForm';
 import TracksForm from './features/tracks/components/TracksForm';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import {useAppSelector} from './app/hooks.ts';
-import {selectUserLog} from './features/users/usersSlice.ts';
+
+import PageNoFoundPicture from '../../frontend/src/assets/pic/404PageNotFound.jpg';
 
 function App() {
   const user = useAppSelector(selectUserLog);

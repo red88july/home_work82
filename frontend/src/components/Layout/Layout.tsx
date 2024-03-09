@@ -1,9 +1,11 @@
-import {PropsWithChildren} from 'react';
+import { PropsWithChildren } from 'react';
+import { Alert } from '@mui/material';
+
+import { useAppSelector } from '../../app/hooks.ts';
+import { selectUserLog } from '../../features/users/usersSlice.ts';
+
 import AppToolbar from '../UI/AppToolbar/AppToolbar';
-import {useAppSelector} from '../../app/hooks.ts';
-import {selectUserLog} from '../../features/users/usersSlice.ts';
-import FormBar from '../FormBar/FormBar.tsx';
-import {Alert} from '@mui/material';
+import FormBar from '../FormBar/FormBar';
 
 const Layout:React.FC<PropsWithChildren> = ({children}) => {
   const user = useAppSelector(selectUserLog);

@@ -1,8 +1,10 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { RootState } from '../../app/store.ts';
+
 import axiosApi from '../../axiosApi.ts';
-import {Artists, ArtistsData, ArtistsMutation, UpdateArtist, ValidationError} from '../../types';
-import {RootState} from '../../app/store.ts';
-import {isAxiosError} from 'axios';
+import { isAxiosError } from 'axios';
+
+import { Artists, ArtistsData, ArtistsMutation, UpdateArtist, ValidationError } from '../../types';
 
 export const artistCreate = createAsyncThunk<ArtistsMutation, ArtistsData, {
   rejectValue: ValidationError,

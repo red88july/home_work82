@@ -1,5 +1,5 @@
-import React, {PropsWithChildren} from 'react';
-import {Navigate} from 'react-router-dom';
+import React, { PropsWithChildren } from 'react';
+import { Navigate } from 'react-router-dom';
 
 interface Props extends PropsWithChildren {
   isAllowed: boolean | null;

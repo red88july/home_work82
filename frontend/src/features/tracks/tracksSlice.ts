@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {getTracks, trackCreate} from './tracksThunk.ts';
+import { getTracks, trackCreate } from './tracksThunk.ts';
 
 import { RootState } from '../../app/store.ts';
 import { Tracks, TracksMutation, ValidationError} from '../../types';

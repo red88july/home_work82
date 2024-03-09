@@ -1,26 +1,27 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link} from 'react-router-dom';
 import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
+
+import { useAppSelector } from '../../../app/hooks.ts';
+import { selectUserLog } from '../../users/usersSlice.ts';
 
 import { apiURL } from '../../../constants.ts';
 import imageNotAvailable from '../../../assets/pic/image_not_available.png';
 import { Artists } from '../../../types';
-import {useAppSelector} from '../../../app/hooks.ts';
-import { selectUserLog } from '../../users/usersSlice.ts';
-import React from 'react';
 
 const cardEffect = {
   width: '450px',
-  flexWrap: "wrap",
-  "&:hover": {
-    transition: "1s",
-    transform: "scale(0.9)",
-    boxShadow: "6px 7px 21px -5px rgba(0,0,0,0.27)",
+  flexWrap: 'wrap',
+  '&:hover': {
+    transition: '1s',
+    transform: 'scale(0.9)',
+    boxShadow: '6px 7px 21px -5px rgba(0,0,0,0.27)',
   }
 };
 
 const positionElements = {
   display: 'flex',
-  justifyContent: "space-around",
+  justifyContent: 'space-around',
   textAlign: 'center',
 };
 
@@ -35,7 +36,7 @@ interface Props {
   isPublished: boolean;
 }
 
-const AlbumsList: React.FC<Props> = ({ id, album, date, image, artist, isPublished,onDelete, onUpdate }) => {
+const AlbumsList: React.FC<Props> = ({id, album, date, image, artist, isPublished, onDelete, onUpdate}) => {
 
   const user = useAppSelector(selectUserLog);
 
@@ -46,7 +47,7 @@ const AlbumsList: React.FC<Props> = ({ id, album, date, image, artist, isPublish
   }
 
   const handleClickDelete = () => {
-     onDelete();
+    onDelete();
   };
 
   const handleClickUpdate = () => {
@@ -57,17 +58,17 @@ const AlbumsList: React.FC<Props> = ({ id, album, date, image, artist, isPublish
     <>
       {(user && user.user?.role === 'admin') || isPublished ? (
         <Box key={id} sx={cardEffect}>
-          <Card id={id} sx={{ padding: 0 }}
+          <Card id={id} sx={{padding: 0}}
                 component={Link} to={`/tracks?album=` + id}>
             <CardActionArea>
               <CardContent sx={positionElements}>
                 <CardMedia
                   component="img"
-                  sx={{ width: 200, borderRadius: "10px" }}
+                  sx={{width: 200, borderRadius: '10px'}}
                   image={coverImage}
                   alt={album}
                 />
-                <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box sx={{display: 'flex', alignItems: 'center'}}>
                   <Box>
                     <Typography gutterBottom variant="h5" component="div">
                       Album: {album}
@@ -83,7 +84,7 @@ const AlbumsList: React.FC<Props> = ({ id, album, date, image, artist, isPublish
               </CardContent>
             </CardActionArea>
           </Card>
-          <Box display="flex"  alignItems="center" justifyContent="center" gap={2} padding={2}>
+          <Box display="flex" alignItems="center" justifyContent="center" gap={2} padding={2}>
             {isPublished ? (
               <Typography
                 variant="body2"

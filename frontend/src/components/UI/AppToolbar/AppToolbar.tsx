@@ -1,10 +1,11 @@
-import {NavLink} from 'react-router-dom';
-import {AppBar, Grid, styled, Toolbar, Typography} from '@mui/material';
-import {useAppSelector} from '../../../app/hooks.ts';
-import {selectUserLog} from '../../../features/users/usersSlice.ts';
+import { NavLink } from 'react-router-dom';
+import { AppBar, Grid, styled, Toolbar, Typography } from '@mui/material';
+
+import { useAppSelector } from '../../../app/hooks.ts';
+import { selectUserLog } from '../../../features/users/usersSlice.ts';
+
 import UserMenu from './UserMenu';
 import GuestMenu from './GuestMenu';
-
 
 const Link = styled(NavLink)({
   color: 'inherit',

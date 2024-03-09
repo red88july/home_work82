@@ -1,22 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import {Alert, Box, Button} from '@mui/material';
-import {NavLink} from 'react-router-dom';
-import AddIcon from '@mui/icons-material/Add';
-import {useAppSelector} from '../../app/hooks.ts';
-import {selectUserLog} from '../../features/users/usersSlice.ts';
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
-const FormBar:React.FC = () => {
+import { Alert, Box, Button } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+
+import { useAppSelector } from '../../app/hooks.ts';
+import { selectUserLog } from '../../features/users/usersSlice.ts';
+
+const FormBar: React.FC = () => {
 
   const user = useAppSelector(selectUserLog);
 
-    const [timer, setTimer] = useState(true);
+  const [timer, setTimer] = useState(true);
 
-    useEffect(() => {
-      const timeout = setTimeout(() => {
-        setTimer(false);
-      }, 4000);
-      return () => clearTimeout(timeout);
-    }, []);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setTimer(false);
+    }, 4000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <Box marginTop={10}>
@@ -24,8 +26,9 @@ const FormBar:React.FC = () => {
         <Box>
           {timer && user && (
             <Box maxWidth="700px">
-              <Alert severity='success'>
-                <p> <strong><em>{user?.user.username}</em> you are in a menu where you can add new artists, as well as add
+              <Alert severity="success">
+                <p><strong><em>{user?.user.username}</em> you are in a menu where you can add new artists, as well as
+                  add
                   their albums and tracks to albums</strong></p>
               </Alert>
             </Box>
@@ -37,7 +40,7 @@ const FormBar:React.FC = () => {
             color="primary"
             component={NavLink}
             to="/artist-form"
-            startIcon={<AddIcon />}>
+            startIcon={<AddIcon/>}>
             Add Artist
           </Button>
           <Button
@@ -45,7 +48,7 @@ const FormBar:React.FC = () => {
             color="primary"
             component={NavLink}
             to="/album-form"
-            startIcon={<AddIcon />}>
+            startIcon={<AddIcon/>}>
             Add Album
           </Button>
           <Button
@@ -53,7 +56,7 @@ const FormBar:React.FC = () => {
             color="primary"
             component={NavLink}
             to="/track-form"
-            startIcon={<AddIcon />}>
+            startIcon={<AddIcon/>}>
             Add Track
           </Button>
         </Box>

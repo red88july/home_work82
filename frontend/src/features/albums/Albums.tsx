@@ -1,14 +1,13 @@
 import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router-dom';
 
-import {isErrorGetLoadingAlbums, loadingAlbum, selectAlbum} from './albumsSlice.ts';
-import {deleteAlbum, getAlbums, updateAlbum} from './albumsThunk.ts';
-import {useAppDispatch, useAppSelector} from '../../app/hooks.ts';
+import { isErrorGetLoadingAlbums, loadingAlbum, selectAlbum } from './albumsSlice.ts';
+import { deleteAlbum, getAlbums, updateAlbum } from './albumsThunk.ts';
+import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 
-
-import AlbumsList from './components/AlbumsList.tsx';
-import {Alert, Box, CircularProgress, Grid, Typography} from '@mui/material';
-import {useSelector} from 'react-redux';
+import AlbumsList from './components/AlbumsList';
+import { Alert, Box, CircularProgress, Grid, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const Albums = () => {
 

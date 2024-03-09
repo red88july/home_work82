@@ -58,6 +58,7 @@ const AlbumsForm:React.FC = () => {
         return {
           ...prevState,
           album: '',
+          artist: '',
           date: 0,
         };
       });
@@ -117,8 +118,7 @@ const AlbumsForm:React.FC = () => {
                 autoComplete="new-name"
                 value={album.artist}
                 onChange={inputChangeHandler}
-                name="artist"
-              >
+                name="artist">
                 <MenuItem value="" disabled>Please select artist...</MenuItem>
                 {filterArtist.map((artist) => (
                   <MenuItem key={artist._id} value={artist._id}>
@@ -140,8 +140,7 @@ const AlbumsForm:React.FC = () => {
                 type="submit"
                 color="primary"
                 variant="contained"
-                disabled={isLoadingCreateAlbum}
-               >
+                disabled={isLoadingCreateAlbum}>
                 {isLoadingCreateAlbum ? (<CircularProgress/>) : 'Add new album'}
               </Button>
             </Grid>

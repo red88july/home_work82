@@ -1,7 +1,7 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {Albums, AlbumsMutation, ValidationError} from '../../types';
-import {albumCreate, getAlbums, getAllAlbums} from './albumsThunk.ts';
-import {RootState} from '../../app/store.ts';
+import { createSlice } from '@reduxjs/toolkit';
+import { Albums, AlbumsMutation, ValidationError } from '../../types';
+import { albumCreate, getAlbums, getAllAlbums } from './albumsThunk.ts';
+import { RootState } from '../../app/store.ts';
 
 interface AlbumsState {
   album: AlbumsMutation | null;

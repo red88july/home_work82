@@ -1,9 +1,10 @@
-import {Alert, Box, CircularProgress, Grid, Typography} from '@mui/material';
+import { Alert, Box, CircularProgress, Grid, Typography } from '@mui/material';
 import { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import {isErrorGetLoadingArtists, loadingArtists, selectArtists} from './artistsSlice.ts';
+import { isErrorGetLoadingArtists, loadingArtists, selectArtists } from './artistsSlice.ts';
 import { getArtists } from './artistsThunk.ts';
+
 import ArtistsItem from './components/ArtistsItem';
 
 const Artists = () => {

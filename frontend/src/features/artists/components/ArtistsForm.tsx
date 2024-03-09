@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
 
 import FileInput from '../../../components/FileInput/FileInput';
 import { ArtistsData } from '../../../types';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ArtistsForm:React.FC = () => {
 
@@ -19,8 +19,8 @@ const ArtistsForm:React.FC = () => {
 
   const [artist, setArtist] = useState<ArtistsData>({
     author: '',
-    photo: null,
     info: '',
+    photo: null,
   });
 
   const getfieldError = (fieldError: string) => {
@@ -113,8 +113,7 @@ const ArtistsForm:React.FC = () => {
                 type="submit"
                 color="primary"
                 variant="contained"
-                disabled={isLoadingCreateArtist}
-              >
+                disabled={isLoadingCreateArtist}>
                 {isLoadingCreateArtist ? (<CircularProgress />) : 'Add new artist'}
               </Button>
             </Grid>
