@@ -24,11 +24,14 @@ export interface TrackData {
 export interface UserData {
     username: string;
     password: string;
+    displayName: string;
+    avatar: string | null;
 }
 
 export interface UserDataExtendsSchema extends UserData {
     token: string;
     role: string;
+    googleId: string;
 }
 
 interface UserMethods {

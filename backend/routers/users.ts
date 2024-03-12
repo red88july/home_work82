@@ -3,14 +3,17 @@ import { Router } from 'express';
 
 import User from "../models/User";
 import { UserData } from "../types";
+import {imageUpload} from "../multer";
 
 export const usersRouter = Router();
 
-usersRouter.post('/',  async (req, res, next) => {
+usersRouter.post('/', imageUpload.single('avatar'), async (req, res, next) => {
    try {
        const userData: UserData = {
            username: req.body.username,
            password: req.body.password,
+           displayName: req.body.displayName,
+           avatar: req.file ? req.file.filename : null,
        };
 
        const newUser = new User(userData);
