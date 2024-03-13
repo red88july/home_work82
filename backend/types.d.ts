@@ -22,16 +22,16 @@ export interface TrackData {
 }
 
 export interface UserData {
-    username: string;
+    displayName?: string;
+    email: string;
     password: string;
-    displayName: string;
     avatar: string | null;
 }
 
 export interface UserDataExtendsSchema extends UserData {
     token: string;
     role: string;
-    googleId: string;
+    googleId?: string;
 }
 
 interface UserMethods {

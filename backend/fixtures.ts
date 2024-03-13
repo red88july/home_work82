@@ -530,15 +530,19 @@ const run = async () => {
 
     await User.create([
         {
-            username: 'Ivanov',
+            displayName: 'Ivanov',
+            email: 'ivanov@gmail.com',
             password: "Ivanov_123#",
             token: crypto.randomUUID(),
             role: 'admin',
+            avatar: 'fixtures/hetfield.jpg',
         },  {
-            username: 'Petrov',
+            displayName: 'Petrov',
+            email: 'petrov@gmail.com',
             password: "Petrov_123#",
             token: crypto.randomUUID(),
             role: 'user',
+            avatar: 'fixtures/hansolo.jpg',
         }
     ])
 

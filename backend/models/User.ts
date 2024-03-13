@@ -7,23 +7,23 @@ import { UserDataExtendsSchema, UserMethods, UserModel } from "../types";
 const SALT_WORK = 10;
 
 const UserSchema = new Schema<UserDataExtendsSchema, UserMethods, UserModel>({
-    username: {
+    email: {
         type: String,
         required: true,
         unique: true,
         validate: {
             validator: async function (
                 this: HydratedDocument<UserDataExtendsSchema>,
-                username: string):Promise<boolean> {
+                email: string):Promise<boolean> {
                 if(!this.isModified('username')) return true;
 
                 const user: HydratedDocument<UserDataExtendsSchema> | null = await User.findOne({
-                    username: username,
+                    email: email,
                 });
 
                 return !user;
             },
-            message: 'This findUser is already registered!'
+            message: 'This User is already registered!'
         }
     },
 

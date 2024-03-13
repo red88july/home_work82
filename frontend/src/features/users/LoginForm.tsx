@@ -20,6 +20,7 @@ import { login } from './usersThunk';
 import {selectLoginError, selectLoginLoading} from './usersSlice';
 import { LoginMutation } from '../../types';
 import {useSelector} from 'react-redux';
+import {GoogleLogin} from '@react-oauth/google';
 
 
 const LoginForm = () => {
@@ -70,6 +71,14 @@ const LoginForm = () => {
             {error.error || "Username or password isn't correct!"}
           </Alert>
         )}
+        <GoogleLogin
+          onSuccess={(credentialResponse) => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log('Login Failed');
+          }}
+        />
         <Box component="form" onSubmit={submitFormHandler} sx={{mt: 1}}>
           <TextField
             required
