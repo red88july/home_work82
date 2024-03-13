@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Avatar,
   Box,
@@ -12,15 +12,16 @@ import {
   CircularProgress
 } from '@mui/material';
 
-import { useSelector } from 'react-redux';
-import { registration } from './usersThunk.ts';
+import {useSelector} from 'react-redux';
+import {registration} from './usersThunk.ts';
 import {errorRegistration, loadingRegistration} from './usersSlice.ts';
-import { useAppDispatch } from '../../app/hooks.ts';
+import {useAppDispatch} from '../../app/hooks.ts';
 
-import { Link as RouterLink, useNavigate} from 'react-router-dom';
-import { RegistrationMutation } from '../../types';
+import {Link as RouterLink, useNavigate} from 'react-router-dom';
+import {RegistrationMutation} from '../../types';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import FileInput from '../../components/FileInput/FileInput.tsx';
 
 const RegisterForm = () => {
 
@@ -30,9 +31,11 @@ const RegisterForm = () => {
 
   const isRegistration = useSelector(loadingRegistration);
 
-   const [register, setRegister] = useState<RegistrationMutation>({
-    username: '',
+  const [register, setRegister] = useState<RegistrationMutation>({
+    displayName: '',
+    email: '',
     password: '',
+    avatar: null,
   });
 
   const getFieldError = (fieldName: string) => {
@@ -53,6 +56,7 @@ const RegisterForm = () => {
     });
   };
 
+
   const submitForm = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -60,6 +64,15 @@ const RegisterForm = () => {
       navigate('/');
     } catch (e) {
       //error
+    }
+  };
+
+  const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, files} = e.target;
+    if (files) {
+      setRegister(prevState => ({
+        ...prevState, [name]: files[0]
+      }));
     }
   };
 
@@ -84,16 +97,31 @@ const RegisterForm = () => {
           <TextField
             required
             fullWidth
-            id="username"
-            type="username"
-            name="username"
-            value={register.username}
-            label="Username"
+            id="displayName"
+            type="displayName"
+            name="displayName"
+            value={register.displayName}
+            label="Enter name of user"
             onChange={inputChange}
-            error={Boolean(getFieldError('username'))}
-            helperText={getFieldError('username')}
+            error={Boolean(getFieldError('displayName'))}
+            helperText={getFieldError('displayName')}
             margin="normal"
-            autoComplete="new-username"
+            autoComplete="new-displayName"
+            autoFocus
+          />
+          <TextField
+            required
+            fullWidth
+            id="email"
+            type="email"
+            name="email"
+            value={register.email}
+            label="E-mail"
+            onChange={inputChange}
+            error={Boolean(getFieldError('email'))}
+            helperText={getFieldError('email')}
+            margin="normal"
+            autoComplete="new-email"
             autoFocus
           />
           <TextField
@@ -110,7 +138,13 @@ const RegisterForm = () => {
             margin="normal"
             autoComplete="new-password"
           />
-
+          <Grid item xs marginTop={1}>
+            <FileInput
+              label="Enter your avatar"
+              name="avatar"
+              onChange={fileInputChangeHandler}
+            />
+          </Grid>
           <Button
             type="submit"
             fullWidth
@@ -118,7 +152,7 @@ const RegisterForm = () => {
             sx={{mt: 3, mb: 2}}
             disabled={isRegistration}
           >
-            {isRegistration ? <CircularProgress /> : 'Sign Up'}
+            {isRegistration ? <CircularProgress/> : 'Sign Up'}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>

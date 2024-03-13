@@ -10,8 +10,8 @@ export const usersRouter = Router();
 usersRouter.post('/', imageUpload.single('avatar'), async (req, res, next) => {
    try {
        const userData: UserData = {
-           email: req.body.email,
            displayName: req.body.displayName,
+           email: req.body.email,
            password: req.body.password,
            avatar: req.file ? req.file.filename : null,
        };

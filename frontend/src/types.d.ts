@@ -90,8 +90,10 @@ export interface User {
 }
 
 export interface RegistrationMutation {
-  username: string;
+  displayName: string;
+  email: string;
   password: string;
+  avatar: File | null;
 }
 
 export interface ValidationError {

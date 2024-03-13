@@ -1,6 +1,6 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import {createAsyncThunk} from '@reduxjs/toolkit';
 
-import { isAxiosError } from 'axios';
+import {isAxiosError} from 'axios';
 import axiosApi from '../../axiosApi.ts';
 
 import {
@@ -14,11 +14,24 @@ import {
 import {RootState} from '../../app/store.ts';
 import {unsetUser} from './usersSlice.ts';
 
-export const registration = createAsyncThunk<RegistrationResponse, RegistrationMutation, {  rejectValue: ValidationError}>(
+export const registration = createAsyncThunk<RegistrationResponse, RegistrationMutation, {
+  rejectValue: ValidationError
+}>(
   'users/registered',
-  async (registrationMutation, {rejectWithValue}) => {
+  async (registration, {rejectWithValue}) => {
     try {
-      const response = await axiosApi.post('/users', registrationMutation);
+      const formData = new FormData();
+      const keys = Object.keys(registration) as (keyof RegistrationMutation)[];
+
+      keys.forEach(key => {
+        const value = registration[key];
+
+        if (value !== null) {
+          formData.append(key, value);
+        }
+      });
+
+      const response = await axiosApi.post('/users', formData);
       return response.data;
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 422) {
@@ -47,9 +60,9 @@ export const login = createAsyncThunk<LoginResponse, LoginMutation, { rejectValu
 
 export const logout = createAsyncThunk<void, undefined, { state: RootState }>(
   'users/logout',
-  async (_,{getState, dispatch}) => {
-      const token = getState().users.usersLog?.user.token;
-      await axiosApi.delete('/users/sessions', {headers: {'Authorization' : `Bearer:${token}`}});
-      dispatch(unsetUser());
+  async (_, {getState, dispatch}) => {
+    const token = getState().users.usersLog?.user.token;
+    await axiosApi.delete('/users/sessions', {headers: {'Authorization': `Bearer:${token}`}});
+    dispatch(unsetUser());
   }
 );

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Box, Button, CircularProgress, Container, Grid, MenuItem, TextField } from '@mui/material';
 
 
-import { albumCreate } from '../albumsThunk.ts';
+// import { albumCreate } from '../albumsThunk.ts';
 import { getAllArtists } from '../../artists/artistsThunk.ts';
 import { isErrorLoadAlbums, isLoadingAlbums } from '../albumsSlice.ts';
 import { selectAllArtists } from '../../artists/artistsSlice.ts';
@@ -52,7 +52,7 @@ const AlbumsForm:React.FC = () => {
   const onFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      await dispatch(albumCreate(album)).unwrap();
+      // await dispatch(albumCreate(album)).unwrap();
 
       setAlbum((prevState) => {
         return {

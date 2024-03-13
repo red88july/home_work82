@@ -44,15 +44,13 @@ const UserSchema = new Schema<UserDataExtendsSchema, UserMethods, UserModel>({
         default: 'user',
     },
 
-    googleId: {
-        type: String,
-        required: true,
-    },
 
     displayName: {
         type: String,
         required: true,
     },
+
+    googleId: String,
 
     avatar: String,
 
