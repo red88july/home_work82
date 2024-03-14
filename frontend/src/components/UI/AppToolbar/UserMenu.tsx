@@ -31,7 +31,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
     <>
       <TracKStoryButton />
       <Button color="inherit" onClick={handleClick}>
-        Hello, {user.username}
+        Hello, {user.displayName}
       </Button>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} keepMounted>
         <MenuItem onClick={handleClickLogout}>Logout</MenuItem>

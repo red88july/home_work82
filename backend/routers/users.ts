@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 import { Router } from 'express';
-
+import { OAuth2Client } from "google-auth-library";
 
 import User from "../models/User";
 import { UserData } from "../types";
 import {imageUpload} from "../multer";
+import connectToDB from "../connectToDB";
 
 export const usersRouter = Router();
 
+const client = new OAuth2Client(connectToDB.google.clientId);
 
 usersRouter.post('/', imageUpload.single('avatar'), async (req, res, next) => {
    try {
@@ -52,7 +54,50 @@ usersRouter.post('/sessions', async (req, res ,next) => {
     } catch (e) {
         next(e);
     }
-})
+});
+
+usersRouter.post('/google', async (req, res, next) => {
+   try {
+       const ticket = await client.verifyIdToken({
+           idToken: req.body.credential,
+           audience: connectToDB.google.clientId,
+       });
+
+       const payload = ticket.getPayload();
+
+       if (!payload) {
+           return res.send(400).send({error: 'Google login failed!'})
+       }
+
+       const email = payload['email'];
+       const id = payload['sub'];
+       const displayName = payload['name'];
+
+       if (!email) {
+           return res.send(400).send({error: 'E-mail not found!'});
+       }
+
+       let userGoogle = await User.findOne({googleId: id});
+
+       if (!userGoogle) {
+           userGoogle = new User({
+               email,
+               password: crypto.randomUUID(),
+               googleId: id,
+               displayName,
+           });
+       }
+
+       userGoogle.generatedToken();
+       await userGoogle.save();
+
+       return res.send({ message: 'Login with Google successfully!', userGoogle });
+
+   } catch (e) {
+       next(e);
+   }
+});
+
 
 usersRouter.delete('/sessions', async (req, res ,next) => {
     try {

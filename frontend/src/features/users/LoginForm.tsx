@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import {Link as RouterLink, useNavigate} from 'react-router-dom';
 import {
   Alert,
   Avatar,
@@ -15,10 +15,10 @@ import {
 } from '@mui/material';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { login } from './usersThunk';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {googleLogin, login} from './usersThunk';
 import {selectLoginError, selectLoginLoading} from './usersSlice';
-import { LoginMutation } from '../../types';
+import {LoginMutation} from '../../types';
 import {useSelector} from 'react-redux';
 import {GoogleLogin} from '@react-oauth/google';
 
@@ -49,6 +49,11 @@ const LoginForm = () => {
     navigate('/');
   };
 
+  const googleLoginHandler = async (credential: string) => {
+    await dispatch(googleLogin(credential)).unwrap();
+    navigate('/');
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline/>
@@ -67,13 +72,15 @@ const LoginForm = () => {
           Sign In
         </Typography>
         {error && (
-          <Alert severity="error" sx={{mt: 3, width: "100%"}}>
-            {error.error || "Username or password isn't correct!"}
+          <Alert severity="error" sx={{mt: 3, width: '100%'}}>
+            {error.error || 'Username or password is not correct!'}
           </Alert>
         )}
         <GoogleLogin
           onSuccess={(credentialResponse) => {
-            console.log(credentialResponse);
+            if (credentialResponse.credential) {
+             void googleLoginHandler(credentialResponse.credential);
+            }
           }}
           onError={() => {
             console.log('Login Failed');
@@ -109,7 +116,7 @@ const LoginForm = () => {
             sx={{mt: 3, mb: 2}}
             disabled={isLogin}
           >
-            {isLogin ? <CircularProgress /> : 'Sign Up'}
+            {isLogin ? <CircularProgress/> : 'Sign Up'}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>

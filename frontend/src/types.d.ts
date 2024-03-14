@@ -83,8 +83,9 @@ export interface Tracks {
 }
 
 export interface User {
+  displayName: string;
   _id: string;
-  username: string;
+  email: string;
   token: string;
   role: string;
 }
