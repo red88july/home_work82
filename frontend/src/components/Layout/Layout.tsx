@@ -13,7 +13,7 @@ const Layout:React.FC<PropsWithChildren> = ({children}) => {
     <>
       <header>
         <AppToolbar/>
-        {user?.user.role === 'admin' || user?.user.role === 'user' ?
+        {user?.role === 'admin' || user?.role === 'user' ?
           (<FormBar />) :
           <Alert severity='info'>
             <b>Welcome to Spot music app! If you want to add new artist/albums/tracks you need to be registered!</b>

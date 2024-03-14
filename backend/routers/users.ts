@@ -6,6 +6,7 @@ import User from "../models/User";
 import { UserData } from "../types";
 import {imageUpload} from "../multer";
 import connectToDB from "../connectToDB";
+import crypto from "crypto";
 
 export const usersRouter = Router();
 
@@ -57,45 +58,49 @@ usersRouter.post('/sessions', async (req, res ,next) => {
 });
 
 usersRouter.post('/google', async (req, res, next) => {
-   try {
-       const ticket = await client.verifyIdToken({
-           idToken: req.body.credential,
-           audience: connectToDB.google.clientId,
-       });
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken: req.body.credential,
+            audience: connectToDB.google.clientId,
+        })
 
-       const payload = ticket.getPayload();
+        const payload = ticket.getPayload();
 
-       if (!payload) {
-           return res.send(400).send({error: 'Google login failed!'})
-       }
+        if (!payload) {
+            return res.status(400).send({error: 'Google login error!'});
+        }
+        const email = payload['email'];
+        const id = payload['sub'];
+        const displayName = payload['name'];
 
-       const email = payload['email'];
-       const id = payload['sub'];
-       const displayName = payload['name'];
+        if (!email) {
+            return res.status(400).send({error: 'Email is not present!'});
+        }
 
-       if (!email) {
-           return res.send(400).send({error: 'E-mail not found!'});
-       }
+        let user = await User.findOne({googleId: id});
 
-       let userGoogle = await User.findOne({googleId: id});
+        if (!user) {
+            user = new User({
+                email,
+                password: crypto.randomUUID(),
+                googleId: id,
+                displayName,
+            });
+        }
 
-       if (!userGoogle) {
-           userGoogle = new User({
-               email,
-               password: crypto.randomUUID(),
-               googleId: id,
-               displayName,
-           });
-       }
+        user.generatedToken();
 
-       userGoogle.generatedToken();
-       await userGoogle.save();
+        await user.save();
 
-       return res.send({ message: 'Login with Google successfully!', userGoogle });
+        return res.send({message: 'Login with Google successfully', user});
 
-   } catch (e) {
-       next(e);
-   }
+    } catch (error) {
+        if (error instanceof mongoose.Error.ValidationError) {
+            return res.status(422).send(error);
+        }
+
+        next(error);
+    }
 });
 
 

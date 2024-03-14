@@ -1,3 +1,12 @@
+export interface User {
+  _id: string;
+  email: string;
+  token: string;
+  role: string;
+  displayName: string;
+  avatar: File | null;
+}
+
 export interface Artists {
   _id: string;
   author: string;
@@ -80,14 +89,6 @@ export interface Tracks {
   duration: number;
   number: number;
   isPublished: boolean;
-}
-
-export interface User {
-  displayName: string;
-  _id: string;
-  email: string;
-  token: string;
-  role: string;
 }
 
 export interface RegistrationMutation {

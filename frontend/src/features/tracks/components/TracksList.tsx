@@ -88,7 +88,7 @@ const TracksList = () => {
 
   const playButtonClick = (id: string) => {
 
-    const token = user?.user.token;
+    const token = user?.token;
 
     if (!token) {
       return {error: 'Token is not found!'};
@@ -182,7 +182,7 @@ const TracksList = () => {
                         color="success">Published</Button>
                     </Box>
                   )}
-                  {(user && user.user.role === 'admin') && <Box>
+                  {(user && user.role === 'admin') && <Box>
                     <Button
                       onClick={() => handleDeleteTrack(track._id)}
                       variant="contained"

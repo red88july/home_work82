@@ -2,36 +2,24 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import {googleLogin, login, registration} from './usersThunk.ts';
 import { RootState } from '../../app/store.ts';
-import {GlobalError, LoginResponse, RegistrationResponse, ValidationError} from '../../types';
+import {GlobalError, RegistrationResponse, User, ValidationError} from '../../types';
 
 interface UsersState {
   users: RegistrationResponse | null;
-  usersLog: LoginResponse | null;
-  usersGoogleLog: LoginResponse | null;
-
+  usersLog: User | null;
   registrationLoading: boolean;
   registrationError: ValidationError | null;
-
   loginLoading: boolean;
   loginError: GlobalError | null;
-
-  loginUserGoogle: boolean;
-  loginUserErrorGoogle: GlobalError | null;
 }
 
 const initialState: UsersState = {
   users: null,
   usersLog: null,
-  usersGoogleLog: null,
-
   registrationLoading: false,
   registrationError: null,
-
   loginLoading: false,
   loginError:  null,
-
-  loginUserGoogle: false,
-  loginUserErrorGoogle: null,
 };
 
 export const usersSlice = createSlice({
@@ -63,7 +51,7 @@ export const usersSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, {payload: data}) => {
       state.loginLoading = false;
-      state.usersLog = data;
+      state.usersLog = data.user;
     });
     builder.addCase(login.rejected, (state, {payload: error}) => {
       state.loginLoading = true;
@@ -71,16 +59,16 @@ export const usersSlice = createSlice({
     });
 
     builder.addCase(googleLogin.pending, (state) => {
-      state.loginUserGoogle = true;
-      state.loginUserErrorGoogle = null;
+      state.loginLoading = true;
+      state.loginError = null;
     });
     builder.addCase(googleLogin.fulfilled, (state, {payload: data}) => {
-      state.loginUserGoogle = false;
-      state.usersGoogleLog = data;
+      state.loginLoading = false;
+      state.usersLog = data.user;
     });
     builder.addCase(googleLogin.rejected, (state, {payload: error}) => {
-      state.loginUserGoogle = true;
-      state.loginUserErrorGoogle = error || null;
+      state.loginLoading = true;
+      state.loginError = error || null;
     });
   }
 });

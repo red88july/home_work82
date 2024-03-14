@@ -13,7 +13,7 @@ export const albumCreate = createAsyncThunk<AlbumsMutation, AlbumsData, {
   async (album, {rejectWithValue, getState}) => {
 
     try {
-      const token = getState().users.usersLog?.user.token;
+      const token = getState().users.usersLog?.token;
 
       const formData = new FormData();
       const keys = Object.keys(album) as (keyof AlbumsData)[];
@@ -62,7 +62,7 @@ export const getAllAlbums = createAsyncThunk<Albums []>(
 export const deleteAlbum = createAsyncThunk<void, string, { state: RootState }>(
   'albums/deleteAlbum',
   async (id, {getState}) => {
-    const token = getState().users.usersLog?.user.token;
+    const token = getState().users.usersLog?.token;
     const response = await axiosApi.delete('/albums/' + id, {headers: {'Authorization': 'Bearer ' + token}});
     return response.data;
   }
@@ -71,7 +71,7 @@ export const deleteAlbum = createAsyncThunk<void, string, { state: RootState }>(
 export const updateAlbum = createAsyncThunk<UpdateAlbum, string, { state: RootState }>(
   'albums/updateAlbum',
   async (id, {getState}) => {
-    const token = getState().users.usersLog?.user.token;
+    const token = getState().users.usersLog?.token;
     const response = await axiosApi.patch(`/albums/` + id + '/togglePublished', null, {headers: {'Authorization': 'Bearer ' + token}});
     return response.data;
   }

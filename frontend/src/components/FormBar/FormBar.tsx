@@ -27,7 +27,7 @@ const FormBar: React.FC = () => {
           {timer && user && (
             <Box maxWidth="700px">
               <Alert severity="success">
-                <p><strong><em>{user?.user.username}</em> you are in a menu where you can add new artists, as well as
+                <p><strong><em>{user?.displayName}</em> you are in a menu where you can add new artists, as well as
                   add
                   their albums and tracks to albums</strong></p>
               </Alert>

@@ -32,22 +32,22 @@ function App() {
             <Route path="/register" element={<RegisterForm/>}/>
             <Route path="/login" element={<LoginForm/>}/>
             <Route path="/track_story" element={
-              <ProtectedRoute isAllowed={user && (user.user?.role === 'admin' || user.user?.role === 'user')}>
+              <ProtectedRoute isAllowed={user && (user.role === 'admin' || user.role === 'user')}>
                 <TrackStoryUser/>
               </ProtectedRoute>
             }/>
             <Route path="/artist-form" element={
-              <ProtectedRoute isAllowed={user && (user.user?.role === 'admin' || user.user?.role === 'user')}>
+              <ProtectedRoute isAllowed={user && (user.role === 'admin' || user.role === 'user')}>
                 <ArtistsForm/>
               </ProtectedRoute>
             }/>
             <Route path="/album-form" element={
-              <ProtectedRoute isAllowed={user && (user.user?.role === 'admin' || user.user?.role === 'user')}>
+              <ProtectedRoute isAllowed={user && (user.role === 'admin' || user.role === 'user')}>
                 <AlbumsForm/>
               </ProtectedRoute>
             }/>
             <Route path="/track-form" element={
-              <ProtectedRoute isAllowed={user && (user.user?.role === 'admin' || user.user?.role === 'user')}>
+              <ProtectedRoute isAllowed={user && (user.role === 'admin' || user.role === 'user')}>
                 <TracksForm/>
               </ProtectedRoute>
             }/>

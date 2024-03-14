@@ -18,6 +18,10 @@ const Link = styled(NavLink)({
 const AppToolbar = () => {
   const user = useAppSelector(selectUserLog);
 
+  if (user === undefined) {
+    return null;
+  }
+
   return (
     <AppBar sx={{mb: 2}}>
       <Toolbar>
@@ -26,7 +30,7 @@ const AppToolbar = () => {
             <Link to="/">Spot</Link>
           </Typography>
           {user ? (
-            <UserMenu user={user.user}/>
+            <UserMenu user={user}/>
           ) : (
             <GuestMenu/>
           )}

@@ -18,7 +18,7 @@ const TracksForm: React.FC = () => {
 
   const albums = useAppSelector(selectAllAlbum);
   const user = useAppSelector(selectUserLog);
-  const filterAlbums = user?.user.role === 'admin' ? albums : albums.filter(album => album.isPublished);
+  const filterAlbums = user?.role === 'admin' ? albums : albums.filter(album => album.isPublished);
 
   const [track, setTrack] = useState<TracksData>({
     number: 0,

@@ -20,7 +20,7 @@ const AlbumsForm:React.FC = () => {
 
   const artist = useAppSelector(selectAllArtists);
   const user = useAppSelector(selectUserLog);
-  const filterArtist = user?.user.role === 'admin' ? artist : artist.filter(artist => artist.isPublished);
+  const filterArtist = user?.role === 'admin' ? artist : artist.filter(artist => artist.isPublished);
 
   const [album, setAlbum] = useState<AlbumsData>({
     album: '',

@@ -9,7 +9,7 @@ export const trackCreate = createAsyncThunk<TracksMutation, TracksData, { reject
   async (track, {rejectWithValue, getState}) => {
 
     try {
-      const token = getState().users.usersLog?.user.token;
+      const token = getState().users.usersLog?.token;
 
       const response = await axiosApi.post('/tracks', track, {headers: {'Authorization': 'Bearer ' + token}});
       return response.data;
@@ -35,7 +35,7 @@ export const getTracks = createAsyncThunk<Tracks [], string>(
 export const deleteTrack = createAsyncThunk<void, string, { state: RootState }>(
   'track/deleteTrack',
   async (id, {getState}) => {
-    const token = getState().users.usersLog?.user.token;
+    const token = getState().users.usersLog?.token;
     const response = await axiosApi.delete('/tracks/' + id, {headers: {'Authorization': 'Bearer ' + token}});
     return response.data;
   }
@@ -44,7 +44,7 @@ export const deleteTrack = createAsyncThunk<void, string, { state: RootState }>(
 export const updateTrack = createAsyncThunk<UpdateAlbum, string, { state: RootState }>(
   'albums/updateTrack',
   async (id, {getState}) => {
-    const token = getState().users.usersLog?.user.token;
+    const token = getState().users.usersLog?.token;
     const response = await axiosApi.patch(`/tracks/` + id + '/togglePublished', null, {headers: {'Authorization': 'Bearer ' + token}});
     return response.data;
   }

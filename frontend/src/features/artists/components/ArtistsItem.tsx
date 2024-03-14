@@ -53,7 +53,7 @@ const ArtistsItem: React.FC<Props> = ({id, photo, author, isPublished}) => {
 
   return (
     <>
-      {(user && user.user.role === 'admin') || isPublished ? (
+      {(user && user.role === 'admin') || isPublished ? (
         <Box key={id} marginTop={10} sx={cardEffect}>
           <Card
             id={id}
@@ -84,7 +84,7 @@ const ArtistsItem: React.FC<Props> = ({id, photo, author, isPublished}) => {
                   color="#ef5350">
                   <b>Not Published</b>
                 </Typography>
-                {(user && user.user.role === 'admin') &&
+                {(user && user.role === 'admin') &&
                   (<Box>
                     <Button
                       onClick={handlePublishClick}
@@ -96,7 +96,7 @@ const ArtistsItem: React.FC<Props> = ({id, photo, author, isPublished}) => {
                 }
               </Box>
             )}
-            {(user && user.user.role === 'admin') &&
+            {(user && user.role === 'admin') &&
               (<Box>
                 <Button
                   onClick={handleClickDelete}

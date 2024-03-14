@@ -56,7 +56,7 @@ const AlbumsList: React.FC<Props> = ({id, album, date, image, artist, isPublishe
 
   return (
     <>
-      {(user && user.user?.role === 'admin') || isPublished ? (
+      {(user && user?.role === 'admin') || isPublished ? (
         <Box key={id} sx={cardEffect}>
           <Card id={id} sx={{padding: 0}}
                 component={Link} to={`/tracks?album=` + id}>
@@ -104,7 +104,7 @@ const AlbumsList: React.FC<Props> = ({id, album, date, image, artist, isPublishe
                   color="success">Published</Button>
               </Box>
             )}
-            {(user && user.user.role === 'admin') && <Box>
+            {(user && user.role === 'admin') && <Box>
               <Button
                 onClick={handleClickDelete}
                 variant="contained"
