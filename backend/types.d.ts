@@ -20,9 +20,8 @@ export interface TrackData {
     album: string;
     duration: string;
 }
-
 export interface UserData {
-    displayName?: string;
+    displayName: string;
     email: string;
     password: string;
     avatar: string | null;

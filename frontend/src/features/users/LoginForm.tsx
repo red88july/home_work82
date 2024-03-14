@@ -32,7 +32,7 @@ const LoginForm = () => {
   const isLogin = useSelector(selectLoginLoading);
 
   const [state, setState] = useState<LoginMutation>({
-    username: '',
+    email: '',
     password: ''
   });
 
@@ -83,13 +83,13 @@ const LoginForm = () => {
           <TextField
             required
             fullWidth
-            type="username"
-            name="username"
-            value={state.username}
-            label="Username"
+            type="email"
+            name="email"
+            value={state.email}
+            label="E-mail"
             onChange={inputChange}
             margin="normal"
-            autoComplete="current-username"
+            autoComplete="current-email"
           />
           <TextField
             required

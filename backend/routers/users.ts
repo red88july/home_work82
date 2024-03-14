@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 import { Router } from 'express';
 
+
 import User from "../models/User";
 import { UserData } from "../types";
 import {imageUpload} from "../multer";
 
 export const usersRouter = Router();
+
 
 usersRouter.post('/', imageUpload.single('avatar'), async (req, res, next) => {
    try {
@@ -31,10 +33,10 @@ usersRouter.post('/', imageUpload.single('avatar'), async (req, res, next) => {
 
 usersRouter.post('/sessions', async (req, res ,next) => {
     try {
-        const user = await User.findOne({username: req.body.username});
+        const user = await User.findOne({email: req.body.email});
 
         if (!user) {
-            return res.status(422).send({message: `Username not found`});
+            return res.status(422).send({message: `Email by user not found`});
         }
 
         const checkPass = await user.checkPassword(req.body.password);
@@ -46,7 +48,7 @@ usersRouter.post('/sessions', async (req, res ,next) => {
         user.generatedToken();
         await user.save();
 
-        return res.send({ message: 'Username and password are correct!', user });
+        return res.send({ message: 'Email and password are correct!', user });
     } catch (e) {
         next(e);
     }
